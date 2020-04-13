@@ -31,6 +31,5 @@ build/
 .vscode/
 
 ## Build projects ##
-frontend/
 node_installation/
 src/main/resources/static/

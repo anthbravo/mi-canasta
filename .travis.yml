@@ -1,0 +1,37 @@
+language: java
+jdk: openjdk8
+cache:
+    directories:
+     - $HOME/.m2
+     - node_installation
+branches:
+  only:
+  - master
+git:
+  depth: 3
+script:
+  - ./mvnw test -B
+email:
+    recipients:
+      - u201320891@upc.edu.pe
+      - U201413797@upc.edu.pe
+      - u201514642@upc.edu.pe
+      - u20161a096@upc.edu.pe
+      - U201613694@upc.edu.pe
+      - u201824310@upc.edu.pe
+      - u20191a919@upc.edu.pe
+    on_success: always
+    on_failure: always
+notifications:
+  webhooks: 
+    - secure: "SoWuFDQ4TC8jeuRFC0QDQvwhSr8eA1LENEnPB1g9iG1C4C+z32fX5XOPEBDbEAN/RV1vFlKRqs2+8rgC0H+w9WrbCQJtrn8Gg4DEw9PTRj1y4ooZ5etGeOdcXMd9HvdnvDbytZizFQAtgPVu/eiP+abBjrJ6vDtuvEH+X7JK2vDwt08QYlFuGjyCTKB+AvkPgge4cj0t0cXZexr8lFxMfOTFvOz4BnAiIVgdi3/wS+a2FxzsoGq6+EkXphhxH8XFkcIWmGmplNCe6QipWXn8RJeeP5SKXNOS88x0EIAHLP01Q60/wl7ZVoOhWOIeHNMVzo4xwjQlPJDY+yvoNNeFJxu8dTgU1ene2GppeyNHKr4zbLX883SO3XjSsmZ2xo+U42vaxEZ15nrzxm2cqTOYi4eLxmxCn9Nn0aVLRymspFYPywaRwv1Lg0RjSLfXDpk0BMAarK1VO8IHy/nbD7euC7GrQ6B9MRgni9TfVwxxQ0pRM+G3n8ziuErQqufkN0FIAGiIHpt99qMvHVbc0lrbjMiz13D0XZkIYjyoPkrH1D7bUdnKuurFaK5ppcR3JpG04B0cstinjZETjcFs3HtsKNK/8E8S0b9/1+gw5LfQmNosj9etx8DIFhSVqnVz7/261xdfMlK/zrtc+hSyGaa6GzhY8wOcNxk8dNF71Kl8ZsU="
+    - secure: "r9jkvAYqfLV2K+N71DWhua+kr+EEgFLu3dDXbciYRS9HD2lL3QEhag5BJB8/rq0T8tey2HE9/BPQvqnOpzCD9wn7CXa35SWvqsjzKfv/PgiPy11vBIuLKT/xJduBx6TybmmWWUGF3geAVJBoQlW8DoDcFnEqIwy+5sXNVSyjARfSQOwFIg6igv82fiW+9KqDcfsHTK6zSAd1SYzW6Bpxfz6I14c5KMoc/iRxeZyubaVSYwmQ5oY1eTr4lAhIkToA2gler0PB6Dp6fKYkdw6k9cKThrognaW0q4aosiswN4SmdvkF8yo5WjRplcKH4zLTpHG+yGBaTr+SPjHYKbYtGuG20LR2v5ddB8GOIvZOHoS8k9BVwUMQwZZUOzZdtZ5PFYFIyPs/A0bE/IwE3ltRgghvZLqHhzg+A5GTAOOvgckAmfBOeAUN3doeHXblLy1rvP8FBu7QE2z67SiiVDE2UvXOb36ErdHQ6DSmbbqkim4I9MUvckH67FUoL77N/JkKyjvAyqqwymmy5mRVfPrgojjOgI3YpPGjrawtCq2knhscstjXHJeum5olm9PmZUpoPAGf/A/GrtxcvPCgZ8HJolIye97JfNGHT0I33J5oxszQVqD+A9Yd5/AqKpdLWqaT81EmVYZuRuUgbHOIMHbjtPTMTcUX3+IAaP+3cRPyvjg="
+deploy:
+  provide: heroku
+  skip-cleanup: true
+  keep-history: true
+  api_key:
+    secure: "e/BqedvHpzHnJrZOTW3NSo6zocbIcoKzqVjT3Y2csviK4qzNn+OEBMaZo0ugQRfU59TQcR+h3rhzzpn7bqMZHXvQf/5jBs5/yZlezqUC4P3hYO2W2OVpJMgaTuQ320Gn6KZEhxS1OD1NMuD7UuktrmdZ8FMc8g1BI9KXSdT4PT5ez3nkzQ6Cw0lax/qkDVEW2Ej524iM+YYfkn0mKUTKO0Bqxbr3yamAHl5mR9TnPamMGCqvoaDjCkRhy5+Rz7Q9zXyk+pQM0dSOFveIa/T1qOeosegFivE76we7v3jYejjT0TI7avu2eJXNVeS9c2+hwoYn6KJXnyrhpUDmYvKJlCWfet+xwAtieEJV0b0HLHa/iUUzWQ6NN32Ct6C8B8H5sIfm2CQ9dRNjbRkABjDxldMkg0rTEGgnHDm+W18PsTmvouGee+kQvLY9TsXiYRsZG3V6q3F9VMgNjfiU27oZgkmxYe9MwgQ6Bq+LHsym2C7MmOOxOZcAKVgg+zhlifj2loFxBtrA+skT3rYr2+2sZhX+rWYQH7yT8Bu3IncTZ48peHl9bvaNXomqNauQd9+ydpHBikdBupe5y3o8Zkdjh5WLuGdUf4+SrvHmKMmZaXn1r5rOm9Hr/+tIzHMHG5fw8cdTqpHoGoMoaEc/kuOCEOQiUFY80Ak5x4048o8IT5E="
+  app: mi-canasta
+  on:
+    repo: anthbravo/mi-canasta

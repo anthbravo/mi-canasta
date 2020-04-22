@@ -14,8 +14,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Solicitud {
+
     @OneToOne(fetch = FetchType.LAZY,optional=false)
-    @JoinColumn(name = )
+    @JoinColumn(name = "usuario_id",nullable = false)
     private Usuario dni;
 
     @ManyToOne(fetch=FetchType.LAZY,optional=false)

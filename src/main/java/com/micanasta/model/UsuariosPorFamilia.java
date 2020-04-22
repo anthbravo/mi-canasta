@@ -13,11 +13,11 @@ public class UsuariosPorFamilia {
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
     @JoinColumn(name="usuario_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private string dni;
+    private Usuario dni;
 
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
     @JoinColumn(name="familia_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private long idFamilia;
+    private Familia idFamilia;
 
 }

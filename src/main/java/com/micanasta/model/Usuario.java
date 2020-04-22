@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 
     @Id
+    @Column(name = "usuario_id")
     private string dni;
 
     @NotNull

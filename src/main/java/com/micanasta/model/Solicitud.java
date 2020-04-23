@@ -10,9 +10,11 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "solicitudes")
 public class Solicitud {
 
     @OneToOne(fetch = FetchType.LAZY,optional=false)

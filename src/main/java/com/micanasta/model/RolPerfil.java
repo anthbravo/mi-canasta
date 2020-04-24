@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -14,7 +15,14 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "rolesPorPerfil")
 public class RolPerfil {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private string descripcion;
-    private Perfil idPerfil;
+    @NotNull
+    private String descripcion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Perfil perfil;
 }

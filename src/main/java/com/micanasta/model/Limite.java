@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,7 +14,15 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "limites")
 public class Limite {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Categoria idCategoria;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "categoria_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Categoria categoria;
+
+    @NotNull
     private float cantidadXPersona;
 }

@@ -3,7 +3,7 @@ package com.micanasta.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.data;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -15,19 +15,18 @@ public class Usuario {
 
     @Id
     @Column(name = "usuario_id")
-    private string dni;
+    private String dni;
 
     @NotNull
-    private string nombre;
+    private String nombre;
     @NotNull
-    private string apellidoPat;
+    private String apellidoPat;
     @NotNull
-    private string apellidoMat;
+    private String apellidoMat;
     @NotNull
-    private string contrasena;
+    private String contrasena;
     @NotNull
-    private string correoElectronico;
+    private String correoElectronico;
 
-    }
 }
 

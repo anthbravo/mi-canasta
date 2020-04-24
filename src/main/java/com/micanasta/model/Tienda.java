@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-@data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,20 +18,21 @@ public class Tienda {
 
     @Id
     @Column(name = "tienda_id")
-    private long idTienda;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @NotNull
-    private string descripcion;
+    private String descripcion;
 
     @NotNull
-    private string direccion;
+    private String direccion;
 
     @NotNull
-    private string latitud;
+    private String latitud;
 
     @NotNull
-    private string longitud;
+    private String longitud;
 
     @NotNull
-    private string horario;
+    private String horario;
 }

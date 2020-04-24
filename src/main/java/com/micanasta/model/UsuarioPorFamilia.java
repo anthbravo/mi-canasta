@@ -18,11 +18,11 @@ public class UsuarioPorFamilia {
     @ManyToOne(fetch= FetchType.LAZY,optional=false)
     @JoinColumn(name="usuario_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Usuario dni;
+    private Usuario usuario;
 
     @ManyToOne(fetch=FetchType.LAZY,optional=false)
     @JoinColumn(name="familia_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Familia idFamilia;
+    private Familia familia;
 
 }

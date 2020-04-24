@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,12 +19,11 @@ import javax.validation.constraints.NotNull;
 public class Familia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "familia_id")
-    private long idFamilia;
+    private long id;
 
     @NotNull
     @Column(unique = true)
-    private string nombreUnico;
+    private String nombreUnico;
 
     private boolean aceptacionSolicitudes = true;
 

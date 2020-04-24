@@ -14,6 +14,13 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "usuariosPorTienda")
 public class UsuariosPorTienda {
-    private Usuario dni;
-    private Tienda idTienda;
+    @ManyToOne(fetch= FetchType.LAZY,optional=false)
+    @JoinColumn(name="usuario_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Usuario usuario;
+
+    @ManyToOne(fetch= FetchType.LAZY,optional=false)
+    @JoinColumn(name="tienda_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Tienda tienda;
 }

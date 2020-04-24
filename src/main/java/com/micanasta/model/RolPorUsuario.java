@@ -14,6 +14,12 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "rolesPorUsuario")
 public class RolPorUsuario {
-    private Usuario dni;
-    private RolPerfil idRolPerfil;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "usuario_dni",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Usuario usuario;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "rolPerfil_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private RolPerfil rolPerfil;
 }

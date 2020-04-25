@@ -16,15 +16,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "stock")
 public class Stock {
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "producto_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Producto producto;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tienda_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Tienda tienda;
+   @EmbeddedId
+   private StockIdentity stockIdentity;
 
     @NotNull
     private float cantidad;

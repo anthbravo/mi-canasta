@@ -15,14 +15,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "usuariosPorFamilia")
 public class UsuarioPorFamilia {
 
-    @ManyToOne(fetch= FetchType.LAZY,optional=false)
-    @JoinColumn(name="usuario_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Usuario usuario;
-
-    @ManyToOne(fetch=FetchType.LAZY,optional=false)
-    @JoinColumn(name="familia_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Familia familia;
+    @EmbeddedId
+    private UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity;
 
 }

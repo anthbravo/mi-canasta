@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import net.bytebuddy.description.type.TypeList;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.util.Date;
@@ -16,20 +17,9 @@ import java.util.Date;
 @Entity
 @Table(name = "historiales")
 public class Historial {
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name = "familia_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Familia familia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tienda_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Tienda tienda;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="producto_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Producto producto;
+    @EmbeddedId
+    private HistorialIdentity historialIdentity;
 
     @NotNull
     private float cantidad;

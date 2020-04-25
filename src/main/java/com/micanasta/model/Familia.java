@@ -1,4 +1,5 @@
 package com.micanasta.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="familias")
 public class Familia {
+
     @Id
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

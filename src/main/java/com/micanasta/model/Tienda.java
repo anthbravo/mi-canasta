@@ -17,7 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Tienda {
 
     @Id
-    @Column(name = "tienda_id")
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

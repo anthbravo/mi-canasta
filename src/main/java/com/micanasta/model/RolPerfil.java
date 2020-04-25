@@ -16,13 +16,15 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "rolesPorPerfil")
 public class RolPerfil {
     @Id
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotNull
     private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "perfil_id",nullable = false)
+    @JoinColumn(name = "perfil_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Perfil perfil;
 }

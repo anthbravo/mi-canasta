@@ -9,17 +9,16 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "limites")
+@Table(name = "Limites")
 public class Limite {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "categoria_id",nullable = false)
+    @JoinColumn (name = "categoria_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Categoria categoria;
 

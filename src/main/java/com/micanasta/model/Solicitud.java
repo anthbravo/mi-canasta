@@ -17,15 +17,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "solicitudes")
 public class Solicitud {
 
-    @OneToOne(fetch = FetchType.LAZY,optional=false)
-    @JoinColumn(name = "usuario_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Usuario usuario;
-
-    @ManyToOne(fetch=FetchType.LAZY,optional=false)
-    @JoinColumn(name="familia_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Familia familia;
-
-
+    @EmbeddedId
+    private SolicitudIdentity solicitudIdentity;
 }

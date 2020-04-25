@@ -14,7 +14,9 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "productos")
 public class Producto {
+
     @Id
+    @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -25,7 +27,7 @@ public class Producto {
     private float cantidadUnit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id",nullable = false)
+    @JoinColumn(name = "categoria_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Categoria categoria;
 

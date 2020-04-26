@@ -3,11 +3,6 @@ package com.micanasta.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="familias")
+@Table(name = "familias")
 public class Familia {
 
     @Id

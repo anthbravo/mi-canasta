@@ -1,16 +1,13 @@
 package com.micanasta.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
-public class UsuarioPorTiendaIdentity implements Serializable{
+public class UsuarioPorTiendaIdentity implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")

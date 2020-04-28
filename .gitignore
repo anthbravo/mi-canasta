@@ -32,5 +32,6 @@ build/
 
 ## Build projects ##
 node_installation/
-src/main/resources/static/
+src/main/resources/
+!src/main/resources/application.properties
 !src/main/resources/static/landing/

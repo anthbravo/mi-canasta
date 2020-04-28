@@ -33,3 +33,4 @@ build/
 ## Build projects ##
 node_installation/
 src/main/resources/static/
+!src/main/resources/static/landing/

@@ -12,17 +12,18 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "familias")
+
 public class Familia {
 
     @Id
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
+    private Long id;
     @NotNull
     @Column(unique = true)
-    private String nombreUnico;
 
+    private String nombreUnico;
     private boolean aceptacionSolicitudes = true;
 
     @NotNull

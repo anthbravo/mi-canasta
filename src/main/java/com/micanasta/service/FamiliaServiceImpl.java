@@ -33,13 +33,10 @@ public class FamiliaServiceImpl implements FamiliaService {
         familia.setCantidad(1);
         familia = familiaRepository.save(familia);
 
-        Usuario usuario = new Usuario();
-        RolPerfil rolPerfil = new RolPerfil();
-
         UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(),familia.getId());
-        RolPorUsuario rolPorUsuario = asignarRolPorUsuario(usuario.getDni(), rolPerfil.getId());
+        RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
         usuarioPorFamiliaRepository.save(usuarioPorFamilia);
-        //rolPorUsuarioRepository.save(rolPorUsuario);
+        rolPorUsuarioRepository.save(rolPorUsuario);
 
         return familia;
 
@@ -61,14 +58,8 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     private RolPorUsuario asignarRolPorUsuario(String dni, Long id) {
 
-        Perfil perfil = new Perfil();
-        perfil.setId(id); // 1--> Administrador, 2--> Miembro
-        perfil.setDescripcion("Administrador"); // olv
-
         RolPerfil rolPerfil = new RolPerfil();
         rolPerfil.setId(id); // 1--> UsuarioPorFamilia, 2--> UsuarioPorTienda
-        rolPerfil.setDescripcion("Usuario por Familia");
-        rolPerfil.setPerfil(perfil);
 
         Usuario usuario = new Usuario();
         usuario.setDni(dni);
@@ -84,3 +75,4 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     }
 }
+

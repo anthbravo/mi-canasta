@@ -8,6 +8,5 @@ import lombok.Setter;
 public class CrearFamiliaDTO {
 
     private String nombreUnico;
-    private boolean aceptacionSolicitudes;
-    private int cantidad;
+    private String dni;
 }

@@ -3,11 +3,9 @@ package com.micanasta.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,9 +21,39 @@ public class Familia {
     @NotNull (message = "No puede dejar campos vacíos")
     @Column(unique = true)
     private String nombreUnico;
-    private boolean aceptacionSolicitudes = true;
+    private boolean aceptacionSolicitudes;
 
-    @NotNull (message = "No puede dejar campos vacíos")
     private int cantidad;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombreUnico() {
+        return nombreUnico;
+    }
+
+    public void setNombreUnico(String nombreUnico) {
+        this.nombreUnico = nombreUnico;
+    }
+
+    public boolean isAceptacionSolicitudes() {
+        return aceptacionSolicitudes;
+    }
+
+    public void setAceptacionSolicitudes(boolean aceptacionSolicitudes) {
+        this.aceptacionSolicitudes = aceptacionSolicitudes;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 }

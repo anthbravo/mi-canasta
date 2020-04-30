@@ -21,4 +21,20 @@ public class RolPorUsuarioIdentity implements Serializable{
     @JoinColumn(name = "rolPerfil_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private RolPerfil rolPerfil;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public RolPerfil getRolPerfil() {
+        return rolPerfil;
+    }
+
+    public void setRolPerfil(RolPerfil rolPerfil) {
+        this.rolPerfil = rolPerfil;
+    }
 }

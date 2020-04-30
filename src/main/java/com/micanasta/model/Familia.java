@@ -18,15 +18,14 @@ public class Familia {
     @Id
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    @NotNull
-    @Column(unique = true)
 
+    @NotNull (message = "No puede dejar campos vacíos")
+    @Column(unique = true)
     private String nombreUnico;
     private boolean aceptacionSolicitudes = true;
 
-    @NotNull
+    @NotNull (message = "No puede dejar campos vacíos")
     private int cantidad;
 
 }

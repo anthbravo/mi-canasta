@@ -16,21 +16,6 @@ import java.util.stream.Collectors;
 public class FamiliaServiceImpl implements FamiliaService {
 
     @Autowired
-    FamiliaRepository familiaRepository;
-
-    @Override
-    public List<Familia> getAll() {
-
-        return familiaRepository.findAll();
-    }
-
-}
-
-
-/*@Service
-public class FamiliaServiceImpl implements FamiliaService {
-
-    @Autowired
     private FamiliaRepository familiaRepository;
 
     @Autowired
@@ -43,7 +28,7 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public List<FamiliaDTO> findAll() {
+    public List<FamiliaDTO> getAll() {
         List<FamiliaDTO> familiasDTO=familiaRepository.findAll().stream().map(familiaDTOConverter::convertToDto)
                 .collect(Collectors.toList());
         return familiasDTO;
@@ -55,12 +40,9 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     /*@Override
-    public List<FamiliaDTO> findAll() {
-        return null;
+    public List<FamiliaDTO> getAll(String nombreUnico) {
+        List<FamiliaDTO> familiasDTO=familiaRepository.findAll().stream().map(familiaDTOConverter::convertToDto)
+                .collect(Collectors.toList());
+        return familiasDTO;
     }*/
-
-    /*@Override
-    public void deleteById(Long id) {
-        familiaRepository.deleteById(id);
-    }
-}*/
+}

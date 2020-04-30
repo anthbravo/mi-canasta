@@ -28,8 +28,8 @@ public class FamiliaDTOConverter {
     }
 
     //mapAutomatic
-    public FamiliaDTO convertToDto(Familia product) {
-        return modelMapper.map(product, FamiliaDTO.class);
+    public FamiliaDTO convertToDto(Familia familia) {
+        return modelMapper.map(familia, FamiliaDTO.class);
 
     }
 

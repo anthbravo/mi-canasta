@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
 @Embeddable
 public class SolicitudIdentity implements Serializable{
 
@@ -19,3 +20,4 @@ public class SolicitudIdentity implements Serializable{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Familia familia;
 }
+

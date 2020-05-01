@@ -5,6 +5,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SolicitudDto {
-    private String nombreFamilia;
+    private long familiaId;
     private String dni;
 }

@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name ="usuarios")
 public class Usuario {
-
     @Id
     @Column(unique = true)
     private String dni;
@@ -35,6 +34,8 @@ public class Usuario {
 
     @NotNull
     private String correoElectronico;
+
+
 
 }
 

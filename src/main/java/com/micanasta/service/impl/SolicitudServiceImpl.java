@@ -2,7 +2,8 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
-import com.micanasta.model.*;
+import com.micanasta.model.Solicitud;
+import com.micanasta.model.SolicitudIdentity;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioRepository;
@@ -32,39 +33,26 @@ public class SolicitudServiceImpl implements SolicitudService {
         Solicitud solicitud = solicitudDtoConverter.convertToEntity(solicitudDto);
         SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
 
-        solicitudIdentity.setFamilia(asignarFamilia(solicitudDto.getNombreFamilia()));
-        solicitudIdentity.setUsuario(asignarUsuario(solicitudDto.getDni()));
+        if (familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()) != null) {
+            solicitudIdentity.setFamilia(familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()));
+            solicitudIdentity.setUsuario(usuarioRepository.findByDni(solicitudDto.getDni()));
 
-        solicitud.setSolicitudIdentity(solicitudIdentity);
+            solicitud.setSolicitudIdentity(solicitudIdentity);
 
-        solicitud = solicitudRepository.save(solicitud);
-        return solicitud;
+            if (aceptaSolicitudes(solicitudDto) == true) {
+                solicitud = solicitudRepository.save(solicitud);
+            }
+            return solicitud;
+
+        }
+        return null;
     }
 
-    private Familia asignarFamilia (String nombreFamilia){
-        Familia familia1=new Familia();
-        Familia familia2 =
-                familiaRepository.findByNombreUnico(nombreFamilia);
+    public boolean aceptaSolicitudes(CrearSolicitudDto solicitudDto) {
+        if (familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()).isAceptacionSolicitudes() == true)
+            return true;
+        else return false;
 
-        familia1.setId(familia2.getId());
-        familia1.setNombreUnico(familia2.getNombreUnico());
-        familia1.setAceptacionSolicitudes(true);
-
-        return familia1;
-    }
-
-    private Usuario asignarUsuario (String dni){
-        Usuario usuario1= new Usuario();
-        Usuario usuario2 =
-                usuarioRepository.findByDni(dni);
-        usuario1.setApellidoMat(usuario2.getApellidoMat());
-        usuario1.setApellidoPat(usuario2.getApellidoPat());
-        usuario1.setContrasena(usuario2.getContrasena());
-        usuario1.setCorreoElectronico(usuario2.getCorreoElectronico());
-        usuario1.setDni(usuario2.getDni());
-        usuario1.setNombre(usuario2.getNombre());
-
-        return usuario1;
     }
 
 }

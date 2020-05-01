@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-public class RolPorUsuarioIdentity implements Serializable{
+public class RolPorUsuarioIdentity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")

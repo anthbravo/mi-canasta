@@ -11,10 +11,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Embeddable
-public class SolicitudIdentity implements Serializable{
+public class SolicitudIdentity implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "usuario_id")
+    @JoinColumn(name = "usuario_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 

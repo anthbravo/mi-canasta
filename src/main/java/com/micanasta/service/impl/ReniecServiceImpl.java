@@ -1,29 +1,34 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.ImportarUsuarioReniecDTO;
+import com.micanasta.dto.UsuarioReniecDto;
 import com.micanasta.model.Usuario;
+import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.ReniecService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
-@Service
 @Component
 public class ReniecServiceImpl implements ReniecService {
 
-    @Transactional(readOnly = true)
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
+
     @Override
-    public Usuario findByDni(String dni) {
+    public UsuarioReniecDto validarIdentidad(String dni) {
+        UsuarioReniecDto usuarioReniecDto;
         RestTemplate restTemplate = new RestTemplate();
         final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";
         Map<String, String> params = new HashMap<String, String>();
         params.put("dni", dni);
-        return restTemplate.getForObject(uri,Usuario.class,params);
+        usuarioReniecDto = restTemplate.getForObject(uri, UsuarioReniecDto.class, params);
+        return usuarioReniecDto;
     }
 }

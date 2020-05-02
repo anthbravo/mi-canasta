@@ -22,7 +22,7 @@ public class ReniecServiceImpl implements ReniecService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public UsuarioReniecDto validarIdentidad(String dni) {
+    public UsuarioReniecDto validateIdentity(String dni) {
         UsuarioReniecDto usuarioReniecDto;
         RestTemplate restTemplate = new RestTemplate();
         final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";

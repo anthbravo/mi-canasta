@@ -5,5 +5,5 @@ import com.micanasta.model.Usuario;
 
 public interface ReniecService {
 
-    UsuarioReniecDto validarIdentidad(String dni);
+    UsuarioReniecDto validateIdentity(String dni);
 }

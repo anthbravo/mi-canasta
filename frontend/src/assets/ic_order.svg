@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.199" height="24.214" viewBox="0 0 19.199 24.214">
+  <g id="ic_order" transform="translate(-53.023)">
+    <g id="Grupo_21" data-name="Grupo 21" transform="translate(53.023 4.777)">
+      <g id="Grupo_20" data-name="Grupo 20">
+        <path id="Trazado_94" data-name="Trazado 94" d="M72.211,116.2,71.13,102.57A1.7,1.7,0,0,0,69.439,101H67.3v3.165a.709.709,0,0,1-1.418,0V101H59.361v3.165a.709.709,0,0,1-1.418,0V101H55.807a1.7,1.7,0,0,0-1.69,1.563L53.035,116.2a3.943,3.943,0,0,0,3.931,4.245H68.28a3.943,3.943,0,0,0,3.931-4.246Zm-6.393-6.939-3.668,3.668a.709.709,0,0,1-1,0l-1.719-1.719a.709.709,0,0,1,1-1l1.218,1.217,3.167-3.167a.709.709,0,1,1,1,1Z" transform="translate(-53.023 -101.005)" fill="#52e9aa"/>
+      </g>
+    </g>
+    <g id="Grupo_23" data-name="Grupo 23" transform="translate(57.943)">
+      <g id="Grupo_22" data-name="Grupo 22">
+        <path id="Trazado_95" data-name="Trazado 95" d="M161.719,0a4.686,4.686,0,0,0-4.68,4.681v.1h1.418v-.1a3.262,3.262,0,1,1,6.524,0v.1H166.4v-.1A4.686,4.686,0,0,0,161.719,0Z" transform="translate(-157.039)" fill="#52e9aa"/>
+      </g>
+    </g>
+  </g>
+</svg>

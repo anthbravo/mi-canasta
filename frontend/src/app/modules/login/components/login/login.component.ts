@@ -10,6 +10,10 @@ import { User } from 'src/app/core/model/user.model';
 export class LoginComponent implements OnInit {
   user: User;
 
+
+  isShowConfirmationModal =  false;
+  isShowErrorModal =  false;
+  isShowWarningModal =  false;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -17,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   enter() {
+    console.log("qweqwe");
     console.log(`${this.user.dni} - ${this.user.password}`);
     this.userService.createUser(this.user).subscribe(
       (user: User) => {
@@ -27,4 +32,27 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  openErrorModal(){
+    this.isShowErrorModal = true;
+  }
+
+  closeErrorModal(){
+    this.isShowErrorModal =  false;
+  }
+
+
+  openModalConfirmation(){
+    this.isShowConfirmationModal =  true;
+  }
+  confirmado(){
+    console.log("Confirmado")
+    this.isShowConfirmationModal =  false;
+  }
+
+  noConfirmado(){
+    console.log("No confirmado")
+    this.isShowConfirmationModal =  false;
+  }
+
 }

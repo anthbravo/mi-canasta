@@ -25,7 +25,4 @@ public class Familia {
 
     private boolean aceptacionSolicitudes = true;
 
-    @NotNull
-    private int cantidad;
-
 }

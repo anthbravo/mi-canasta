@@ -1,7 +1,6 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.UsuarioReniecDto;
-import com.micanasta.model.Usuario;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.ReniecService;
 import org.modelmapper.ModelMapper;
@@ -23,17 +22,17 @@ public class ReniecServiceImpl implements ReniecService {
 
     @Override
     public UsuarioReniecDto validateIdentity(String dni) {
-            UsuarioReniecDto usuarioReniecDto;
-            RestTemplate restTemplate = new RestTemplate();
-            final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("dni", dni);
-            usuarioReniecDto = restTemplate.getForObject(uri, UsuarioReniecDto.class, params);
-            if(usuarioReniecDto==null)
-                usuarioReniecDto = new UsuarioReniecDto();
-                usuarioReniecDto.dni = "NotExist";
-            return usuarioReniecDto;
-
+        UsuarioReniecDto usuarioReniecDto;
+        RestTemplate restTemplate = new RestTemplate();
+        final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("dni", dni);
+        usuarioReniecDto = restTemplate.getForObject(uri, UsuarioReniecDto.class, params);
+        if (usuarioReniecDto == null) {
+            usuarioReniecDto = new UsuarioReniecDto();
+            usuarioReniecDto.dni = "NotExist";
+        }
+        return usuarioReniecDto;
 
 
     }

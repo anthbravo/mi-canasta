@@ -12,11 +12,11 @@
 
     <div class="field-container margin">
       <label class="label-shared-component">Contraseña</label>
-      <input class="input-shared-component" type="password" [(ngModel)]="user.password" />
+      <input class="input-shared-component" type="password" [(ngModel)]="user.contrasena" />
     </div>
 
-    <app-button-shared class="login-container__button" [text]="'Texto'" [type]="'large'" [bgColor]="'red'"
-      [loading]="false" (event)="enter()"></app-button-shared>
-    <app-warning-modal *ngIf="isShowErrorModal" [description]="'Hubo un error u.u'" (closeEvent)="closeErrorModal()">
-    </app-warning-modal>
+    <app-button-shared class="login-container__button" [text]="'Ingresar'" [type]="'large'" [bgColor]="'red'"
+      [loading]="loadingLoginButton" (event)="enter()"></app-button-shared>
+    <app-error-modal *ngIf="isShowErrorModal" title="Credenciales inválidas" [description]="'El DNI o password ingresado es incorrecto'" (closeEvent)="closeErrorModal()">
+    </app-error-modal>
   </div>

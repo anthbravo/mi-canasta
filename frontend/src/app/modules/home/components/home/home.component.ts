@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     try {
       const res = await this.familiaService.crearFamilia({
         aceptaSolicitudes: true,
-        dni: '12345674',
+        dni: localStorage.getItem("dni"),
         familiaNombre: this.grupoFamiliar,
       });
     } catch (error) {

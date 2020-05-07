@@ -23,12 +23,18 @@ public class ReniecServiceImpl implements ReniecService {
 
     @Override
     public UsuarioReniecDto validateIdentity(String dni) {
-        UsuarioReniecDto usuarioReniecDto;
-        RestTemplate restTemplate = new RestTemplate();
-        final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("dni", dni);
-        usuarioReniecDto = restTemplate.getForObject(uri, UsuarioReniecDto.class, params);
-        return usuarioReniecDto;
+            UsuarioReniecDto usuarioReniecDto;
+            RestTemplate restTemplate = new RestTemplate();
+            final String uri = "https://reniec-api.herokuapp.com/ciudadanos/{dni}";
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("dni", dni);
+            usuarioReniecDto = restTemplate.getForObject(uri, UsuarioReniecDto.class, params);
+            if(usuarioReniecDto==null)
+                usuarioReniecDto = new UsuarioReniecDto();
+                usuarioReniecDto.dni = "NotExist";
+            return usuarioReniecDto;
+
+
+
     }
 }

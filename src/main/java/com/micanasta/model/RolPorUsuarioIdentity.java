@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-public class RolPorUsuarioIdentity implements Serializable{
+public class RolPorUsuarioIdentity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
@@ -21,4 +21,20 @@ public class RolPorUsuarioIdentity implements Serializable{
     @JoinColumn(name = "rolPerfil_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private RolPerfil rolPerfil;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public RolPerfil getRolPerfil() {
+        return rolPerfil;
+    }
+
+    public void setRolPerfil(RolPerfil rolPerfil) {
+        this.rolPerfil = rolPerfil;
+    }
 }

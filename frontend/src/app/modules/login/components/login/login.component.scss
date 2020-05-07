@@ -1,0 +1,34 @@
+.login-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.login-container__header {
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-container__header img {
+  width: 48px;
+}
+.login-container__header h1 {
+  font-size: 24px;
+  margin: 16px 0 8px 0;
+}
+.login-container__header p {
+  font-size: 14px;
+}
+
+.login-container__form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.login-container__button {
+  margin-top: 24px;
+}

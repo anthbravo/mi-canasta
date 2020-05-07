@@ -1,0 +1,31 @@
+<div class="home-container">
+  <div class="field-container margin">
+    <label class="label-shared-component grupo-familiar-label">Grupo Familiar</label>
+    <input class="input-shared-component" type="text" [(ngModel)]="grupoFamiliar" />
+  </div>
+
+  <div class="home-container__list-button">
+
+    <app-button-shared
+
+      [loading]="loadingCreaFamiliarButton"
+
+    [disable]="grupoFamiliar.length < 1" [text]="'Crear'" [type]="'small'" [bgColor]="'red'"
+      (event)="crearGrupo()"></app-button-shared>
+
+    <app-button-shared [disable]="grupoFamiliar.length < 1" [text]="'Unirse'" [type]="'small'" [bgColor]="'yellow'"
+      (event)="unirseGrupo()">
+    </app-button-shared>
+  </div>
+
+  <app-error-modal
+
+    *ngIf="errorFlagModal"
+    title="Lo sentimos"
+    description="El nombre del grupo  familiar ya existe"
+    (closeEvent)="cerrarModal()"
+
+    >
+
+  </app-error-modal>
+</div>

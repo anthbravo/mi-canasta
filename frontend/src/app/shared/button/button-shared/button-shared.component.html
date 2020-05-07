@@ -1,0 +1,17 @@
+<div>
+
+  <button
+    [disabled]="disable"
+
+  (click)="eventParent()" class="btn-shared-component" [ngClass]="{
+    'large': type==='large',
+    'small': type==='small',
+    'red': bgColor ==='red',
+    'yellow': bgColor==='yellow'
+  }">
+
+    <span *ngIf="!loading">{{text}}</span>
+    <app-loading-button *ngIf="loading"></app-loading-button>
+  </button>
+
+</div>

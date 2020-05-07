@@ -1,9 +1,8 @@
 package com.micanasta.service;
 
-import com.micanasta.model.Solicitud;
+import com.micanasta.Dto.SolicitudBusquedaDto;
 
-import java.util.List;
 
 public interface SolicitudService {
-    public List<Solicitud> getAll();
+    SolicitudBusquedaDto solicitudNombreFamilia(String dni);
 }

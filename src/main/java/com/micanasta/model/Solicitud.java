@@ -8,7 +8,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,4 +17,12 @@ public class Solicitud {
 
     @EmbeddedId
     private SolicitudIdentity solicitudIdentity;
+
+    public SolicitudIdentity getSolicitudIdentity() {
+        return solicitudIdentity;
+    }
+
+    public void setSolicitudIdentity(SolicitudIdentity solicitudIdentity) {
+        this.solicitudIdentity = solicitudIdentity;
+    }
 }

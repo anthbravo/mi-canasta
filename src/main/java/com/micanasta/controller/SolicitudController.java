@@ -1,30 +1,33 @@
 package com.micanasta.controller;
 
+import com.micanasta.Dto.SolicitudBusquedaDto;
 import com.micanasta.model.Solicitud;
 import com.micanasta.service.SolicitudService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/solicitudes")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET })
+@RequiredArgsConstructor
 public class SolicitudController {
 
-    @Autowiredd
+    @Autowired
     SolicitudService solicitudService;
 
-    @GetMapping()
-    public ResponseEntity<List<Solicitud>> getAll() {
+    @GetMapping("/solicitudes")
+    public ResponseEntity<?> BusquedaDni(@Valid @RequestBody String dni){
 
-        List<Solicitud> solicitudes= solicitudService.getAll();
+        SolicitudBusquedaDto result = solicitudService.solicitudNombreFamilia(dni);
 
-        if (solicitudes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.ok(solicitudes);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
 
     }
+
+
+
 }

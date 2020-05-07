@@ -4,5 +4,5 @@ import com.micanasta.model.Familia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FamiliaRepository extends JpaRepository<Familia, Long> {
-    String  findById(long id);
+    Familia findById(long id);
 }

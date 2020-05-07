@@ -25,4 +25,6 @@ public class Solicitud {
     public void setSolicitudIdentity(SolicitudIdentity solicitudIdentity) {
         this.solicitudIdentity = solicitudIdentity;
     }
+
+
 }

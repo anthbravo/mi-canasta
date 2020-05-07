@@ -1,7 +1,6 @@
 package com.micanasta.controller;
 
 import com.micanasta.Dto.SolicitudBusquedaDto;
-import com.micanasta.model.Solicitud;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+i
 
 @RestController
 @RequiredArgsConstructor

@@ -1,6 +1,9 @@
 package com.micanasta.service;
 
+import com.micanasta.Dto.FamiliaDto;
 import com.micanasta.Dto.SolicitudBusquedaDto;
+import com.micanasta.Dto.SolicitudDto;
+import com.micanasta.Dto.converter.FamiliaDtoConverter;
 import com.micanasta.Dto.converter.SolicitudDtoConverter;
 import com.micanasta.model.Familia;
 import com.micanasta.model.Solicitud;
@@ -22,23 +25,31 @@ public class SolicitudServiceImpl implements SolicitudService{
     private FamiliaRepository familiaRepository;
     @Autowired
     private SolicitudDtoConverter solicitudDtoConverter;
+    @Autowired
+    private FamiliaDtoConverter familiaDtoConverter;
 
     public SolicitudBusquedaDto solicitudNombreFamilia(String dni){
 
-        //Solicitud solicitud = solicitudDtoConverter.convertToEntity();
+
         SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
         SolicitudBusquedaDto solicitudBusquedaDto = new SolicitudBusquedaDto();
+        Solicitud solicitud = new Solicitud();
+        Familia familia = new Familia();
 
-        long dniFamilia = solicitudRepository.findByDni(dni);
-        String nombreFamilia= familiaRepository.findById(dniFamilia);
+        solicitud = solicitudRepository.findByDni(dni);
 
-        solicitudBusquedaDto.setDni(dni);
-        solicitudBusquedaDto.setNombreUnico(nombreFamilia);
+        if(solicitud != null) {
 
-        return solicitudBusquedaDto;
+            SolicitudDto solicitudDto = solicitudDtoConverter.convertToDto(solicitud);
+            familia = familiaRepository.findById(solicitudDto.getFamiliaId());
+            FamiliaDto familiaDto = familiaDtoConverter.convertToDto(familia);
+            solicitudBusquedaDto.setDni(dni);
+            solicitudBusquedaDto.setNombreUnico(familiaDto.getNombreUnico());
 
 
-
+            return solicitudBusquedaDto;
+        }
+        return null;
 
 
     }

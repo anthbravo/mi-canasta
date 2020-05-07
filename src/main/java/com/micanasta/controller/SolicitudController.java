@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-i
 
 @RestController
 @RequiredArgsConstructor
@@ -18,15 +17,15 @@ public class SolicitudController {
     @Autowired
     SolicitudService solicitudService;
 
-    @GetMapping("/solicitudes")
-    public ResponseEntity<?> BusquedaDni(@Valid @RequestBody String dni){
+    @GetMapping("/solicitudes/{dni}")
+    public ResponseEntity<?> obtenerSolicitud(@PathVariable("dni") String dni) {
 
-        SolicitudBusquedaDto result = solicitudService.solicitudNombreFamilia(dni);
+        SolicitudBusquedaDto solicitudBusquedaDto = solicitudService.solicitudPorDni(dni);
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(solicitudBusquedaDto != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                .body(solicitudBusquedaDto);
 
     }
-
 
 
 }

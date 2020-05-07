@@ -1,23 +1,9 @@
 package com.micanasta.Dto;
 
+import lombok.Data;
+
+@Data
 public class SolicitudBusquedaDto {
-
-    public String Dni;
-    public String NombreUnico;
-
-    public String getDni() {
-        return Dni;
-    }
-
-    public void setDni(String dni) {
-        Dni = dni;
-    }
-
-    public String getNombreUnico() {
-        return NombreUnico;
-    }
-
-    public void setNombreUnico(String nombreUnico) {
-        NombreUnico = nombreUnico;
-    }
+    public String dni;
+    public String nombreFamilia;
 }

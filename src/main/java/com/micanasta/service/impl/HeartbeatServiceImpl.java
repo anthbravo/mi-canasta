@@ -1,7 +1,8 @@
-package com.micanasta.service;
+package com.micanasta.service.impl;
 
 import java.util.List;
 
+import com.micanasta.service.HeartbeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

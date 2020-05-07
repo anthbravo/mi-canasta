@@ -13,18 +13,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "solicitudes")
+@Data
 public class Solicitud {
 
     @EmbeddedId
     private SolicitudIdentity solicitudIdentity;
-
-    public SolicitudIdentity getSolicitudIdentity() {
-        return solicitudIdentity;
-    }
-
-    public void setSolicitudIdentity(SolicitudIdentity solicitudIdentity) {
-        this.solicitudIdentity = solicitudIdentity;
-    }
-
 
 }

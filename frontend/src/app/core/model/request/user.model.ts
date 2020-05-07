@@ -1,5 +1,5 @@
 export class User {
   dni: string;
-  password: string;
+  contrasena: string;
   nombre?: string;
 }

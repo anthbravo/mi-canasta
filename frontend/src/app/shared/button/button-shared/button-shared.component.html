@@ -1,6 +1,9 @@
 <div>
 
-  <button (click)="eventParent()" class="btn-shared-component" [ngClass]="{
+  <button
+    [disabled]="disable"
+
+  (click)="eventParent()" class="btn-shared-component" [ngClass]="{
     'large': type==='large',
     'small': type==='small',
     'red': bgColor ==='red',

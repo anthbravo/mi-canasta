@@ -54,3 +54,7 @@
     border-radius: 4px;
 }
 
+button:disabled{
+  opacity: .3;
+  cursor: not-allowed;
+}

@@ -1,26 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { FamiliaService } from 'src/app/core/service/familia.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  grupoFamiliar = '';
 
-  constructor() { }
+  errorFlagModal = false;
 
-  grupoFamiliar =  ''
+  isGrupoFamiliarText = false;
 
-  ngOnInit(): void {
+  loadingCreaFamiliarButton = false;
+
+  constructor(private familiaService: FamiliaService) {}
+
+  ngOnInit(): void {}
+
+  async crearGrupo() {
+    this.loadingCreaFamiliarButton = true;
+    try {
+      const res = await this.familiaService.crearFamilia({
+        aceptaSolicitudes: true,
+        dni: localStorage.getItem("dni"),
+        familiaNombre: this.grupoFamiliar,
+      });
+    } catch (error) {
+      console.log(error);
+      this.loadingCreaFamiliarButton = false;
+      this.errorFlagModal = true;
+    }
   }
 
-  crearGrupo(){
-    console.log("Creando grupo")
+  unirseGrupo() {
+    console.log('Unirse grupo');
   }
 
-  unirseGrupo(){
-    console.log("Unirse grupo")
+  cerrarModal() {
+    this.errorFlagModal = false;
   }
-
 }

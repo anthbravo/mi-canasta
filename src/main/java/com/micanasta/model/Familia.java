@@ -7,22 +7,59 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "familias")
+
 public class Familia {
 
     @Id
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @NotNull
+    @NotNull(message = "No puede dejar campos vacíos")
     @Column(unique = true)
     private String nombreUnico;
+    private boolean aceptacionSolicitudes;
 
-    private boolean aceptacionSolicitudes = true;
+
+    private int cantidad;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombreUnico(String nombre_unico) {
+        return nombreUnico;
+    }
+
+    public void setNombreUnico(String nombreUnico) {
+        this.nombreUnico = nombreUnico;
+    }
+
+    public boolean isAceptacionSolicitudes() {
+        return aceptacionSolicitudes;
+    }
+
+    public void setAceptacionSolicitudes(boolean aceptacionSolicitudes) {
+        this.aceptacionSolicitudes = aceptacionSolicitudes;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    //private boolean aceptacionSolicitudes = true;
+
 
 }

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -56,16 +55,16 @@ public class Usuario {
         return apellidoPaterno;
     }
 
-    public void setApellidoPaterno(String apellidoPat) {
-        this.apellidoPaterno = apellidoPat;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
 
-    public void setApellidoMaterno(String apellidoMat) {
-        this.apellidoMaterno = apellidoMat;
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getContrasena() {
@@ -84,4 +83,3 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
     }
 }
-

@@ -8,7 +8,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,4 +16,12 @@ public class RolPorUsuario {
 
     @EmbeddedId
     private RolPorUsuarioIdentity rolPorUsuarioIdentity;
+
+    public RolPorUsuarioIdentity getRolPorUsuarioIdentity() {
+        return rolPorUsuarioIdentity;
+    }
+
+    public void setRolPorUsuarioIdentity(RolPorUsuarioIdentity rolPorUsuarioIdentity) {
+        this.rolPorUsuarioIdentity = rolPorUsuarioIdentity;
+    }
 }

@@ -1,8 +1,13 @@
 package com.micanasta.repository;
 
 import com.micanasta.model.UsuarioPorFamilia;
-import com.micanasta.model.UsuarioPorFamiliaIdentity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioPorFamiliaRepository extends JpaRepository<UsuarioPorFamilia, UsuarioPorFamiliaIdentity> {
+import java.util.List;
+import java.util.Optional;
+
+public interface UsuarioPorFamiliaRepository extends JpaRepository<UsuarioPorFamilia, Long> {
+
+    Optional<List<UsuarioPorFamilia>> findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(String nombreFamilia);
+
 }

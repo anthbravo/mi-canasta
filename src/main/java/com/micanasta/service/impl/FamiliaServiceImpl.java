@@ -1,14 +1,22 @@
-package com.micanasta.service;
+package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
 import com.micanasta.repository.UsuarioPorFamiliaRepository;
+import com.micanasta.service.FamiliaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,6 +47,32 @@ public class FamiliaServiceImpl implements FamiliaService {
         usuarioPorFamiliaRepository.save(usuarioPorFamilia);
         rolPorUsuarioRepository.save(rolPorUsuario);
         return familia;
+    }
+
+    @Override
+    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) {
+        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
+
+        Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia);
+
+        if (miembrosGrupoFamiliarPorFamilia.isPresent() && miembrosGrupoFamiliarPorFamilia.get().size() > 0) {
+
+            familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream()
+                    .map((miembro) -> {
+                        FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
+                        familiaBusquedaMiembrosDto.setDni(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getDni());
+                        familiaBusquedaMiembrosDto.setNombre(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getNombre());
+                        familiaBusquedaMiembrosDto.setApellidoPaterno(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoPaterno());
+                        familiaBusquedaMiembrosDto.setApellidoMaterno(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoMaterno());
+
+                        return familiaBusquedaMiembrosDto;
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            familiaBusquedaMiembrosDtos = null;
+        }
+
+        return familiaBusquedaMiembrosDtos;
     }
 
     private UsuarioPorFamilia generarUsuarioPorFamilia(String dni, Long id) {

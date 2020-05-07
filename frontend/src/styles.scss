@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  outline: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+}
+*[color-rojo]{
+  color: #F76A8C;
+}
+*[color-verde]{
+  color: #CCF0E1;
+}
+
+*[color-amarillo]{
+  color : #F8FAB8;
+}
+
+.field-container{
+  display: flex;
+  flex-direction: column;
+  margin: 12px 0;
+
+}
+.label-shared-component {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7A7A7A;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.input-shared-component{
+  width: 264px;
+    border: none;
+    background: #FAFAFA;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 16px;
+    border-radius: 4px;
+}
+

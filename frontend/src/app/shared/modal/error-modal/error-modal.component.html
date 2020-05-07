@@ -1,0 +1,12 @@
+<div class="container-modal-error">
+  <div class="card">
+      <h2>{{title}}</h2>
+      <p>{{description}}</p>
+      <app-button-shared
+          [text]="'Cerrar'"
+          [type]="'small'"
+          [bgColor]="'red'"
+           (event)="closeModal()"
+      ></app-button-shared>
+  </div>
+</div>

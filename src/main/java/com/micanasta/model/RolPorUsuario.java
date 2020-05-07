@@ -15,6 +15,6 @@ import javax.persistence.Table;
 @Table(name = "rolesPorUsuario")
 public class RolPorUsuario {
 
-   @EmbeddedId
+    @EmbeddedId
     private RolPorUsuarioIdentity rolPorUsuarioIdentity;
 }

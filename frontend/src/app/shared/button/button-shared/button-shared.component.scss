@@ -1,0 +1,26 @@
+.btn-shared-component{
+  border-radius: 6px;
+  border: none;
+  color: #ffffff;
+  padding: 12px 32px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.large{
+  width: 224px;
+
+}
+.small{
+  width: fit-content;
+}
+.red{
+  background: #FF5A82;
+}
+.yellow{
+  background: #F8DC88;
+}

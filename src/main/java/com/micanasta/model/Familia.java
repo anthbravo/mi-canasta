@@ -24,6 +24,7 @@ public class Familia {
     private String nombreUnico;
     private boolean aceptacionSolicitudes;
 
+
     private int cantidad;
 
     public Long getId() {
@@ -57,4 +58,8 @@ public class Familia {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    private boolean aceptacionSolicitudes = true;
+
+
 }

@@ -17,4 +17,5 @@ public class Solicitud {
 
     @EmbeddedId
     private SolicitudIdentity solicitudIdentity;
+
 }

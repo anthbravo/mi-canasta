@@ -1,0 +1,23 @@
+<div class="container-modal-confirmation">
+  <div class="card">
+      <h2>{{title}}</h2>
+      <p>{{description}}</p>
+
+      <div class="list-button">
+
+      <app-button-shared
+          [text]="'Si'"
+          [type]="'small'"
+          [bgColor]="'red'"
+           (event)="yes()"
+      ></app-button-shared>
+      <app-button-shared
+      class="no-button"
+          [text]="'No'"
+          [type]="'small'"
+           (event)="no()"
+      ></app-button-shared>
+      </div>
+
+  </div>
+</div>

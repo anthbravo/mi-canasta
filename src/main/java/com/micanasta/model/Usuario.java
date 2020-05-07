@@ -13,9 +13,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="usuarios")
+@Table(name = "usuarios")
 public class Usuario {
-
     @Id
     @Column(unique = true)
     private String dni;
@@ -82,5 +81,6 @@ public class Usuario {
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
     }
+
 }
 

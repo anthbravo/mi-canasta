@@ -20,6 +20,8 @@ export class ButtonSharedComponent implements OnInit {
   @Input()
   loading:boolean
 
+  @Input()
+  disable?:boolean
 
   @Output()
   event =  new EventEmitter<any>();

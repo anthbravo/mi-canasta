@@ -1,11 +1,11 @@
 package com.micanasta.service;
 
-import java.util.List;
-
 import com.micanasta.model.Heartbeat;
+
+import java.util.List;
 
 public interface HeartbeatService {
 
-	public List<Heartbeat> getAll();
+    public List<Heartbeat> getAll();
 
 }

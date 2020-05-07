@@ -21,3 +21,4 @@ public class SolicitudIdentity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Familia familia;
 }
+

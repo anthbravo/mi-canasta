@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "stock")
 public class Stock {
 
-   @EmbeddedId
-   private StockIdentity stockIdentity;
+    @EmbeddedId
+    private StockIdentity stockIdentity;
 
     @NotNull
     private float cantidad;

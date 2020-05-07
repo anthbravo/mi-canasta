@@ -1,1 +1,44 @@
-<p>footer works!</p>
+<div class="footer-container">
+  <div class="footer-container__list">
+    <li>
+      <img
+        class="footer-container__list__noselected"
+                  [ngClass]="{'active': 1 == activedIndex}"
+
+        (click)="onSelecteFooterIcon(1)"
+        src="assets/ic_location.svg"
+        alt=""
+      />
+    </li>
+    <li>
+      <img
+        class="footer-container__list__noselected"
+                  [ngClass]="{'active': 2 == activedIndex}"
+
+        (click)="onSelecteFooterIcon(2)"
+        src="assets/ic_team.svg"
+        alt=""
+      />
+    </li>
+    <li>
+      <img
+        class="footer-container__list__noselected"
+                  [ngClass]="{'active': 3 == activedIndex}"
+
+        (click)="onSelecteFooterIcon(3)"
+        src="assets/ic_order.svg"
+        alt=""
+      />
+    </li>
+    <li>
+      <img
+        class="footer-container__list__noselected"
+                  [ngClass]="{'active': 4 == activedIndex}"
+
+        (click)="onSelecteFooterIcon(4)"
+        src="assets/ic_profile.svg"
+        alt=""
+      />
+    </li>
+  </div>
+</div>

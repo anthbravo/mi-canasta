@@ -17,11 +17,11 @@ public class UsuarioController {
     @PostMapping("usuarios")
     public ResponseEntity<?> ValidarIngreso(@RequestBody UsuarioLoginDto usuarioLoginDto) {
         UsuarioAccesoDto usuarioAccesoDto = usuarioService.ValidateLogin(usuarioLoginDto.dni, usuarioLoginDto.contrasena);
-        if (usuarioAccesoDto.dni == null) {
-            return ResponseEntity.status(401).build();
+        if (usuarioAccesoDto.dni == "NotFound") {
+            return ResponseEntity.status(401).body(usuarioAccesoDto);
         }
         if (usuarioAccesoDto.dni == "NotExist") {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(usuarioAccesoDto);
         } else {
             return ResponseEntity.ok().body(usuarioAccesoDto);
         }

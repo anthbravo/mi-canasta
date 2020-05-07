@@ -48,6 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         UsuarioDto usuarioDto = findByDni(dni);
         if (usuarioDto.dni == null) {
             UsuarioReniecDto resultIdentity = reniecService.validateIdentity(dni);
+
             if (resultIdentity.dni == "NotExist") {
                 UsuarioDto usuarioDto1 = new UsuarioDto();
                 usuarioDto1.dni = "NotExist";
@@ -59,7 +60,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuarioDto.contrasena.equals(contrasena)) {
             return modelMapper.map(usuarioDto, UsuarioAccesoDto.class);
         }
-        return new UsuarioAccesoDto();
+        UsuarioAccesoDto usuarioAccesoDto = new UsuarioAccesoDto();
+        usuarioAccesoDto.dni = "NotFound";
+        return usuarioAccesoDto;
 
     }
 }

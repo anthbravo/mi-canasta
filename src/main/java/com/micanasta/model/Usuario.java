@@ -51,36 +51,20 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellidoPat() {
-        return apellidoPat;
-    }
-
-    public void setApellidoPat(String apellidoPat) {
-        this.apellidoPat = apellidoPat;
-    }
-
-    public String getApellidoMat() {
-        return apellidoMat;
-    }
-
-    public void setApellidoMat(String apellidoMat) {
-        this.apellidoMat = apellidoMat;
-
     public String getApellidoPaterno() {
         return apellidoPaterno;
     }
 
-    public void setApellidoPaterno(String apellidoPat) {
-        this.apellidoPaterno = apellidoPat;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
 
-    public void setApellidoMaterno(String apellidoMat) {
-        this.apellidoMaterno = apellidoMat;
-
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getContrasena() {
@@ -99,4 +83,3 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
     }
 }
-

@@ -1,14 +1,12 @@
 package com.micanasta.controller;
 
-import com.micanasta.Dto.SolicitudBusquedaDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor

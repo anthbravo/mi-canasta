@@ -1,6 +1,6 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.Dto.SolicitudBusquedaDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.model.Solicitud;
 import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.service.SolicitudService;

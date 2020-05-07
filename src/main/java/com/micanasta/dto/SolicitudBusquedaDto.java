@@ -1,4 +1,4 @@
-package com.micanasta.Dto;
+package com.micanasta.dto;
 
 import lombok.Data;
 

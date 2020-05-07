@@ -1,6 +1,6 @@
 package com.micanasta.service;
 
-import com.micanasta.Dto.SolicitudBusquedaDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
 
 
 public interface SolicitudService {

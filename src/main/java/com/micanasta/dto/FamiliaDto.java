@@ -1,4 +1,4 @@
-package com.micanasta.Dto;
+package com.micanasta.dto;
 
 public class FamiliaDto {
 

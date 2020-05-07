@@ -59,7 +59,7 @@ public class Familia {
         this.cantidad = cantidad;
     }
 
-    private boolean aceptacionSolicitudes = true;
+    //private boolean aceptacionSolicitudes = true;
 
 
 }

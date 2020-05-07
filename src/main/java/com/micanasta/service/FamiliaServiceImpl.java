@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 public class FamiliaServiceImpl implements FamiliaService {
 
@@ -33,16 +34,14 @@ public class FamiliaServiceImpl implements FamiliaService {
         familia.setCantidad(1);
         familia = familiaRepository.save(familia);
 
-        UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(),familia.getId());
+        UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(), familia.getId());
         RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
         usuarioPorFamiliaRepository.save(usuarioPorFamilia);
         rolPorUsuarioRepository.save(rolPorUsuario);
-
         return familia;
-
     }
 
-    private UsuarioPorFamilia generarUsuarioPorFamilia(String dni, Long id ){
+    private UsuarioPorFamilia generarUsuarioPorFamilia(String dni, Long id) {
         UsuarioPorFamilia usuarioPorFamilia = new UsuarioPorFamilia();
         UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity = new UsuarioPorFamiliaIdentity();
         Familia familia = new Familia();

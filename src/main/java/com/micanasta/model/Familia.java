@@ -3,6 +3,7 @@ package com.micanasta.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +19,7 @@ public class Familia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull (message = "No puede dejar campos vacíos")
+    @NotNull(message = "No puede dejar campos vacíos")
     @Column(unique = true)
     private String nombreUnico;
     private boolean aceptacionSolicitudes;
@@ -33,7 +34,7 @@ public class Familia {
         this.id = id;
     }
 
-    public String getNombreUnico() {
+    public String getNombreUnico(String nombre_unico) {
         return nombreUnico;
     }
 

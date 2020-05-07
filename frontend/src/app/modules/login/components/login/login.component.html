@@ -1,4 +1,36 @@
-<input type="text" [(ngModel)]="user.dni" />
-<input type="password" [(ngModel)]="user.password" />
+<div class="login-container">
+    <div class="login-container__header">
+      <img src="assets/ic_logo.svg" alt="Mi canasta" />
+      <h1 color-rojo>Mi Canasta</h1>
+      <p>Administra tus recursos</p>
+    </div>
+    <div class="login-container__form-container">
+      <div class="field-container margin">
+        <label class="label-shared-component">Dni</label>
+        <input class="input-shared-component" type="text" [(ngModel)]="user.dni" />
+      </div>
 
-<button (click)="enter()">Login</button>
+      <div class="field-container margin">
+        <label class="label-shared-component">Contraseña</label>
+        <input
+          class="input-shared-component"
+          type="password"
+          [(ngModel)]="user.password"
+        />
+      </div>
+
+  <app-button-shared
+  class="login-container__button"
+
+  [text]="'Texto'"
+  [type]="'large'"
+  [bgColor]="'red'"
+  [loading]="false"
+  (event)="enter()"
+  ></app-button-shared>
+  <app-warning-modal
+    *ngIf="isShowErrorModal"
+    [description]="'Hubo un error u.u'"
+    (closeEvent)="closeErrorModal()"
+  ></app-warning-modal>
+</div>

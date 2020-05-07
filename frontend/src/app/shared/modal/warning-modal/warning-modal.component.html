@@ -1,0 +1,13 @@
+<div class="container-modal-warning">
+  <div class="card">
+      <img src="assets/ic_warning.svg" alt="">
+      <p>{{description}}</p>
+    <app-button-shared
+        class="button"
+        [text]="'Entendido'"
+        [type]="'large'"
+        [bgColor]="'yellow'"
+        (event)="closeModal()"
+    ></app-button-shared>
+  </div>
+</div>

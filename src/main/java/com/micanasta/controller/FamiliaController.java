@@ -40,4 +40,5 @@ public class FamiliaController {
                     .body(familyNotFoundException.exceptionDto);
         }
     }
+
 }

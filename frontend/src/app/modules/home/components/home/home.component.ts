@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { FamiliaService } from 'src/app/core/service/familia.service';
+import {Component, OnInit} from '@angular/core';
+import {FamiliaService} from 'src/app/core/service/familia.service';
 
 @Component({
   selector: 'app-home',

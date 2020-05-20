@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HomeService } from 'src/app/core/service/home.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {HomeService} from 'src/app/core/service/home.service';
 
 @Component({
   selector: 'app-layout',

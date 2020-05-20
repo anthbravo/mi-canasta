@@ -2,7 +2,8 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
-import com.micanasta.model.Solicitud;
+import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,15 @@ public class SolicitudController {
     private SolicitudService solicitudService;
 
     @PostMapping("/solicitudes")
-    public ResponseEntity<?> createSolicitud(@Valid @RequestBody CrearSolicitudDto solicitudDto) {
+    public ResponseEntity<?> createSolicitud(@Valid @RequestBody CrearSolicitudDto solicitudDto) throws FamilyNotAceptedSolicitudeException, FamilyNotFoundException {
 
-        Solicitud result = solicitudService.create(solicitudDto);
-
-        if (result != null) {
-            if (solicitudService.aceptaSolicitudes(solicitudDto) == false) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El grupo familiar no acepta solicitudes");
-            } else return ResponseEntity.status(HttpStatus.OK).body(result);
-        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El grupo familiar no existe");
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(solicitudService.create(solicitudDto));
+        } catch (FamilyNotFoundException familyNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
+        } catch (FamilyNotAceptedSolicitudeException familyNotAceptedSolicitudeException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotAceptedSolicitudeException.exceptionDto);
+        }
     }
 
     @GetMapping("/solicitudes/{dni}")

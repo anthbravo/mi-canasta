@@ -1,6 +1,4 @@
 package com.micanasta.controller;
-import java.util.List;
-
 
 import com.micanasta.model.Heartbeat;
 import com.micanasta.service.HeartbeatService;
@@ -29,5 +27,5 @@ public class HeartbeatController {
             return ResponseEntity.ok(heartbeats);
         }
 
-	}
+    }
 }

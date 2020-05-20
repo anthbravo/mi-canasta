@@ -1,5 +1,5 @@
 package com.micanasta.service.impl;
-import com.micanasta.dto.ExceptionDto;
+
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
@@ -37,14 +37,12 @@ public class SolicitudServiceImpl implements SolicitudService {
         Solicitud solicitud = null;
 
 
-        if(familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()) == null){
+        if (familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()) == null) {
             throw new FamilyNotFoundException();
-        }
-        else{
-            if(aceptaSolicitudes(solicitudDto) == false) {
+        } else {
+            if (aceptaSolicitudes(solicitudDto) == false) {
                 throw new FamilyNotAceptedSolicitudeException();
-            }
-            else{
+            } else {
                 solicitud = solicitudDtoConverter.convertToEntity(solicitudDto);
                 SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
                 solicitudIdentity.setFamilia(familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()));

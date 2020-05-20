@@ -17,7 +17,7 @@ public class FamiliaDTOConverter {
 
     //mapExplicitly
     @PostConstruct
-    public void init(){
+    public void init() {
         modelMapper.addMappings(new PropertyMap<Familia, FamiliaDTO>() {
 
             @Override

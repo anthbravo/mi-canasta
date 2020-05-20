@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UsuarioLoginDto {
-        public String dni;
-        public String contrasena;
+    public String dni;
+    public String contrasena;
 }

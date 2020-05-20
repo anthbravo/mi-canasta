@@ -2,7 +2,6 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

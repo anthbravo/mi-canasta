@@ -2,7 +2,7 @@ package com.micanasta.exception;
 
 import com.micanasta.dto.ExceptionDto;
 
-public class FamilyNotAceptedSolicitudeException extends Exception{
+public class FamilyNotAceptedSolicitudeException extends Exception {
     public ExceptionDto exceptionDto;
 
     public FamilyNotAceptedSolicitudeException() {

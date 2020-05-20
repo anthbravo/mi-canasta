@@ -4,7 +4,6 @@ import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
-import com.micanasta.model.Solicitud;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,9 @@ public class SolicitudController {
 
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(solicitudService.create(solicitudDto));
-        }
-        catch (FamilyNotFoundException familyNotFoundException) {
+        } catch (FamilyNotFoundException familyNotFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
-        }
-        catch (FamilyNotAceptedSolicitudeException familyNotAceptedSolicitudeException) {
+        } catch (FamilyNotAceptedSolicitudeException familyNotAceptedSolicitudeException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotAceptedSolicitudeException.exceptionDto);
         }
     }

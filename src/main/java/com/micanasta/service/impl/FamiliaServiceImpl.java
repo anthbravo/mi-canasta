@@ -3,6 +3,7 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
@@ -48,13 +49,15 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) {
-        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
+    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) throws FamilyNotFoundException {
+
+        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos = null;
 
         Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia);
 
-        if (miembrosGrupoFamiliarPorFamilia.isPresent() && miembrosGrupoFamiliarPorFamilia.get().size() > 0) {
-
+        if (!miembrosGrupoFamiliarPorFamilia.isPresent()) {
+            throw new FamilyNotFoundException();
+        } else {
             familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream()
                     .map((miembro) -> {
                         FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
@@ -66,8 +69,6 @@ public class FamiliaServiceImpl implements FamiliaService {
                         return familiaBusquedaMiembrosDto;
                     })
                     .collect(Collectors.toList());
-        } else {
-            familiaBusquedaMiembrosDtos = null;
         }
 
         return familiaBusquedaMiembrosDtos;

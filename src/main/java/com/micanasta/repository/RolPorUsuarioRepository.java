@@ -4,5 +4,5 @@ import com.micanasta.model.RolPorUsuario;
 import com.micanasta.model.RolPorUsuarioIdentity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RolPorUsuarioRepository extends JpaRepository<RolPorUsuario, RolPorUsuarioIdentity > {
+public interface RolPorUsuarioRepository extends JpaRepository<RolPorUsuario, RolPorUsuarioIdentity> {
 }

@@ -3,8 +3,6 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.UsuarioAccesoDto;
 import com.micanasta.dto.UsuarioDto;
 import com.micanasta.dto.UsuarioReniecDto;
-import com.micanasta.exception.UserLoginIncorrectException;
-import com.micanasta.exception.UserLoginNotFoundException;
 import com.micanasta.model.Usuario;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.UsuarioService;
@@ -45,22 +43,27 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
-    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) throws UserLoginIncorrectException, UserLoginNotFoundException {
+    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) {
         ReniecServiceImpl reniecService = new ReniecServiceImpl();
         UsuarioDto usuarioDto = findByDni(dni);
         if (usuarioDto.dni == null) {
             UsuarioReniecDto resultIdentity = reniecService.validateIdentity(dni);
+
             if (resultIdentity.dni == "NotExist") {
-                throw new UserLoginIncorrectException();
+                UsuarioDto usuarioDto1 = new UsuarioDto();
+                usuarioDto1.dni = "NotExist";
+                return modelMapper.map(usuarioDto1, UsuarioAccesoDto.class);
             }
             Object result = save(resultIdentity);
             return modelMapper.map(result, UsuarioAccesoDto.class);
         }
         if (usuarioDto.contrasena.equals(contrasena)) {
             return modelMapper.map(usuarioDto, UsuarioAccesoDto.class);
-        } else {
-            throw new UserLoginNotFoundException();
         }
+        UsuarioAccesoDto usuarioAccesoDto = new UsuarioAccesoDto();
+        usuarioAccesoDto.dni = "NotFound";
+        return usuarioAccesoDto;
+
     }
 }
 //

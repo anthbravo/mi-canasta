@@ -83,15 +83,13 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) throws FamilyNotFoundException {
-
-        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos = null;
+    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) {
+        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
 
         Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia);
 
-        if (!miembrosGrupoFamiliarPorFamilia.isPresent()) {
-            throw new FamilyNotFoundException();
-        } else {
+        if (miembrosGrupoFamiliarPorFamilia.isPresent() && miembrosGrupoFamiliarPorFamilia.get().size() > 0) {
+
             familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream()
                     .map((miembro) -> {
                         FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
@@ -103,6 +101,8 @@ public class FamiliaServiceImpl implements FamiliaService {
                         return familiaBusquedaMiembrosDto;
                     })
                     .collect(Collectors.toList());
+        } else {
+            familiaBusquedaMiembrosDtos = null;
         }
 
         return familiaBusquedaMiembrosDtos;

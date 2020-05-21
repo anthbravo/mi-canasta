@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
 
     Optional<Solicitud> findBySolicitudIdentityUsuarioDni(String dni);
-
 }

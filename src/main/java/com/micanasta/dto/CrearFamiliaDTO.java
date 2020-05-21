@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CrearFamiliaDTO {
 
-    private String nombreUnico;
-    private String dni;
+    public String nombreUnico;
+    public String dni;
+
 }

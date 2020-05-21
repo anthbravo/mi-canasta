@@ -11,4 +11,5 @@ public class FamiliaDTO {
     private String nombreUnico;
     private boolean aceptacionSolicitudes;
     private int cantidad;
+
 }

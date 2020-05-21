@@ -11,6 +11,6 @@ public class SolicitudeNotFoundException extends Throwable {
 
     public SolicitudeNotFoundException() {
         exceptionDto = new ExceptionDto("SolicitudeNotFoundException",
-                "No hay solicitud enviada");
+                "No se encuentra la solicitud");
     }
 }

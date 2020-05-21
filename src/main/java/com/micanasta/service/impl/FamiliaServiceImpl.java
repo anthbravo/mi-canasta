@@ -56,19 +56,8 @@ public class FamiliaServiceImpl implements FamiliaService {
             rolPorUsuarioRepository.save(rolPorUsuario);
 
             return familia;
-
-            UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(), familia.getId());
-            RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
-            usuarioPorFamiliaRepository.save(usuarioPorFamilia);
-            rolPorUsuarioRepository.save(rolPorUsuario);
-
-            return familia;
         }
     }
-
-    @Override
-    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) {
-        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
 
     public Familia desactivarSolicitudes(String nombreFamilia, String dni) throws FamilyNotFoundException {
         Familia nombreFam;

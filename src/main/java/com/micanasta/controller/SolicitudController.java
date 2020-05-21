@@ -4,6 +4,7 @@ import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,14 @@ public class SolicitudController {
                 .body(solicitudBusquedaDto);
 
     }
+
+    @DeleteMapping("/solicitudes/{dni}")
+    public ResponseEntity<?> cancelarSolicitud(@PathVariable("dni") String dni) throws SolicitudeNotFoundException{
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(solicitudService.cancelarSolicitud(dni));
+        } catch (SolicitudeNotFoundException solicitudeNotFoundException){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
+        }
+    }
+
 }

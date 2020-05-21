@@ -3,7 +3,9 @@ package com.micanasta.controller;
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.Familia;
+import com.micanasta.model.UsuarioPorFamilia;
 import com.micanasta.service.FamiliaService;
+import com.micanasta.service.UsuarioPorFamiliaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class FamiliaController {
 
     @Autowired
     private FamiliaService familiaService;
+
+    @Autowired
+    private UsuarioPorFamiliaService usuarioPorFamiliaService;
 
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {
@@ -39,6 +44,11 @@ public class FamiliaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT)
                     .body(familyNotFoundException.exceptionDto);
         }
+    }
+
+    @DeleteMapping("/familias/{nombreFamilia}/usuarios/dni")
+    public ResponseEntity<?> deleteUsuarioDeFamilia(String AdminDni, @PathVariable String dni ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(AdminDni, dni));
     }
 
 }

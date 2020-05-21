@@ -104,6 +104,7 @@ public class FamiliaServiceImpl implements FamiliaService {
         rolPorUsuario.setRolPorUsuarioIdentity(rolPorUsuarioIdentity);
 
         return rolPorUsuario;
+
     }
 }
 

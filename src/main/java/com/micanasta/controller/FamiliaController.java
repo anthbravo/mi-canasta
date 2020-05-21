@@ -4,8 +4,8 @@ import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.exception.FamilyNotFoundException;
-import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
+import com.micanasta.service.FamiliaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,4 +52,10 @@ public class FamiliaController {
         return ResponseEntity.status(HttpStatus.OK).body("Se desactivó realizar solicitudes y se eliminaron las existentes");
     }
 
+        List<FamiliaBusquedaMiembrosDto> miembrosGrupoFamiliarPorFamilia = familiaService.buscarMiembrosGrupoFamiliarPorNombreFamilia(nombreFamilia);
+
+        return ResponseEntity.status(miembrosGrupoFamiliarPorFamilia != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                .body(miembrosGrupoFamiliarPorFamilia);
+
+    }
 }

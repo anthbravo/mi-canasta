@@ -1,7 +1,10 @@
 package com.micanasta.service.impl;
 
+import com.micanasta.dto.UsuarioDto;
 import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
+import com.micanasta.exception.UserNotAdminException;
+import com.micanasta.exception.UserToDeleteIsAdminException;
 import com.micanasta.model.Familia;
 import com.micanasta.model.Usuario;
 import com.micanasta.model.UsuarioPorFamilia;
@@ -33,23 +36,33 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
 
     @Transactional
     @Override
-    public UsuarioPorFamiliaDto Remove(String adminDni, String userDni) {
+    public UsuarioPorFamiliaDto Remove(String adminDni, String userDni) throws UserNotAdminException, UserToDeleteIsAdminException {
 
-        Optional<UsuarioPorFamilia> usuarioPorFamilia =
-                usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
+        UsuarioPorFamiliaDto usuarioPorFamiliaDto=null;
 
-        UsuarioPorFamilia usuario =new UsuarioPorFamilia();
-        UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
+        if(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId()!=1)
+            throw new UserNotAdminException();
+        else{
+            if(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId()==1)
+                throw new UserToDeleteIsAdminException();
+            else{
+                UsuarioPorFamilia usuario=new UsuarioPorFamilia();
+                Optional<UsuarioPorFamilia> usuarioPorFamilia =
+                        usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
 
-        usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
-        usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
+                UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
 
-        usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+                usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
+                usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
+                usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
 
-        usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
-        rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-        usuario.getUsuarioPorFamiliaIdentity().getUsuario().setDni(userDni);
+                usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
 
-        return usuarioPorFamiliaDtoConverter.convertToDto(usuario);
+                usuarioPorFamiliaDto = usuarioPorFamiliaDtoConverter.convertToDto(usuario);
+                usuarioPorFamiliaDto.setDni(userDni);
+            }
+        }
+        return usuarioPorFamiliaDto;
     }
 }

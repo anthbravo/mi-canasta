@@ -2,6 +2,8 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.UserNotAdminException;
+import com.micanasta.exception.UserToDeleteIsAdminException;
 import com.micanasta.model.Familia;
 import com.micanasta.model.UsuarioPorFamilia;
 import com.micanasta.service.FamiliaService;
@@ -47,8 +49,16 @@ public class FamiliaController {
     }
 
     @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
-    public ResponseEntity<?> deleteUsuarioDeFamilia(String adminDni, @PathVariable String dni ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(adminDni, dni));
+    public ResponseEntity<?> deleteUsuarioDeFamilia(String adminDni, @PathVariable String dni ) throws UserToDeleteIsAdminException, UserNotAdminException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(adminDni, dni));
+        }
+        catch(UserNotAdminException userNotAdminException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        }
+        catch(UserToDeleteIsAdminException userToDeleteIsAdminException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
+        }
     }
 
 }

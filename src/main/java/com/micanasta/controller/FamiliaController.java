@@ -1,7 +1,7 @@
 package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
-import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,12 +30,14 @@ public class FamiliaController {
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")
-    public ResponseEntity<?> buscarMiembrosGrupoFamiliarPorNombreFamilia(@PathVariable("nombreFamilia") String nombreFamilia) {
+    public ResponseEntity<?> buscarMiembrosGrupoFamiliarPorNombreFamilia(@PathVariable("nombreFamilia") String nombreFamilia) throws FamilyNotFoundException {
 
-        List<FamiliaBusquedaMiembrosDto> miembrosGrupoFamiliarPorFamilia = familiaService.buscarMiembrosGrupoFamiliarPorNombreFamilia(nombreFamilia);
-
-        return ResponseEntity.status(miembrosGrupoFamiliarPorFamilia != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
-                .body(miembrosGrupoFamiliarPorFamilia);
-
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(familiaService.buscarMiembrosGrupoFamiliarPorNombreFamilia(nombreFamilia));
+        } catch (FamilyNotFoundException familyNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(familyNotFoundException.exceptionDto);
+        }
     }
 }

@@ -13,6 +13,6 @@ public interface UsuarioPorFamiliaRepository extends JpaRepository<UsuarioPorFam
     Optional<List<UsuarioPorFamilia>> findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(String nombreFamilia);
     Optional<UsuarioPorFamilia> findByUsuarioPorFamiliaIdentityUsuarioDni(String dni);
 
-    Optional<UsuarioPorFamilia> deleteByUsuarioPorFamiliaIdentityUsuarioDni(String dni);
+    void deleteByUsuarioPorFamiliaIdentityUsuarioDni(String dni);
 
 }

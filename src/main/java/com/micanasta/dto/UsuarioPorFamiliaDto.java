@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UsuarioPorFamiliaDto {
-    private String Dni;
-    private Long familiaId;
+    private String dni;
+    private long familiaId;
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface RolPorUsuarioRepository extends JpaRepository<RolPorUsuario, RolPorUsuarioIdentity> {
 
-    Optional<RolPorUsuario> deleteByRolPorUsuarioIdentityUsuarioDni(String dni);
+    void deleteByRolPorUsuarioIdentityUsuarioDni(String dni);
 }

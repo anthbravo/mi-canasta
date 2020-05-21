@@ -46,9 +46,9 @@ public class FamiliaController {
         }
     }
 
-    @DeleteMapping("/familias/{nombreFamilia}/usuarios/dni")
-    public ResponseEntity<?> deleteUsuarioDeFamilia(String AdminDni, @PathVariable String dni ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(AdminDni, dni));
+    @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> deleteUsuarioDeFamilia(String adminDni, @PathVariable String dni ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(adminDni, dni));
     }
 
 }

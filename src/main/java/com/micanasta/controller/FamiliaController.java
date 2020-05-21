@@ -5,6 +5,7 @@ import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.service.FamiliaService;
+import com.micanasta.model.Familia;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class FamiliaController {
 
     @Autowired
     private FamiliaService familiaService;
+
 
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {

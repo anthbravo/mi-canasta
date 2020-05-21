@@ -2,6 +2,7 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,11 @@ public class FamiliaController {
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {
         try {
-            Familia result = familiaService.crearGrupoFamiliar(familiaDto);
-        } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya existe el grupo familiar :(");
+             familiaService.crearGrupoFamiliar(familiaDto);
+        } catch (ExistingFamilyFoundException existingFamilyFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Se ha creado el grupo familiar :)");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Se ha creado el grupo familiar");
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")

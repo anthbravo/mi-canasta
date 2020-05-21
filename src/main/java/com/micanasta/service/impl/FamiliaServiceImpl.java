@@ -3,6 +3,7 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
+import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
@@ -34,17 +35,22 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Override
     @Transactional
-    public Familia crearGrupoFamiliar(CrearFamiliaDTO familiaDTO) {
-        Familia familia = familiaDTOConverter.convertToEntity(familiaDTO);
-        familia.setAceptacionSolicitudes(true);
-        familia.setCantidad(1);
-        familia = familiaRepository.save(familia);
+    public Familia crearGrupoFamiliar(CrearFamiliaDTO familiaDTO) throws ExistingFamilyFoundException {
+        if (familiaRepository.findByNombreUnico(familiaDTO.getNombreUnico()) != null) {
+            throw new ExistingFamilyFoundException();
+        } else {
+            Familia familia = familiaDTOConverter.convertToEntity(familiaDTO);
+            familia.setAceptacionSolicitudes(true);
+            familia.setCantidad(1);
+            familia = familiaRepository.save(familia);
 
-        UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(), familia.getId());
-        RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
-        usuarioPorFamiliaRepository.save(usuarioPorFamilia);
-        rolPorUsuarioRepository.save(rolPorUsuario);
-        return familia;
+            UsuarioPorFamilia usuarioPorFamilia = generarUsuarioPorFamilia(familiaDTO.getDni(), familia.getId());
+            RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
+            usuarioPorFamiliaRepository.save(usuarioPorFamilia);
+            rolPorUsuarioRepository.save(rolPorUsuario);
+
+            return familia;
+        }
     }
 
     @Override

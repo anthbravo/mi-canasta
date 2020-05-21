@@ -4,6 +4,7 @@ import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +52,4 @@ public class FamiliaController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("Se desactivó realizar solicitudes y se eliminaron las existentes");
     }
-
 }

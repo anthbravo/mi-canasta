@@ -4,7 +4,6 @@ import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
-import com.micanasta.service.FamiliaService;
 import com.micanasta.service.SolicitudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ import javax.validation.Valid;
 public class SolicitudController {
     @Autowired
     private SolicitudService solicitudService;
-
-    @Autowired
-    private FamiliaService familiaService;
 
     @PostMapping("/solicitudes")
     public ResponseEntity<?> createSolicitud(@Valid @RequestBody CrearSolicitudDto solicitudDto) throws FamilyNotAceptedSolicitudeException, FamilyNotFoundException {
@@ -44,5 +40,4 @@ public class SolicitudController {
                 .body(solicitudBusquedaDto);
 
     }
-
 }

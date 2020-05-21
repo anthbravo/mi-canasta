@@ -45,12 +45,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
-    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) throws UserLoginIncorrectException,UserLoginNotFoundException {
+    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) throws UserLoginIncorrectException, UserLoginNotFoundException {
         ReniecServiceImpl reniecService = new ReniecServiceImpl();
         UsuarioDto usuarioDto = findByDni(dni);
         if (usuarioDto.dni == null) {
             UsuarioReniecDto resultIdentity = reniecService.validateIdentity(dni);
-
             if (resultIdentity.dni == "NotExist") {
                 throw new UserLoginIncorrectException();
             }
@@ -58,13 +57,10 @@ public class UsuarioServiceImpl implements UsuarioService {
             return modelMapper.map(result, UsuarioAccesoDto.class);
         }
         if (usuarioDto.contrasena.equals(contrasena)) {
-
-                throw new UserLoginNotFoundException();
-        } else {
             return modelMapper.map(usuarioDto, UsuarioAccesoDto.class);
+        } else {
+            throw new UserLoginNotFoundException();
         }
-
-
     }
 }
 //

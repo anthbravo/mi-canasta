@@ -3,7 +3,7 @@ package com.micanasta.controller;
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.exception.ExistingFamilyFoundException;
-import com.micanasta.model.Familia;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.service.FamiliaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,9 @@ public class FamiliaController {
     @Autowired
     private FamiliaService familiaService;
 
+    @Autowired
+    private UsuarioPorFamiliaService usuarioPorFamiliaService;
+
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {
         try {
@@ -32,12 +35,28 @@ public class FamiliaController {
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")
-    public ResponseEntity<?> buscarMiembrosGrupoFamiliarPorNombreFamilia(@PathVariable("nombreFamilia") String nombreFamilia) {
+    public ResponseEntity<?> buscarMiembrosGrupoFamiliarPorNombreFamilia(@PathVariable("nombreFamilia") String nombreFamilia) throws FamilyNotFoundException {
 
-        List<FamiliaBusquedaMiembrosDto> miembrosGrupoFamiliarPorFamilia = familiaService.buscarMiembrosGrupoFamiliarPorNombreFamilia(nombreFamilia);
-
-        return ResponseEntity.status(miembrosGrupoFamiliarPorFamilia != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
-                .body(miembrosGrupoFamiliarPorFamilia);
-
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(familiaService.buscarMiembrosGrupoFamiliarPorNombreFamilia(nombreFamilia));
+        } catch (FamilyNotFoundException familyNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(familyNotFoundException.exceptionDto);
+        }
     }
+
+    @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> deleteUsuarioDeFamilia(String adminDni, @PathVariable String dni ) throws UserToDeleteIsAdminException, UserNotAdminException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioPorFamiliaService.Remove(adminDni, dni));
+        }
+        catch(UserNotAdminException userNotAdminException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        }
+        catch(UserToDeleteIsAdminException userToDeleteIsAdminException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
+        }
+    }
+
 }

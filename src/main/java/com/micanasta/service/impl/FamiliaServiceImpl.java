@@ -4,14 +4,17 @@ import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
+import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioPorFamiliaRepository;
 import com.micanasta.service.FamiliaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.micanasta.model.Solicitud;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,13 +57,15 @@ public class FamiliaServiceImpl implements FamiliaService {
     }
 
     @Override
-    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) {
-        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
+    public List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia) throws FamilyNotFoundException {
+
+        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos = null;
 
         Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia);
 
-        if (miembrosGrupoFamiliarPorFamilia.isPresent() && miembrosGrupoFamiliarPorFamilia.get().size() > 0) {
-
+        if (!miembrosGrupoFamiliarPorFamilia.isPresent()) {
+            throw new FamilyNotFoundException();
+        } else {
             familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream()
                     .map((miembro) -> {
                         FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
@@ -72,8 +77,6 @@ public class FamiliaServiceImpl implements FamiliaService {
                         return familiaBusquedaMiembrosDto;
                     })
                     .collect(Collectors.toList());
-        } else {
-            familiaBusquedaMiembrosDtos = null;
         }
 
         return familiaBusquedaMiembrosDtos;

@@ -4,9 +4,11 @@ import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
+import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioPorFamiliaRepository;
 import com.micanasta.service.FamiliaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class FamiliaServiceImpl implements FamiliaService {
     @Autowired
     private RolPorUsuarioRepository rolPorUsuarioRepository;
 
+    @Autowired
+    private SolicitudRepository solicitudRepository;
+
     @Override
     @Transactional
     public Familia crearGrupoFamiliar(CrearFamiliaDTO familiaDTO) throws ExistingFamilyFoundException {
@@ -49,6 +54,29 @@ public class FamiliaServiceImpl implements FamiliaService {
             usuarioPorFamiliaRepository.save(usuarioPorFamilia);
             rolPorUsuarioRepository.save(rolPorUsuario);
 
+            return familia;
+        }
+    }
+
+    public Familia desactivarSolicitudes(String nombreFamilia, String dni) throws FamilyNotFoundException {
+        Familia nombreFam;
+        nombreFam = familiaRepository.findByNombreUnico(nombreFamilia);
+
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+
+        if (nombreFam == null){
+            throw new FamilyNotFoundException();
+        } else {
+            Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
+            familia.setNombreUnico(nombreFamilia);
+            familia.setAceptacionSolicitudes(false);
+            familiaRepository.save(familia);
+
+            solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+            if (solicitud.isPresent()){
+                Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
+                solicitudRepository.delete(solicitudes);
+            }
             return familia;
         }
     }

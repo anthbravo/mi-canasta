@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface UsuarioPorFamiliaRepository extends JpaRepository<UsuarioPorFamilia, Long> {
 
     Optional<List<UsuarioPorFamilia>> findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(String nombreFamilia);
-
+    Optional<UsuarioPorFamilia> findByUsuarioPorFamiliaIdentityUsuarioDni(String dni);
+    void deleteByUsuarioPorFamiliaIdentityUsuarioDni(String dni);
 }

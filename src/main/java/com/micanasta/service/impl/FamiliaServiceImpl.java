@@ -2,9 +2,13 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
+import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
 import com.micanasta.exception.ExistingFamilyFoundException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.UserNotAdminException;
+import com.micanasta.exception.UserToDeleteIsAdminException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
@@ -31,6 +35,9 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Autowired
     private UsuarioPorFamiliaRepository usuarioPorFamiliaRepository;
+
+    @Autowired
+    private UsuarioPorFamiliaDtoConverter usuarioPorFamiliaDtoConverter;
 
     @Autowired
     private RolPorUsuarioRepository rolPorUsuarioRepository;
@@ -138,6 +145,38 @@ public class FamiliaServiceImpl implements FamiliaService {
 
         return rolPorUsuario;
 
+    }
+
+    @Transactional
+    @Override
+    public UsuarioPorFamiliaDto Remove(String adminDni, String userDni) throws UserNotAdminException, UserToDeleteIsAdminException {
+
+        UsuarioPorFamiliaDto usuarioPorFamiliaDto=null;
+
+        if(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId()!=1)
+            throw new UserNotAdminException();
+        else{
+            if(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId()==1)
+                throw new UserToDeleteIsAdminException();
+            else{
+                UsuarioPorFamilia usuario=new UsuarioPorFamilia();
+                Optional<UsuarioPorFamilia> usuarioPorFamilia =
+                        usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
+
+                UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
+
+                usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
+                usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
+                usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+
+                usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
+
+                usuarioPorFamiliaDto = usuarioPorFamiliaDtoConverter.convertToDto(usuario);
+                usuarioPorFamiliaDto.setDni(userDni);
+            }
+        }
+        return usuarioPorFamiliaDto;
     }
 }
 

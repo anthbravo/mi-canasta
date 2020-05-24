@@ -144,6 +144,19 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     }
 
+    UsuarioPorFamilia asignarIdentitys(String userDni){
+        UsuarioPorFamilia usuario = new UsuarioPorFamilia();
+        Optional<UsuarioPorFamilia> usuarioPorFamilia =
+                usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
+
+        UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
+
+        usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
+        usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
+        usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+        return usuario;
+    }
+
     @Transactional
     @Override
     public UsuarioPorFamiliaDto Remove(String adminDni, String userDni) throws UserNotAdminException, UserToDeleteIsAdminException {
@@ -156,15 +169,8 @@ public class FamiliaServiceImpl implements FamiliaService {
             if(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId()==1)
                 throw new UserToDeleteIsAdminException();
             else{
-                UsuarioPorFamilia usuario=new UsuarioPorFamilia();
-                Optional<UsuarioPorFamilia> usuarioPorFamilia =
-                        usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
 
-                UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
-
-                usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
-                usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
-                usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+                UsuarioPorFamilia usuario = asignarIdentitys(userDni);
 
                 usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
                 rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
@@ -212,14 +218,7 @@ public class FamiliaServiceImpl implements FamiliaService {
 
         if (usuarioPorFamiliaRepository.countByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia)==1){
 
-            Optional<UsuarioPorFamilia> usuarioPorFamilia =
-                    usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
-
-            UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
-
-            usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
-            usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
-            usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+            usuario = asignarIdentitys(userDni);
 
             usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
             rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
@@ -233,14 +232,7 @@ public class FamiliaServiceImpl implements FamiliaService {
                 throw new UserOnlyAdminException();
             }
             else{
-                Optional<UsuarioPorFamilia> usuarioPorFamilia =
-                        usuarioPorFamiliaRepository.findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
-
-                UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity=new UsuarioPorFamiliaIdentity();
-
-                usuarioPorFamiliaIdentity.setFamilia(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getFamilia());
-                usuarioPorFamiliaIdentity.setUsuario(usuarioPorFamilia.get().getUsuarioPorFamiliaIdentity().getUsuario());
-                usuario.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
+                usuario = asignarIdentitys(userDni);
 
                 usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
                 rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);

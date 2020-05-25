@@ -2,10 +2,7 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.exception.ExistingFamilyFoundException;
-import com.micanasta.exception.FamilyNotFoundException;
-import com.micanasta.exception.UserNotAdminException;
-import com.micanasta.exception.UserToDeleteIsAdminException;
+import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
@@ -56,16 +53,27 @@ public class FamiliaController {
     }
 
     @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
-    public ResponseEntity<?> deleteUsuarioDeFamilia(String adminDni, @PathVariable String dni ) throws UserToDeleteIsAdminException, UserNotAdminException {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(familiaService.Remove(adminDni, dni));
+    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, String adminDni,
+                                                    @PathVariable String dni )
+            throws UserOnlyAdminException,
+            UserToDeleteIsAdminException,
+            UserNotAdminException {
+        if (adminDni.equals(dni)) {
+            try {
+                return ResponseEntity.status(HttpStatus.OK).body(familiaService.RemoveMyself(nombreFamilia, dni));
+            } catch (UserOnlyAdminException userOnlyAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userOnlyAdminException.exceptionDto);
+            }
         }
-        catch(UserNotAdminException userNotAdminException){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        else {
+            try {
+                return ResponseEntity.status(HttpStatus.OK).body(familiaService.Remove(adminDni, dni));
+            } catch (UserNotAdminException userNotAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+            } catch (UserToDeleteIsAdminException userToDeleteIsAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
+            }
         }
-        catch(UserToDeleteIsAdminException userToDeleteIsAdminException){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
-        }
-    }
 
+    }
 }

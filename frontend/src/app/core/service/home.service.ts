@@ -2,16 +2,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
+  pageStatus = new BehaviorSubject<any>({ isLoginView: true });
 
-  pageStatus =  new BehaviorSubject<any>({isLoginView:true})
+  constructor() {}
 
-  constructor() { }
-
-  setStatus(item:any){
-    this.pageStatus.next(item)
+  setStatus(item: any) {
+    this.pageStatus.next(item);
   }
-
 }

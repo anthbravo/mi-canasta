@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { FamiliasRequest } from '../model/request/familia.model';
+import { Familia, FamiliaCreate } from '../model/familia.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,9 @@ import { FamiliasRequest } from '../model/request/familia.model';
 export class FamiliaService {
   constructor(private httpClient: HttpClient) {}
 
-  async crearFamilia(familiaRequest: FamiliasRequest) {
+  async crearFamilia(familia: FamiliaCreate) {
     return await this.httpClient
-      .post(`${environment.url_api}/familias`, familiaRequest)
+      .post(`${environment.url_api}/familias`, familia)
       .toPromise();
   }
 }

@@ -2,15 +2,19 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
+import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.model.Familia;
 import com.micanasta.model.Solicitud;
 import com.micanasta.model.SolicitudIdentity;
+import com.micanasta.model.Usuario;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.SolicitudService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +30,11 @@ public class SolicitudServiceImpl implements SolicitudService {
     private FamiliaRepository familiaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
-
     @Autowired
     private SolicitudDtoConverter solicitudDtoConverter;
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
+
 
     @Override
     @Transactional
@@ -78,4 +84,20 @@ public class SolicitudServiceImpl implements SolicitudService {
         return solicitudBusquedaDto;
     }
 
+    @Override
+    public boolean borrarSolicitud(SolicitudUsuarioDto solicitudUsuarioDto) {
+        Usuario usuario = usuarioRepository.findByDni(solicitudUsuarioDto.dni);
+        Optional<Familia> optionalFamilia = familiaRepository.findById(solicitudUsuarioDto.familiaId);
+        if(usuario != null && optionalFamilia.isPresent()) {
+            SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
+            solicitudIdentity.setUsuario(usuario);
+            Familia familia = optionalFamilia.get();
+            solicitudIdentity.setFamilia(familia);
+            Solicitud solicitud = new Solicitud();
+            solicitud.setSolicitudIdentity(solicitudIdentity);
+            solicitudRepository.delete(solicitud);
+            return true;
+        }
+        return false;
+    }
 }

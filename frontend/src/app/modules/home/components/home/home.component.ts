@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FamiliaService } from 'src/app/core/service/familia.service';
@@ -16,7 +17,10 @@ export class HomeComponent implements OnInit {
 
   loadingCreaFamiliarButton = false;
 
-  constructor(private familiaService: FamiliaService) {}
+  constructor(
+    private familiaService: FamiliaService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -24,9 +28,8 @@ export class HomeComponent implements OnInit {
     this.loadingCreaFamiliarButton = true;
     try {
       const res = await this.familiaService.crearFamilia({
-        aceptaSolicitudes: true,
-        dni: localStorage.getItem("dni"),
-        familiaNombre: this.grupoFamiliar,
+        dni: this.authService.getUsuarioAutenticacion().dni,
+        nombreUnico: this.grupoFamiliar,
       });
     } catch (error) {
       console.log(error);

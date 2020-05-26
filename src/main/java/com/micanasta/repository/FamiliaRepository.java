@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface FamiliaRepository extends JpaRepository<Familia, Long> {
 
     Familia findByNombreUnico(String nombreFamilia);
+    void deleteByNombreUnico(String nombreFamilia);
 
 }

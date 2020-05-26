@@ -2,9 +2,10 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
+import com.micanasta.model.Familia;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,41 @@ public class FamiliaController {
 
         return ResponseEntity.status(miembrosGrupoFamiliarPorFamilia != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
                 .body(miembrosGrupoFamiliarPorFamilia);
+
+    }
+
+    @PutMapping("/familias/{nombreFamilia}")
+    public ResponseEntity<?> desactivarSolicitudes(@PathVariable("nombreFamilia")  String nombreFamilia, String dni){
+        try{
+            familiaService.desactivarSolicitudes(nombreFamilia, dni);
+        } catch (FamilyNotFoundException familyNotFoundException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Se desactivó realizar solicitudes y se eliminaron las existentes");
+    }
+
+    @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, String adminDni,
+                                                    @PathVariable String dni )
+            throws UserOnlyAdminException,
+            UserToDeleteIsAdminException,
+            UserNotAdminException {
+        if (adminDni.equals(dni)) {
+            try {
+                return ResponseEntity.status(HttpStatus.OK).body(familiaService.RemoveMyself(nombreFamilia, dni));
+            } catch (UserOnlyAdminException userOnlyAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userOnlyAdminException.exceptionDto);
+            }
+        }
+        else {
+            try {
+                return ResponseEntity.status(HttpStatus.OK).body(familiaService.Remove(adminDni, dni));
+            } catch (UserNotAdminException userNotAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+            } catch (UserToDeleteIsAdminException userToDeleteIsAdminException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
+            }
+        }
 
     }
 }

@@ -7,16 +7,40 @@
   <div class="login-container__form-container">
     <div class="field-container margin">
       <label class="label-shared-component">Dni</label>
-      <input class="input-shared-component" type="text" [(ngModel)]="user.dni" />
+      <input
+        class="input-shared-component"
+        type="text"
+        [(ngModel)]="usuario.dni"
+        maxlength="8"
+      />
     </div>
 
     <div class="field-container margin">
       <label class="label-shared-component">Contraseña</label>
-      <input class="input-shared-component" type="password" [(ngModel)]="user.contrasena" />
+      <input
+        class="input-shared-component"
+        type="password"
+        [(ngModel)]="usuario.contrasena"
+        maxlength="50"
+      />
     </div>
 
-    <app-button-shared class="login-container__button" [text]="'Ingresar'" [type]="'large'" [bgColor]="'red'"
-      [loading]="loadingLoginButton" (event)="enter()"></app-button-shared>
-    <app-error-modal *ngIf="isShowErrorModal" title="Credenciales inválidas" [description]="'El DNI o password ingresado es incorrecto'" (closeEvent)="closeErrorModal()">
+    <app-button-shared
+      class="login-container__button"
+      [text]="'Ingresar'"
+      [type]="'large'"
+      [bgColor]="'red'"
+      [loading]="loadingLoginButton"
+      [disable]="disableButton"
+      (event)="autenticar()"
+    ></app-button-shared>
+
+    <app-error-modal
+      *ngIf="isShowErrorModal"
+      title="{{ error.title }}"
+      description="{{ error.description }}"
+      (closeEvent)="closeErrorModal()"
+    >
     </app-error-modal>
   </div>
+</div>

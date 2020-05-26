@@ -5,6 +5,7 @@ import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.model.Solicitud;
 import com.micanasta.model.SolicitudIdentity;
 import com.micanasta.repository.FamiliaRepository;
@@ -78,4 +79,15 @@ public class SolicitudServiceImpl implements SolicitudService {
         return solicitudBusquedaDto;
     }
 
+    public Optional<Solicitud> cancelarSolicitud(String dni) throws SolicitudeNotFoundException{
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+        solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+        if (solicitud.isPresent()) {
+            Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
+            solicitudRepository.delete(solicitudes);
+        } else {
+            throw new SolicitudeNotFoundException();
+        }
+        return null;
+    }
 }

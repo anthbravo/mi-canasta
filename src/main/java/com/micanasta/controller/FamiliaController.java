@@ -1,8 +1,10 @@
 package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.EditarRolesFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +42,15 @@ public class FamiliaController {
                 .body(miembrosGrupoFamiliarPorFamilia);
 
     }
+
+    @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> editarRoles(@Valid EditarRolesFamiliaDTO editarRolesFamiliaDTO){
+        try{
+            familiaService.editarRoles(editarRolesFamiliaDTO);
+        } catch (FamilyNotFoundException familyNotFoundException){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Se modificaron los roles");
+    }
+
 }

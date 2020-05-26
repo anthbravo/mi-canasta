@@ -1,6 +1,7 @@
 package com.micanasta.dto.converter;
 
 import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.EditarRolesFamiliaDTO;
 import com.micanasta.dto.FamiliaDTO;
 import com.micanasta.model.Familia;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,11 @@ public class FamiliaDTOConverter {
 
     public Familia convertToEntity(CrearFamiliaDTO familiaDto) {
         return modelMapper.map(familiaDto, Familia.class);
+
+    }
+
+    public Familia convertToEntity(EditarRolesFamiliaDTO editarRolesFamiliaDTO ) {
+        return modelMapper.map(editarRolesFamiliaDTO, Familia.class);
 
     }
 

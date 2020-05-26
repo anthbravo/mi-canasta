@@ -1,18 +1,23 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.EditarRolesFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.FamiliaDTO;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
 import com.micanasta.repository.RolPorUsuarioRepository;
 import com.micanasta.repository.UsuarioPorFamiliaRepository;
+import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.FamiliaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +38,9 @@ public class FamiliaServiceImpl implements FamiliaService {
     @Autowired
     private RolPorUsuarioRepository rolPorUsuarioRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Override
     @Transactional
     public Familia crearGrupoFamiliar(CrearFamiliaDTO familiaDTO) throws ExistingFamilyFoundException {
@@ -48,6 +56,21 @@ public class FamiliaServiceImpl implements FamiliaService {
             RolPorUsuario rolPorUsuario = asignarRolPorUsuario(familiaDTO.getDni(), (long) 1); // Asignación directa
             usuarioPorFamiliaRepository.save(usuarioPorFamilia);
             rolPorUsuarioRepository.save(rolPorUsuario);
+
+            return familia;
+        }
+    }
+
+    public Familia editarRoles(EditarRolesFamiliaDTO editarRolesFamiliaDTO) throws FamilyNotFoundException {
+        if (familiaRepository.findByNombreUnico(editarRolesFamiliaDTO.getNombreFamilia()) == null) {
+            throw new FamilyNotFoundException();
+        } else {
+            familiaDTOConverter.convertToEntity(editarRolesFamiliaDTO);
+            Familia familia = familiaRepository.findByNombreUnico(editarRolesFamiliaDTO.getNombreFamilia());
+            RolPorUsuario rolPorUsuario = asignarRolPorUsuario(editarRolesFamiliaDTO.getDni(), (long) 2); // Asignación directa
+
+            rolPorUsuarioRepository.save(rolPorUsuario);
+            familiaRepository.save(familia);
 
             return familia;
         }
@@ -109,7 +132,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         rolPorUsuario.setRolPorUsuarioIdentity(rolPorUsuarioIdentity);
 
         return rolPorUsuario;
-
     }
 }
 

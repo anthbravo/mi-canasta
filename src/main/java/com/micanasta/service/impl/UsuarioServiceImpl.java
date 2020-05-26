@@ -3,7 +3,9 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.UsuarioAccesoDto;
 import com.micanasta.dto.UsuarioDto;
 import com.micanasta.dto.UsuarioReniecDto;
+import com.micanasta.model.Solicitud;
 import com.micanasta.model.Usuario;
+import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private SolicitudRepository solicitudRepository;
 
 
     public UsuarioDto save(UsuarioReniecDto model) {
@@ -65,6 +69,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioAccesoDto;
 
     }
+
 }
-//
+
 

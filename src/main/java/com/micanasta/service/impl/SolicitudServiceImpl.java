@@ -7,6 +7,7 @@ import com.micanasta.dto.converter.SolicitudDtoConverter;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.model.Familia;
+import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.model.Solicitud;
 import com.micanasta.model.SolicitudIdentity;
 import com.micanasta.model.Usuario;
@@ -35,13 +36,12 @@ public class SolicitudServiceImpl implements SolicitudService {
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
 
-
     @Override
     @Transactional
-    public Solicitud create(CrearSolicitudDto solicitudDto) throws FamilyNotFoundException, FamilyNotAceptedSolicitudeException {
+    public Solicitud create(CrearSolicitudDto solicitudDto)
+            throws FamilyNotFoundException, FamilyNotAceptedSolicitudeException {
 
         Solicitud solicitud = null;
-
 
         if (familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()) == null) {
             throw new FamilyNotFoundException();
@@ -64,7 +64,8 @@ public class SolicitudServiceImpl implements SolicitudService {
     public boolean aceptaSolicitudes(CrearSolicitudDto solicitudDto) {
         if (familiaRepository.findByNombreUnico(solicitudDto.getNombreFamilia()).isAceptacionSolicitudes() == true)
             return true;
-        else return false;
+        else
+            return false;
 
     }
 
@@ -88,7 +89,7 @@ public class SolicitudServiceImpl implements SolicitudService {
     public boolean borrarSolicitud(SolicitudUsuarioDto solicitudUsuarioDto) {
         Usuario usuario = usuarioRepository.findByDni(solicitudUsuarioDto.dni);
         Optional<Familia> optionalFamilia = familiaRepository.findById(solicitudUsuarioDto.familiaId);
-        if(usuario != null && optionalFamilia.isPresent()) {
+        if (usuario != null && optionalFamilia.isPresent()) {
             SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
             solicitudIdentity.setUsuario(usuario);
             Familia familia = optionalFamilia.get();
@@ -99,5 +100,17 @@ public class SolicitudServiceImpl implements SolicitudService {
             return true;
         }
         return false;
+    }
+
+    public Optional<Solicitud> cancelarSolicitud(String dni) throws SolicitudeNotFoundException {
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+        solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+        if (solicitud.isPresent()) {
+            Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
+            solicitudRepository.delete(solicitudes);
+        } else {
+            throw new SolicitudeNotFoundException();
+        }
+        return null;
     }
 }

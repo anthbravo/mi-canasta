@@ -3,9 +3,9 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.UsuarioAccesoDto;
 import com.micanasta.dto.UsuarioDto;
 import com.micanasta.dto.UsuarioReniecDto;
-import com.micanasta.model.Solicitud;
+import com.micanasta.exception.UserLoginIncorrectException;
+import com.micanasta.exception.UserLoginNotFoundException;
 import com.micanasta.model.Usuario;
-import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -21,8 +21,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
-    @Autowired
-    private SolicitudRepository solicitudRepository;
 
 
     public UsuarioDto save(UsuarioReniecDto model) {
@@ -47,29 +45,21 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
-    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) {
+    public UsuarioAccesoDto ValidateLogin(String dni, String contrasena) throws UserLoginIncorrectException, UserLoginNotFoundException {
         ReniecServiceImpl reniecService = new ReniecServiceImpl();
         UsuarioDto usuarioDto = findByDni(dni);
         if (usuarioDto.dni == null) {
             UsuarioReniecDto resultIdentity = reniecService.validateIdentity(dni);
-
-            if (resultIdentity.dni == "NotExist") {
-                UsuarioDto usuarioDto1 = new UsuarioDto();
-                usuarioDto1.dni = "NotExist";
-                return modelMapper.map(usuarioDto1, UsuarioAccesoDto.class);
+            if (resultIdentity.dni.equals("NotExist")) {
+                throw new UserLoginNotFoundException();
             }
             Object result = save(resultIdentity);
             return modelMapper.map(result, UsuarioAccesoDto.class);
         }
         if (usuarioDto.contrasena.equals(contrasena)) {
             return modelMapper.map(usuarioDto, UsuarioAccesoDto.class);
+        } else {
+            throw new UserLoginIncorrectException();
         }
-        UsuarioAccesoDto usuarioAccesoDto = new UsuarioAccesoDto();
-        usuarioAccesoDto.dni = "NotFound";
-        return usuarioAccesoDto;
-
     }
-
 }
-
-

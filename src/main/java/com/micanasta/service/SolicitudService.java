@@ -2,6 +2,7 @@ package com.micanasta.service;
 
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
+import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.exception.SolicitudeNotFoundException;
@@ -15,6 +16,8 @@ public interface SolicitudService {
     boolean aceptaSolicitudes(CrearSolicitudDto solicitudDto);
 
     SolicitudBusquedaDto solicitudPorDni(String dni);
+
+    boolean borrarSolicitud(SolicitudUsuarioDto solicitudUsuarioDto);
 
     Optional<Solicitud> cancelarSolicitud(String dni) throws SolicitudeNotFoundException;
 

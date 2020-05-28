@@ -210,7 +210,7 @@ public class FamiliaServiceImpl implements FamiliaService {
         else return false;
     }
 
-// Cuando el usuairo se intenta borrar a sí mismo
+// Cuando el usuario se intenta borrar a sí mismo
     @Transactional
     @Override
     public UsuarioPorFamiliaDto RemoveMyself(String nombreFamilia, String userDni) throws UserOnlyAdminException {

@@ -8,11 +8,13 @@ import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,13 @@ public class FamiliaController {
 
     }
 
+    @GetMapping("/familias/{nombreFamilia}/historiales")
+    public ResponseEntity<?> getHistorial(@PathVariable String nombreFamilia, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
+                                          @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd")  Date fechaFin){
+        return ResponseEntity.status(HttpStatus.OK).body(familiaService.getHistorial(nombreFamilia, fechaInicio,
+                fechaFin));
+    }
+
     @PutMapping("/familias/{nombreFamilia}")
     public ResponseEntity<?> desactivarSolicitudes(@PathVariable("nombreFamilia")  String nombreFamilia, String dni){
         try{
@@ -53,11 +62,7 @@ public class FamiliaController {
     }
 
     @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
-    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, String adminDni,
-                                                    @PathVariable String dni )
-            throws UserOnlyAdminException,
-            UserToDeleteIsAdminException,
-            UserNotAdminException {
+    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, String adminDni, @PathVariable String dni ) throws UserOnlyAdminException, UserToDeleteIsAdminException, UserNotAdminException {
         if (adminDni.equals(dni)) {
             try {
                 return ResponseEntity.status(HttpStatus.OK).body(familiaService.RemoveMyself(nombreFamilia, dni));

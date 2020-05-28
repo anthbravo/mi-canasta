@@ -2,20 +2,19 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.HistorialDto;
 import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
 import com.micanasta.exception.*;
 import com.micanasta.model.*;
-import com.micanasta.repository.FamiliaRepository;
-import com.micanasta.repository.RolPorUsuarioRepository;
-import com.micanasta.repository.SolicitudRepository;
-import com.micanasta.repository.UsuarioPorFamiliaRepository;
+import com.micanasta.repository.*;
 import com.micanasta.service.FamiliaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +40,9 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Autowired
     private SolicitudRepository solicitudRepository;
+
+    @Autowired
+    private HistorialRepository historialRepository;
 
     @Override
     @Transactional
@@ -242,6 +244,52 @@ public class FamiliaServiceImpl implements FamiliaService {
             }
         }
         return usuarioPorFamiliaDto;
+    }
+
+    public List<Historial> filtrarPorFecha(String familiaNombre, Date fechaInicio, Date fechaFinal){
+        List<Historial> historiales = historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
+        //List<Historial> historialesAux = historiales;
+        //historialesAux.clear();
+
+        /*historiales.stream().filter(x->x.getFechaCompra().after(fechaInicio)&&x.getFechaCompra().before(fechaFinal)
+        ).forEach(x->historialesAux.add(x));
+         */
+
+        /*for (Historial historial : historiales.) {
+            if(historial.getFechaCompra().after(fechaInicio) && historial.getFechaCompra().before(fechaFinal)){
+                historialesAux.add(historial);
+            }
+        }*/
+        return historiales;
+    }
+
+    @Override
+    public List<HistorialDto> getHistorial(String familiaNombre, Date fechaInicio, Date fechaFinal){
+        List<HistorialDto> historialesDto;
+        //List<Historial> historiales=historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
+
+        List<Historial> historialesAux = historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
+        historialesAux.clear();
+
+
+        for(Historial historial: historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre)){
+            if(historial.getFechaCompra().after(fechaInicio)&&historial.getFechaCompra().before(fechaFinal)){
+                historialesAux.add(historial);
+            }
+        }
+
+            historialesDto = historialesAux.stream().map(x -> {
+                HistorialDto historialDto = new HistorialDto();
+                historialDto.setDni(x.getDni());
+                historialDto.setCantidad(x.getCantidad());
+                historialDto.setFechaCompra(x.getFechaCompra());
+                historialDto.setFamiliaId(x.getHistorialIdentity().getFamilia().getId());
+                historialDto.setProductoId(x.getHistorialIdentity().getProducto().getId());
+                historialDto.setTiendaId(x.getHistorialIdentity().getTienda().getId());
+                return historialDto;
+            }).collect(Collectors.toList());
+
+        return historialesDto;
     }
 }
 

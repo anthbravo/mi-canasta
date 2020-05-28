@@ -1,5 +1,7 @@
 package com.micanasta.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Embeddable
 public class HistorialIdentity implements Serializable {
 

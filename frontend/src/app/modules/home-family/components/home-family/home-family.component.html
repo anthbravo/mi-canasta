@@ -1,0 +1,15 @@
+<div class="family-container">
+  <div class="family-container__title">
+    <h2>Participantes</h2>
+  </div>
+  <div class="family-container__enable-request">
+    <p>Desactivar solicitudes</p>
+    <nz-switch [(ngModel)]="switchValue"></nz-switch>
+
+  </div>
+
+  <div class="family-container__list-members">
+      <app-members [person]="user" *ngFor="let user of mock"></app-members>
+
+    </div>
+</div>

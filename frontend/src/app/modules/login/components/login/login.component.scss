@@ -15,6 +15,7 @@
 }
 .login-container__header h1 {
   font-size: 24px;
+  font-weight: 700;
   margin: 16px 0 8px 0;
 }
 .login-container__header p {
@@ -31,4 +32,7 @@
 
 .login-container__button {
   margin-top: 24px;
+}
+.input-shared-container{
+  margin-bottom: 24px;
 }

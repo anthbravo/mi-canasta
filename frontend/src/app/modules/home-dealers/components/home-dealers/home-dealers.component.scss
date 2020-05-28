@@ -1,0 +1,52 @@
+
+.dealers-container{
+  padding: 0 32px;
+  height: calc(640px  - 128px);
+  overflow: auto;
+}
+
+.dealers-container__members-quantity{
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+}
+.dealers-container__members-quantity p {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 0 6px;
+}
+.dealers-container__title{
+  margin-top: 24px;
+}
+.dealers-container__title h2{
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.dealers-container__add{
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.dealers-container__add button{
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #F76A8C;
+}
+
+.dealers-container__add > div{
+  margin-top: 32px;
+}
+
+.dealers-container__add input{
+  text-align: center;
+}

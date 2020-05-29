@@ -42,4 +42,16 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
         }
      throw new SolicitudeTroubleException();
     }
+
+    @Override
+    public Familia findFamiliaById(String dni) {
+        Long familiaId = usuarioPorFamiliaRepository.findByDni(dni);
+       if(familiaId!=null)
+       {
+           Optional<Familia> familia = familiaRepository.findById(familiaId);
+            if(familia.isPresent())
+                return familia.get();
+       }
+        return null;
+    }
 }

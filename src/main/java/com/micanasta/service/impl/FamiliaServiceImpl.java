@@ -2,6 +2,7 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.FamiliaDTO;
 import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 
@@ -243,5 +245,6 @@ public class FamiliaServiceImpl implements FamiliaService {
         }
         return usuarioPorFamiliaDto;
     }
+
 }
 

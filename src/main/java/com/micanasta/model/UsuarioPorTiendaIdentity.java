@@ -15,7 +15,7 @@ public class UsuarioPorTiendaIdentity implements Serializable {
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "familia_id")
+    @JoinColumn(name = "tienda_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Tienda tienda;
 }

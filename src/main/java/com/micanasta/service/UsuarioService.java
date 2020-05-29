@@ -5,6 +5,10 @@ import com.micanasta.dto.UsuarioDto;
 import com.micanasta.dto.UsuarioReniecDto;
 import com.micanasta.exception.UserLoginIncorrectException;
 import com.micanasta.exception.UserLoginNotFoundException;
+import com.micanasta.dto.UsuarioUpdateDto;
+import com.micanasta.exception.ActualPasswordNotMatchException;
+import com.micanasta.exception.EmailWrongFormatException;
+import com.micanasta.exception.NewPasswordNotMatchException;
 
 public interface UsuarioService {
 
@@ -12,8 +16,11 @@ public interface UsuarioService {
 
     UsuarioDto findByDni(String dni);
 
-    UsuarioAccesoDto ValidateLogin (String dni, String contrasena)throws UserLoginIncorrectException, UserLoginNotFoundException;
+    UsuarioAccesoDto ValidateLogin(String dni, String contrasena)
+            throws UserLoginIncorrectException, UserLoginNotFoundException;
 
-    //Usuario validarDni(String dni);
+    UsuarioUpdateDto update(String dni, UsuarioUpdateDto usuarioUpdateDto)
+            throws EmailWrongFormatException, NewPasswordNotMatchException, ActualPasswordNotMatchException;
+    // Usuario validarDni(String dni);
 
 }

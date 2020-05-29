@@ -26,6 +26,9 @@ public class Tienda {
     private String direccion;
 
     @NotNull
+    private int limite;
+
+    @NotNull
     private String latitud;
 
     @NotNull

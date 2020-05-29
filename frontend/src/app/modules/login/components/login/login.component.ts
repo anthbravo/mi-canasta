@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
         this.usuario
       );
 
+      localStorage.setItem("dni",usuarioAutenticacion.dni);
+
       this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
 
       this.route.navigate(['/home']);

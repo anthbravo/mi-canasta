@@ -5,6 +5,11 @@ import { LoadingButtonComponent } from './loading/loading-button/loading-button.
 import { ConfirmationModalComponent } from './modal/confirmation-modal/confirmation-modal.component';
 import { ErrorModalComponent } from './modal/error-modal/error-modal.component';
 import { WarningModalComponent } from './modal/warning-modal/warning-modal.component';
+import { MembersComponent } from './members/members.component';
+import { SelectComponent } from './select/select.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,14 +18,18 @@ import { WarningModalComponent } from './modal/warning-modal/warning-modal.compo
     ConfirmationModalComponent,
     ErrorModalComponent,
     WarningModalComponent,
+    MembersComponent,
+    SelectComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule,ReactiveFormsModule, NzSelectModule],
   exports: [
     ButtonSharedComponent,
     ConfirmationModalComponent,
     LoadingButtonComponent,
     ErrorModalComponent,
-    WarningModalComponent
+    WarningModalComponent,
+    MembersComponent,
+    SelectComponent
   ],
 })
 export class SharedModule {}

@@ -6,8 +6,10 @@ class Familia {
 }
 
 class FamiliaCreate {
-  nombreUnico?: string;
+  familiaNombre?: string;
   dni?: string;
+  aceptaSolicitudes?:boolean =  true;
+
 }
 
 export { Familia, FamiliaCreate };

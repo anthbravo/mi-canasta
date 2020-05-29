@@ -1,0 +1,20 @@
+<div class="member-container">
+    <div class="member-container__information">
+      <div class="member-container__roles">
+          <img *ngIf="person.roles.includes('Admin')" src="assets/ic_crown.svg" alt="">
+          <img *ngIf="person.roles.includes('Comprador')" src="assets/ic_shop-cart.svg" alt="">
+
+      </div>
+      <div class="member-container__personal">
+        <h2>{{ person.name }}</h2>
+        <p>{{ person.dni }}</p>
+      </div>
+      <div class="member-container__delete-btn">
+          <button>Remover</button>
+      </div>
+    </div>
+
+    <div class="member-container__select">
+      <app-select  [options]="data"></app-select>
+    </div>
+</div>

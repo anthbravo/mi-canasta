@@ -62,23 +62,12 @@ public class FamiliaController {
     }
 
     @DeleteMapping("/familias/{nombreFamilia}/usuarios/{dni}")
-    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, String adminDni, @PathVariable String dni ) throws UserOnlyAdminException, UserToDeleteIsAdminException, UserNotAdminException {
-        if (adminDni.equals(dni)) {
+    public ResponseEntity<?> deleteUsuarioDeFamilia(@PathVariable String nombreFamilia, @PathVariable String dni ){
             try {
-                return ResponseEntity.status(HttpStatus.OK).body(familiaService.RemoveMyself(nombreFamilia, dni));
-            } catch (UserOnlyAdminException userOnlyAdminException) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userOnlyAdminException.exceptionDto);
+                return ResponseEntity.status(HttpStatus.OK).body(familiaService.Remove(dni));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
-        }
-        else {
-            try {
-                return ResponseEntity.status(HttpStatus.OK).body(familiaService.Remove(adminDni, dni));
-            } catch (UserNotAdminException userNotAdminException) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
-            } catch (UserToDeleteIsAdminException userToDeleteIsAdminException) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userToDeleteIsAdminException.exceptionDto);
-            }
-        }
 
     }
 }

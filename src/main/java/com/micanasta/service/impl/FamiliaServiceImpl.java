@@ -1,11 +1,8 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.CrearFamiliaDTO;
-import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.dto.FamiliaDTO;
-import com.micanasta.dto.HistorialDto;
-import com.micanasta.dto.UsuarioPorFamiliaDto;
+import com.micanasta.dto.*;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
+import com.micanasta.dto.converter.RolPorUsuarioDtoConverter;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
 import com.micanasta.exception.*;
 import com.micanasta.model.*;
@@ -18,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +40,9 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Autowired
     private HistorialRepository historialRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     @Transactional
@@ -303,4 +302,26 @@ public class FamiliaServiceImpl implements FamiliaService {
 
         return historialesDto;
     }
+
+    @Transactional
+    @Override
+    public UsuarioPorFamilia editarRolUsuarioFamilia(String dni) throws UserNotFoundException {
+
+        if (usuarioPorFamiliaRepository.findByDni(dni) == null) {
+            throw new UserNotFoundException();
+
+        } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
+            RolPorUsuario rolPorUsuario = new RolPorUsuario();
+            rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+            rolPorUsuario = asignarRolPorUsuario(dni, (long) 2);
+            rolPorUsuarioRepository.save(rolPorUsuario);
+
+        } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 2) {
+            RolPorUsuario rolPorUsuario = new RolPorUsuario();
+            rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+            rolPorUsuario = asignarRolPorUsuario(dni, (long) 1);
+            rolPorUsuarioRepository.save(rolPorUsuario);
+        }
+        return null;
+     }
 }

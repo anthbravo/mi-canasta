@@ -1,6 +1,7 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.StockDto;
+import com.micanasta.dto.StockUpdateDto;
 import com.micanasta.dto.TiendaDto;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
@@ -10,6 +11,7 @@ import com.micanasta.repository.TiendaRepository;
 import com.micanasta.service.TiendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +44,14 @@ public class TiendaServiceimpl implements TiendaService {
             stocksDto.add(stockDtoConverter.convertToDto(stock));
         }
         return stocksDto;
+    }
+
+    @Transactional
+    @Override
+    public StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto) {
+        Stock stock = stockRepository.getByStockIdentityTiendaIdAndStockIdentityProductoId(idTienda, idProducto);
+        stock.setCantidad(stockUpdateDto.getCantidad());
+        stockRepository.save(stock);
+        return stockDtoConverter.convertToDto(stock);
     }
 }

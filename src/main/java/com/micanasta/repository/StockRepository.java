@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Stock, StockIdentity> {
     List<Stock> getByStockIdentityTiendaId(long id);
+    Stock getByStockIdentityTiendaIdAndStockIdentityProductoId(long tiendaId, long productoId);
 }

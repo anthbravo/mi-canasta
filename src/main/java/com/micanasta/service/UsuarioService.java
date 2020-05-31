@@ -1,11 +1,8 @@
 package com.micanasta.service;
 
-import com.micanasta.dto.UsuarioAccesoDto;
-import com.micanasta.dto.UsuarioDto;
-import com.micanasta.dto.UsuarioReniecDto;
+import com.micanasta.dto.*;
 import com.micanasta.exception.UserLoginIncorrectException;
 import com.micanasta.exception.UserLoginNotFoundException;
-import com.micanasta.dto.UsuarioUpdateDto;
 import com.micanasta.exception.ActualPasswordNotMatchException;
 import com.micanasta.exception.EmailWrongFormatException;
 import com.micanasta.exception.NewPasswordNotMatchException;
@@ -22,5 +19,7 @@ public interface UsuarioService {
     UsuarioUpdateDto update(String dni, UsuarioUpdateDto usuarioUpdateDto)
             throws EmailWrongFormatException, NewPasswordNotMatchException, ActualPasswordNotMatchException;
     // Usuario validarDni(String dni);
+
+    TiendaDto updateTienda(String dni, Long idTienda, TiendaUpdateDto tiendaUpdateDto) throws ActualPasswordNotMatchException;
 
 }

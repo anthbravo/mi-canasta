@@ -1,16 +1,16 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.UsuarioAccesoDto;
-import com.micanasta.dto.UsuarioDto;
-import com.micanasta.dto.UsuarioReniecDto;
+import com.micanasta.dto.*;
+import com.micanasta.dto.converter.TiendaDtoConverter;
 import com.micanasta.exception.UserLoginIncorrectException;
 import com.micanasta.exception.UserLoginNotFoundException;
-import com.micanasta.dto.UsuarioUpdateDto;
 import com.micanasta.exception.ActualPasswordNotMatchException;
 import com.micanasta.exception.EmailWrongFormatException;
 import com.micanasta.exception.NewPasswordNotMatchException;
 import com.micanasta.model.Solicitud;
+import com.micanasta.model.Tienda;
 import com.micanasta.model.Usuario;
+import com.micanasta.repository.TiendaRepository;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -27,6 +27,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TiendaRepository tiendaRepository;
+
+    @Autowired
+    private TiendaDtoConverter tiendaDtoConverter;
+
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -113,4 +120,28 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioUpdateDto;
     }
 
+    @Transactional
+    @Override
+    public TiendaDto updateTienda(String dni, Long idTienda, TiendaUpdateDto tiendaUpdateDto) throws ActualPasswordNotMatchException {
+        Usuario usuario = usuarioRepository.encontrarPorDni(dni);
+        Tienda tienda = tiendaRepository.encontrarPorId(idTienda);
+
+        if(!usuario.getContrasena().equals(tiendaUpdateDto.getContrasena())){
+            throw new ActualPasswordNotMatchException();
+        }
+        else {
+            if(tiendaUpdateDto.getDescripcion()!=null)
+                tienda.setDescripcion(tiendaUpdateDto.getDescripcion());
+            if(tiendaUpdateDto.getDireccion()!=null)
+                tienda.setDireccion(tiendaUpdateDto.getDireccion());
+            if(tiendaUpdateDto.getHorario()!=null)
+                tienda.setHorario(tiendaUpdateDto.getHorario());
+            if(tiendaUpdateDto.getLatitud()!=null)
+                tienda.setLatitud(tiendaUpdateDto.getLatitud());
+            if(tiendaUpdateDto.getLongitud()!=null)
+                tienda.setLongitud(tiendaUpdateDto.getLongitud());
+            tiendaRepository.save(tienda);
+        }
+        return tiendaDtoConverter.convertToDto(tienda);
+    }
 }

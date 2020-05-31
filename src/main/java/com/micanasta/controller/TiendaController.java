@@ -18,4 +18,14 @@ public class TiendaController {
     public ResponseEntity<?> getById(@PathVariable long id){
         return ResponseEntity.ok().body(tiendaService.getById(id));
     }
+
+    @GetMapping("/tiendas/{idTienda}/stocks")
+    public ResponseEntity<?> getStocksById(@PathVariable long idTienda){
+        try {
+            return ResponseEntity.ok().body(tiendaService.getStocksById(idTienda));
+        }
+        catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
 }

@@ -5,8 +5,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class StockDto {
-    private long tiendaId;
-    private long productoId;
+public class StockUpdateDto {
     private float cantidad;
 }

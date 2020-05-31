@@ -1,23 +1,19 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.UsuarioAccesoDto;
-import com.micanasta.dto.UsuarioDto;
-import com.micanasta.dto.UsuarioReniecDto;
-import com.micanasta.exception.UserLoginIncorrectException;
-import com.micanasta.exception.UserLoginNotFoundException;
-import com.micanasta.dto.UsuarioUpdateDto;
-import com.micanasta.exception.ActualPasswordNotMatchException;
-import com.micanasta.exception.EmailWrongFormatException;
-import com.micanasta.exception.NewPasswordNotMatchException;
-import com.micanasta.model.Solicitud;
+import com.micanasta.dto.*;
+import com.micanasta.exception.*;
+import com.micanasta.model.Familia;
+import com.micanasta.model.RolPorUsuario;
+import com.micanasta.model.Tienda;
 import com.micanasta.model.Usuario;
-import com.micanasta.repository.UsuarioRepository;
+import com.micanasta.repository.*;
 import com.micanasta.service.UsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +23,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private FamiliaRepository familiaRepository;
+    @Autowired
+    private TiendaRepository tiendaRepository;
+    @Autowired
+    private UsuarioPorFamiliaRepository usuarioPorFamiliaRepository;
+    @Autowired
+    private UsuarioPorTiendaRepository usuarioPorTiendaRepository;
+    @Autowired
+    private RolPorUsuarioRepository rolPorUsuarioRepository;
+
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -69,6 +76,32 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             throw new UserLoginIncorrectException();
         }
+    }
+
+    @Override
+    public UsuarioDataDto GetDatosUsuario(String dni, String contrasena) throws UserLoginIncorrectException, UserLoginNotFoundException {
+        UsuarioDataDto usuarioDataDto = new UsuarioDataDto();
+        FamiliaDataDto familiaDataDto;
+        TiendaDataDto tiendaDataDto;
+        List<RolPorUsuarioDataDto> rolPorUsuarioDataDtoList = new ArrayList<RolPorUsuarioDataDto>();
+        Long familiaId = usuarioPorFamiliaRepository.findByDni(dni);
+        if (familiaId != null) {
+            Optional<Familia> familia = familiaRepository.findById(familiaId);
+            familiaDataDto = modelMapper.map(familia, FamiliaDataDto.class);
+        } else familiaDataDto = null;
+        Long tiendaId = usuarioPorTiendaRepository.findByDni(dni);
+        if (tiendaId != null) {
+            Optional<Tienda> tienda = tiendaRepository.findById(tiendaId);
+            tiendaDataDto = modelMapper.map(tienda, TiendaDataDto.class);
+        } else tiendaDataDto = null;
+        List<RolPorUsuario> rolesPorUsuario = rolPorUsuarioRepository.findAllById(dni);
+        modelMapper.map(rolesPorUsuario, rolPorUsuarioDataDtoList);
+        usuarioDataDto.setUsuarioAccesoDto(ValidateLogin(dni, contrasena));
+        usuarioDataDto.setFamilia(familiaDataDto);
+        usuarioDataDto.setTienda(tiendaDataDto);
+        usuarioDataDto.setRolPorUsuario(rolPorUsuarioDataDtoList);
+        return usuarioDataDto;
+
     }
 
     public static boolean correoValido(String email) {

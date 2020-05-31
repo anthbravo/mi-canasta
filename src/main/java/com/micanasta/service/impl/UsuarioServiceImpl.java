@@ -87,12 +87,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         Long familiaId = usuarioPorFamiliaRepository.findByDni(dni);
         if (familiaId != null) {
             Optional<Familia> familia = familiaRepository.findById(familiaId);
-            familiaDataDto = modelMapper.map(familia, FamiliaDataDto.class);
+            familiaDataDto = modelMapper.map(familia.get(), FamiliaDataDto.class);
         } else familiaDataDto = null;
         Long tiendaId = usuarioPorTiendaRepository.findByDni(dni);
         if (tiendaId != null) {
             Optional<Tienda> tienda = tiendaRepository.findById(tiendaId);
-            tiendaDataDto = modelMapper.map(tienda, TiendaDataDto.class);
+            tiendaDataDto = modelMapper.map(tienda.get(), TiendaDataDto.class);
         } else tiendaDataDto = null;
         List<RolPorUsuario> rolesPorUsuario = rolPorUsuarioRepository.findAllById(dni);
         modelMapper.map(rolesPorUsuario, rolPorUsuarioDataDtoList);

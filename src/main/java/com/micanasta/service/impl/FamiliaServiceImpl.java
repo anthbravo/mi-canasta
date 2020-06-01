@@ -305,23 +305,38 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Transactional
     @Override
-    public UsuarioPorFamilia editarRolUsuarioFamilia(String dni) throws UserNotFoundException {
+    public UsuarioPorFamilia editarRolUsuarioFamilia(String userDni, String adminDni ) throws UserNotFoundException, UserNotAdminException {
 
-        if (usuarioPorFamiliaRepository.findByDni(dni) == null) {
+        if (usuarioPorFamiliaRepository.findByDni(adminDni) == null) {
             throw new UserNotFoundException();
-
-        } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
-            RolPorUsuario rolPorUsuario = new RolPorUsuario();
-            rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
-            rolPorUsuario = asignarRolPorUsuario(dni, (long) 2);
-            rolPorUsuarioRepository.save(rolPorUsuario);
-
-        } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 2) {
-            RolPorUsuario rolPorUsuario = new RolPorUsuario();
-            rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
-            rolPorUsuario = asignarRolPorUsuario(dni, (long) 1);
-            rolPorUsuarioRepository.save(rolPorUsuario);
         }
+
+        if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity()
+                .getRolPerfil().getId() != 1)
+            throw new UserNotAdminException();
+
+        if (usuarioPorFamiliaRepository.findByDni(userDni) == null) {
+            throw new UserNotFoundException();
+        }
+
+        else {
+            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
+
+                if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
+                    RolPorUsuario rolPorUsuario = new RolPorUsuario();
+                    rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
+                    rolPorUsuario = asignarRolPorUsuario(userDni, (long) 2);
+                    rolPorUsuarioRepository.save(rolPorUsuario);
+
+                } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 2) {
+                    RolPorUsuario rolPorUsuario = new RolPorUsuario();
+                    rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
+                    rolPorUsuario = asignarRolPorUsuario(userDni, (long) 1);
+                    rolPorUsuarioRepository.save(rolPorUsuario);
+                }
+            }
+        }
+
         return null;
-     }
+    }
 }

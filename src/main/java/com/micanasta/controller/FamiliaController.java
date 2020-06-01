@@ -83,12 +83,13 @@ public class FamiliaController {
     }
 
     @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")
-    public ResponseEntity<?> editarRolUsuarioFamilia(@PathVariable String dni ){
-            try {
-                return ResponseEntity.status(HttpStatus.OK).body(familiaService.editarRolUsuarioFamilia(dni));
-            } catch (UserNotFoundException userNotFoundException) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundException.exceptionDto);
-            }
+    public ResponseEntity<?> editarRolUsuarioFamilia(@PathVariable String dni, String adminDni ) throws UserNotFoundException, UserNotAdminException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(familiaService.editarRolUsuarioFamilia(dni, adminDni));
+        } catch (UserNotFoundException userNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundException.exceptionDto);
+        } catch (UserNotAdminException userNotAdminException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        }
     }
-
 }

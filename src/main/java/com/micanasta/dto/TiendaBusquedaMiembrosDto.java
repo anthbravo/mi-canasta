@@ -11,5 +11,4 @@ public class TiendaBusquedaMiembrosDto {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private RolPorUsuarioDataDto rolPorUsuarioDataDto;
 }

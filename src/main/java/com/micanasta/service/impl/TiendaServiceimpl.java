@@ -1,9 +1,6 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.StockDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaDto;
-import com.micanasta.dto.TiendaUsuarioDto;
+import com.micanasta.dto.*;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
@@ -22,6 +19,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TiendaServiceimpl implements TiendaService {
@@ -42,6 +40,9 @@ public class TiendaServiceimpl implements TiendaService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TiendaService tiendaService;
 
     @Override
     public TiendaDto getById(long id) {
@@ -87,4 +88,31 @@ public class TiendaServiceimpl implements TiendaService {
             }else throw new UserAddedShopExceedLimitException();
         }else throw new UserAddedShopIncorrectException();
     }
+
+    @Override
+    public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
+        List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;
+
+        Optional<List<UsuarioPorTienda>> miembrosGrupoDistruibuidoraPorTienda = usuarioPorTiendaRepository
+                .findByUsuarioPorTiendaIdentityTiendaId(id);
+
+        if (miembrosGrupoDistruibuidoraPorTienda.isPresent() && miembrosGrupoDistruibuidoraPorTienda.get().size() > 0) {
+
+            tiendaBusquedaMiembrosDtos = miembrosGrupoDistruibuidoraPorTienda.get().stream().map((miembro) -> {
+                TiendaBusquedaMiembrosDto tiendaBusquedaMiembrosDto = new TiendaBusquedaMiembrosDto();
+
+                tiendaBusquedaMiembrosDto.setDni(miembro.getUsuarioPorTiendaIdentity().getUsuario().getDni());
+                tiendaBusquedaMiembrosDto.setNombre(miembro.getUsuarioPorTiendaIdentity().getUsuario().getNombre());
+                tiendaBusquedaMiembrosDto.setApellidoPaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoPaterno());
+                tiendaBusquedaMiembrosDto.setApellidoMaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoMaterno());
+
+                return tiendaBusquedaMiembrosDto;
+
+            }).collect(Collectors.toList());
+        } else {
+            tiendaBusquedaMiembrosDtos = null;
+        }
+        return tiendaBusquedaMiembrosDtos;
+    }
+
 }

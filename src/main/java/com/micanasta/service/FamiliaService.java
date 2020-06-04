@@ -1,6 +1,10 @@
 package com.micanasta.service;
 
 import com.micanasta.dto.*;
+import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.HistorialDto;
+import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.model.Usuario;
@@ -17,10 +21,7 @@ public interface FamiliaService {
 
     List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia);
 
-    UsuarioPorFamiliaDto Remove(String adminDni, String userDni)
-            throws UserNotAdminException, UserToDeleteIsAdminException;
-
-    UsuarioPorFamiliaDto RemoveMyself(String nombreFamilia, String userDni) throws UserOnlyAdminException;
+    UsuarioPorFamiliaDto Remove(String userDni);
 
     List<HistorialDto> getHistorial(String familiaNombre, Date fechaInicio, Date fechaFin);
 

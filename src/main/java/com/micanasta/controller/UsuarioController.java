@@ -35,14 +35,8 @@ public class UsuarioController {
     @PostMapping("usuarios")
     public ResponseEntity<?> ValidarIngreso(@RequestBody UsuarioLoginDto usuarioLoginDto) {
         try {
-            UsuarioAccesoDto usuarioAccesoDto = usuarioService.ValidateLogin(usuarioLoginDto.dni,
-                    usuarioLoginDto.contrasena);
-            UsuarioDataDto usuarioDataDto = new UsuarioDataDto();
-            usuarioDataDto.setUsuarioAccesoDto(usuarioAccesoDto);
-            usuarioDataDto.setFamilia(usuarioPorFamiliaService.findFamiliaById(usuarioLoginDto.dni));
-            usuarioDataDto.setTienda(usuarioPorTiendaService.findTiendaById(usuarioLoginDto.dni));
-            usuarioDataDto.setRolPorUsuario(rolPorUsuarioService.findByDni(usuarioLoginDto.dni));
-            return ResponseEntity.status(201).body(usuarioDataDto);
+
+            return ResponseEntity.status(201).body(usuarioService.GetDatosUsuario(usuarioLoginDto.dni,usuarioLoginDto.contrasena));
         } catch (UserLoginNotFoundException userLoginNotFoundException) {
             return ResponseEntity.status(400).body(userLoginNotFoundException.exceptionDto);
         } catch (UserLoginIncorrectException userLoginIncorrectException) {

@@ -11,7 +11,6 @@ public interface FamiliaRepository extends JpaRepository<Familia, Long> {
     Familia findByNombreUnico(String nombreFamilia);
     void deleteByNombreUnico(String nombreFamilia);
 
-
-
-
+    @Query("select f from Familia f where f.id=:id")
+    Familia encontrarPorId(long id);
 }

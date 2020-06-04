@@ -162,96 +162,21 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Transactional
     @Override
-    public UsuarioPorFamiliaDto Remove(String adminDni, String userDni)
-            throws UserNotAdminException, UserToDeleteIsAdminException {
+    public UsuarioPorFamiliaDto Remove(String userDni) {
 
-        UsuarioPorFamiliaDto usuarioPorFamiliaDto = null;
+        UsuarioPorFamiliaDto usuarioPorFamiliaDto = new UsuarioPorFamiliaDto();
+        UsuarioPorFamilia usuario = asignarIdentitys(userDni);
 
-        if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity()
-                .getRolPerfil().getId() != 1)
-            throw new UserNotAdminException();
-        else {
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity()
-                    .getRolPerfil().getId() == 1)
-                throw new UserToDeleteIsAdminException();
-            else {
-
-                UsuarioPorFamilia usuario = asignarIdentitys(userDni);
-
-                usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
-                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-
-                usuarioPorFamiliaDto = usuarioPorFamiliaDtoConverter.convertToDto(usuario);
-                usuarioPorFamiliaDto.setDni(userDni);
-            }
-        }
-        return usuarioPorFamiliaDto;
-    }
-
-    public boolean unicoAdmin(Familia familia) {
-        int countAdmin = 0;
-        Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository
-                .findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(familia.getNombreUnico());
-
-        List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream()
-                .map((miembro) -> {
-                    FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
-                    familiaBusquedaMiembrosDto.setDni(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getDni());
-                    familiaBusquedaMiembrosDto
-                            .setNombre(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getNombre());
-                    familiaBusquedaMiembrosDto.setApellidoPaterno(
-                            miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoPaterno());
-                    familiaBusquedaMiembrosDto.setApellidoMaterno(
-                            miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoMaterno());
-
-                    return familiaBusquedaMiembrosDto;
-                }).collect(Collectors.toList());
-
-        for (FamiliaBusquedaMiembrosDto miembro : familiaBusquedaMiembrosDtos) {
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getDni())
-                    .getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
-                countAdmin++;
-            }
-        }
-        if (countAdmin == 1)
-            return true;
-        else
-            return false;
-    }
-
-    // Cuando el usuario se intenta borrar a sí mismo
-    @Transactional
-    @Override
-    public UsuarioPorFamiliaDto RemoveMyself(String nombreFamilia, String userDni) throws UserOnlyAdminException {
-
-        UsuarioPorFamiliaDto usuarioPorFamiliaDto = null;
-        UsuarioPorFamilia usuario = new UsuarioPorFamilia();
-
-        if (usuarioPorFamiliaRepository.countByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia) == 1) {
-
-            usuario = asignarIdentitys(userDni);
+        // Validar que elimine solo su rol como grupo familiar y no como tienda
+        if(usuario!=null && rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getPerfil().getId()==1) {
 
             usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
             rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-            familiaRepository.deleteByNombreUnico(nombreFamilia);
 
             usuarioPorFamiliaDto = usuarioPorFamiliaDtoConverter.convertToDto(usuario);
             usuarioPorFamiliaDto.setDni(userDni);
-        } else {
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity()
-                    .getRolPerfil().getId() == 1
-                    && unicoAdmin(familiaRepository.findByNombreUnico(nombreFamilia)) == true) {
-                throw new UserOnlyAdminException();
-            } else {
-                usuario = asignarIdentitys(userDni);
-
-                usuarioPorFamiliaRepository.deleteByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
-                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-
-                usuarioPorFamiliaDto = usuarioPorFamiliaDtoConverter.convertToDto(usuario);
-                usuarioPorFamiliaDto.setDni(userDni);
-            }
         }
+
         return usuarioPorFamiliaDto;
     }
 

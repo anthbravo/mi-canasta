@@ -9,4 +9,7 @@ public interface UsuarioPorTiendaRepository extends JpaRepository<UsuarioPorTien
     @Query(value = "select `tienda_id` from `usuarios_por_tienda` ut where ut.`usuario_id` = ?1", nativeQuery = true)
     Long findByDni(String dni);
 
+    @Query(value = "select COUNT(`usuario_id`) from `usuarios_por_tienda` ut where ut.`tienda_id` = ?1", nativeQuery = true)
+    Long countById(long tiendaId);
+
 }

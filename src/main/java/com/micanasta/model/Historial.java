@@ -28,4 +28,7 @@ public class Historial {
 
     @NotNull
     private String dni;
+
+    @NotNull
+    private boolean confirmacion;
 }

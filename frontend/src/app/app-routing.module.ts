@@ -39,6 +39,12 @@ const routes: Routes = [
         path: 'home/request-sent',
         loadChildren: ()=>
           import("./modules/requests-sent/requests-sent.module").then((m)=>m.RequestsSentModule)
+      },
+      {
+        path:'home/request-received',
+        loadChildren: ()=>
+          import("./modules/requests-received/requests-received.module").then( m=>m.RequestsReceivedModule)
+
       }
     ],
   },

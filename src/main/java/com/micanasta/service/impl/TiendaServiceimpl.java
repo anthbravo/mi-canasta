@@ -6,11 +6,11 @@ import com.micanasta.dto.converter.TiendaDtoConverter;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
 import com.micanasta.model.*;
-import com.micanasta.repository.StockRepository;
-import com.micanasta.repository.TiendaRepository;
-import com.micanasta.repository.UsuarioPorTiendaRepository;
-import com.micanasta.repository.UsuarioRepository;
+import com.micanasta.repository.*;
 import com.micanasta.service.TiendaService;
+import com.micanasta.service.UsuarioService;
+import lombok.var;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,13 @@ public class TiendaServiceimpl implements TiendaService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    private TiendaService tiendaService;
+    private RolPorUsuarioRepository rolPorUsuarioRepository;
+
+    @Autowired
+    UsuarioService usuarioService;
+
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public TiendaDto getById(long id) {
@@ -105,6 +111,12 @@ public class TiendaServiceimpl implements TiendaService {
                 tiendaBusquedaMiembrosDto.setNombre(miembro.getUsuarioPorTiendaIdentity().getUsuario().getNombre());
                 tiendaBusquedaMiembrosDto.setApellidoPaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoPaterno());
                 tiendaBusquedaMiembrosDto.setApellidoMaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoMaterno());
+                //rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario().getDni());
+
+                tiendaBusquedaMiembrosDto.setRolId(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario()
+                        .getDni()).getRolPorUsuarioIdentity().getRolPerfil().getId());
+                tiendaBusquedaMiembrosDto.setDescripción(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario()
+                        .getDni()).getRolPorUsuarioIdentity().getRolPerfil().getDescripcion());
 
                 return tiendaBusquedaMiembrosDto;
 

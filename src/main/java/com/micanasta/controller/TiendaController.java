@@ -1,10 +1,13 @@
 package com.micanasta.controller;
 
+import com.micanasta.dto.RolPorUsuarioDataDto;
 import com.micanasta.dto.StockUpdateDto;
 import com.micanasta.dto.TiendaBusquedaMiembrosDto;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
+import com.micanasta.model.UsuarioPorTienda;
 import com.micanasta.service.TiendaService;
+import com.micanasta.service.UsuarioService;
 import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

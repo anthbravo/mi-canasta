@@ -95,7 +95,7 @@ public class TiendaServiceimpl implements TiendaService {
     public RolPorUsuario asignarRolPorUsuario(String dni, Long id) {
 
         RolPerfil rolPerfil = new RolPerfil();
-        rolPerfil.setId(id); // 1--> UsuarioPorFamilia, 2--> UsuarioPorTienda
+        rolPerfil.setId(id);
 
         Usuario usuario = new Usuario();
         usuario.setDni(dni);
@@ -112,16 +112,15 @@ public class TiendaServiceimpl implements TiendaService {
     }
     @Transactional
     @Override
-    public List <RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni)throws UserNotFoundException, UserNotAdminException
+    public List <RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni,boolean cambiarRol)throws UserNotFoundException, UserNotAdminException
     {
-        List<RolPorPerfilListaDto> entry;
+        if(cambiarRol == true){
 
         if (usuarioPorTiendaRepository.findByDni(adminDni) == null) {
             throw new UserNotFoundException();
         }
 
-        if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity()
-                .getRolPerfil().getId() != 1)
+        if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() != 3)
             throw new UserNotAdminException();
 
         if (usuarioPorTiendaRepository.findByDni(userDni) == null) {
@@ -129,49 +128,36 @@ public class TiendaServiceimpl implements TiendaService {
         }
 
         else {
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
+            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
 
-                if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 1) {
+                if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
                     RolPorUsuario rolPorUsuario;
                     rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
                     rolPorUsuario = asignarRolPorUsuario(userDni, (long) 4);
                     rolPorUsuarioRepository.save(rolPorUsuario);
 
-                } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 2) {
+                } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 4) {
                     RolPorUsuario rolPorUsuario;
                     rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
                     rolPorUsuario = asignarRolPorUsuario(userDni, (long) 3);
                     rolPorUsuarioRepository.save(rolPorUsuario);
                 }
             }
+        }}
+        List<RolPerfil> roles = rolPerfilRepository.findAll();
+        List<RolPorPerfilListaDto> result = null;
+
+        for (RolPerfil rolPerfil : roles){
+            RolPorPerfilListaDto rolPorPerfilListaDto = null;
+            rolPorPerfilListaDto.setDescripcion(rolPerfil.getDescripcion());
+            rolPorPerfilListaDto.setId(rolPerfil.getId());
+            result.add(rolPorPerfilListaDto);
+            rolPorPerfilListaDto= null;
         }
 
-        /*Optional<List<RolPerfil>> listaRolPerfil = Optional.of(rolPerfilRepository.findAll());
-        if(listaRolPerfil.isPresent()){
-            entry =  listaRolPerfil.get().stream().map()
 
 
-
-        }*/
-       /*     List<FamiliaBusquedaMiembrosDto> familiaBusquedaMiembrosDtos;
-
-        Optional<List<UsuarioPorFamilia>> miembrosGrupoFamiliarPorFamilia = usuarioPorFamiliaRepository
-                .findByUsuarioPorFamiliaIdentityFamiliaNombreUnico(nombreFamilia);
-        if (miembrosGrupoFamiliarPorFamilia.isPresent() && miembrosGrupoFamiliarPorFamilia.get().size() > 0) {
-
-            familiaBusquedaMiembrosDtos = miembrosGrupoFamiliarPorFamilia.get().stream().map((miembro) -> {
-                FamiliaBusquedaMiembrosDto familiaBusquedaMiembrosDto = new FamiliaBusquedaMiembrosDto();
-                familiaBusquedaMiembrosDto.setDni(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getDni());
-                familiaBusquedaMiembrosDto.setNombre(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getNombre());
-                familiaBusquedaMiembrosDto
-                        .setApellidoPaterno(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoPaterno());
-                familiaBusquedaMiembrosDto
-                        .setApellidoMaterno(miembro.getUsuarioPorFamiliaIdentity().getUsuario().getApellidoMaterno());
-
-                return familiaBusquedaMiembrosDto;
-            }).collect(Collectors.toList());*/
-
-        return null;
+        return result;
     }
     }
 

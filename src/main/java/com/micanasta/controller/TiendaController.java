@@ -1,5 +1,7 @@
 package com.micanasta.controller;
 
+import com.micanasta.dto.RolPorPerfilListaDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.StockUpdateDto;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,6 +59,18 @@ public class TiendaController {
         }
 
     }
+
+    @GetMapping("/tiendas/{userDni}/{dniAdmi}/{cambiarRol}")
+    public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
+
+
+        List<RolPorPerfilListaDto> rolPorPerfilListaDtos = tiendaService.switchRolPerfil(userDni, adminDni, cambiarRol);
+
+        return ResponseEntity.status(rolPorPerfilListaDtos != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                .body(rolPorPerfilListaDtos);
+
+    }
+
 
 }
 

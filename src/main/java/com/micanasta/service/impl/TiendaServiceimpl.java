@@ -1,9 +1,6 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.StockDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaDto;
-import com.micanasta.dto.TiendaUsuarioDto;
+import com.micanasta.dto.*;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
@@ -88,14 +85,31 @@ public class TiendaServiceimpl implements TiendaService {
             }else throw new UserAddedShopExceedLimitException();
         }else throw new UserAddedShopIncorrectException();
     }
+    public TiendaInfoDto getTiendaInfo(long idTienda) {
 
-    public List<TiendaDto>getAllTiendas(){
+        Tienda tienda = tiendaRepository.getById(idTienda);
 
-        List<TiendaDto> tiendasDto = new ArrayList<>();
-        List<Tienda> tiendas= tiendaRepository.findAll();
-        for (Tienda tienda : tiendas){
-            tiendasDto.add(tiendaDtoConverter.convertToDto(tienda));
+        if (tienda != null) {
+            List<Stock> stocks = stockRepository.getByStockIdentityTiendaId(idTienda);
+            List<StockInfoDto> stockNombre = new ArrayList<>();
+            TiendaInfoDto result = new TiendaInfoDto();
+
+
+            for (Stock stock : stocks) {
+
+                StockInfoDto stockInfoDto = null;
+                stockInfoDto.setNombre(stock.getStockIdentity().getProducto().getDescripcion());
+                stockInfoDto.setCantidad(stock.getCantidad());
+                stockNombre.add(stockInfoDto);
+            }
+            result.setDescripcion(tienda.getDescripcion());
+            result.setDireccion(tienda.getDireccion());
+            result.setHorario(tienda.getHorario());
+            result.setStock(stockNombre);
+
+
+            return result;
         }
-        return tiendasDto;
+        else return null;
     }
 }

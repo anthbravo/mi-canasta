@@ -55,15 +55,14 @@ public class TiendaController {
         }
 
     }
-    @GetMapping("/tiendas")
-    public ResponseEntity<?> getAllTiendas() {
+    @GetMapping("/tiendas/{idTienda}")
+    public ResponseEntity<?> getTiendaInfo(@PathVariable long idTienda) {
         try {
-            return ResponseEntity.ok().body(tiendaService.getAllTiendas());
+            return ResponseEntity.ok().body(tiendaService.getTiendaInfo(idTienda));
         } catch (Exception e) {
             return ResponseEntity.noContent().build();
         }
     }
-
 
 }
 

@@ -43,6 +43,7 @@ public class TiendaServiceimpl implements TiendaService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+
     @Override
     public TiendaDto getById(long id) {
         return tiendaDtoConverter.convertToDto(tiendaRepository.getById(id));
@@ -86,5 +87,15 @@ public class TiendaServiceimpl implements TiendaService {
                 return tiendaUsuarioDto;
             }else throw new UserAddedShopExceedLimitException();
         }else throw new UserAddedShopIncorrectException();
+    }
+
+    public List<TiendaDto>getAllTiendas(){
+
+        List<TiendaDto> tiendasDto = new ArrayList<>();
+        List<Tienda> tiendas= tiendaRepository.findAll();
+        for (Tienda tienda : tiendas){
+            tiendasDto.add(tiendaDtoConverter.convertToDto(tienda));
+        }
+        return tiendasDto;
     }
 }

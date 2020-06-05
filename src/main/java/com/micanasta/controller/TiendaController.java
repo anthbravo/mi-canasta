@@ -55,6 +55,15 @@ public class TiendaController {
         }
 
     }
+    @GetMapping("/tiendas")
+    public ResponseEntity<?> getAllTiendas() {
+        try {
+            return ResponseEntity.ok().body(tiendaService.getAllTiendas());
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
 
 }
 

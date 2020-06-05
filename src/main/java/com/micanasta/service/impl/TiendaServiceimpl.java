@@ -64,6 +64,7 @@ public class TiendaServiceimpl implements TiendaService {
         stockRepository.save(stock);
         return stockDtoConverter.convertToDto(stock);
     }
+
     public TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
     {
         Usuario usuario = usuarioRepository.findByDni(dni);
@@ -85,6 +86,8 @@ public class TiendaServiceimpl implements TiendaService {
             }else throw new UserAddedShopExceedLimitException();
         }else throw new UserAddedShopIncorrectException();
     }
+    @Transactional
+    @Override
     public TiendaInfoDto getTiendaInfo(long idTienda) {
 
         Tienda tienda = tiendaRepository.getById(idTienda);
@@ -97,7 +100,7 @@ public class TiendaServiceimpl implements TiendaService {
 
             for (Stock stock : stocks) {
 
-                StockInfoDto stockInfoDto = null;
+                StockInfoDto stockInfoDto = new StockInfoDto();
                 stockInfoDto.setNombre(stock.getStockIdentity().getProducto().getDescripcion());
                 stockInfoDto.setCantidad(stock.getCantidad());
                 stockNombre.add(stockInfoDto);
@@ -105,7 +108,8 @@ public class TiendaServiceimpl implements TiendaService {
             result.setDescripcion(tienda.getDescripcion());
             result.setDireccion(tienda.getDireccion());
             result.setHorario(tienda.getHorario());
-            result.setStock(stockNombre);
+            result.setStock(stockNombre)
+            ;
 
 
             return result;

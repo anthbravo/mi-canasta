@@ -1,6 +1,8 @@
 package com.micanasta.controller;
 
+import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.dto.TiendaInfoDto;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
 import com.micanasta.service.TiendaService;
@@ -42,27 +44,26 @@ public class TiendaController {
     }
 
     @PostMapping("/tiendas/{idTienda}/usuario/{dni}/usuariosportienda")
-    public ResponseEntity<?> PostNewUserInShop(long idTienda,String dni){
-        try
-        {
-           return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(dni,idTienda));
-        }catch (UserAddedShopExceedLimitException userAdded)
-        {
+    public ResponseEntity<?> PostNewUserInShop(long idTienda, String dni) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(dni, idTienda));
+        } catch (UserAddedShopExceedLimitException userAdded) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAdded.exceptionDto);
-        }catch (UserAddedShopIncorrectException userIncorrect)
-        {
+        } catch (UserAddedShopIncorrectException userIncorrect) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userIncorrect.exceptionDto);
         }
 
     }
-    @GetMapping("/tiendas/{idTienda}")
-    public ResponseEntity<?> getTiendaInfo(@PathVariable long idTienda) {
-        try {
-            return ResponseEntity.ok().body(tiendaService.getTiendaInfo(idTienda));
-        } catch (Exception e) {
-            return ResponseEntity.noContent().build();
-        }
-    }
 
+
+    @GetMapping("/tiendas/{idTienda}/stockNombre")
+    public ResponseEntity<?> getTiendaInfo(@PathVariable long idTienda) {
+
+        TiendaInfoDto tiendaInfoDto = tiendaService.getTiendaInfo(idTienda);
+        return ResponseEntity.status(tiendaInfoDto != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                .body(tiendaInfoDto);
+
+    }
 }
+
 

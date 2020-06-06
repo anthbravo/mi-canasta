@@ -1,7 +1,7 @@
 class Familia {
   familiaId?: number;
-  nombreUnico?: string;
-  cantidad?: string;
+  nombre?: string;
+  cantidad?: number;
   aceptaSolicitudes?: boolean;
 }
 

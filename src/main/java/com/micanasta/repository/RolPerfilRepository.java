@@ -9,6 +9,7 @@ import java.util.Optional;
 
 
 public interface RolPerfilRepository extends JpaRepository<RolPerfil, Long> {
-    Optional<List<RolPerfil>> GetAll();
+
+
 
 }

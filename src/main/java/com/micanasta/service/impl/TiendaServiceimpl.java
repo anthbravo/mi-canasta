@@ -1,6 +1,7 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.*;
+import com.micanasta.dto.converter.RolPorPerfilDtoConverter;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
@@ -144,16 +145,19 @@ public class TiendaServiceimpl implements TiendaService {
                 }
             }
         }}
-        List<RolPerfil> roles = rolPerfilRepository;
-        List<RolPorPerfilListaDto> result = null;
+        List <RolPerfil> roles = rolPerfilRepository.findAll();
+        List<RolPorPerfilListaDto> result = new ArrayList<>();
 
         for (RolPerfil rolPerfil : roles){
             RolPorPerfilListaDto rolPorPerfilListaDto = null;
             rolPorPerfilListaDto.setDescripcion(rolPerfil.getDescripcion());
             rolPorPerfilListaDto.setId(rolPerfil.getId());
+
             result.add(rolPorPerfilListaDto);
 
         }
+
+
 
 
 

@@ -3,8 +3,7 @@ package com.micanasta.controller;
 import com.micanasta.dto.RolPorPerfilListaDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.exception.UserAddedShopExceedLimitException;
-import com.micanasta.exception.UserAddedShopIncorrectException;
+import com.micanasta.exception.*;
 import com.micanasta.service.TiendaService;
 import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
@@ -64,10 +63,14 @@ public class TiendaController {
     public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
 
 
-        List<RolPorPerfilListaDto> rolPorPerfilListaDtos = tiendaService.switchRolPerfil(userDni, adminDni, cambiarRol);
-
-        return ResponseEntity.status(rolPorPerfilListaDtos != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
-                .body(rolPorPerfilListaDtos);
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.switchRolPerfil(userDni,adminDni,cambiarRol));
+        }catch (UserNotFoundException userNotFoundExeption) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundExeption.exceptionDto);
+        }catch (UserNotAdminException userNotAdminException)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException);
+        }
 
     }
 

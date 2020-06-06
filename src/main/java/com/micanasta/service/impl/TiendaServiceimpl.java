@@ -144,7 +144,7 @@ public class TiendaServiceimpl implements TiendaService {
                 }
             }
         }}
-        List<RolPerfil> roles = rolPerfilRepository.findAll();
+        List<RolPerfil> roles = rolPerfilRepository;
         List<RolPorPerfilListaDto> result = null;
 
         for (RolPerfil rolPerfil : roles){
@@ -152,7 +152,7 @@ public class TiendaServiceimpl implements TiendaService {
             rolPorPerfilListaDto.setDescripcion(rolPerfil.getDescripcion());
             rolPorPerfilListaDto.setId(rolPerfil.getId());
             result.add(rolPorPerfilListaDto);
-            rolPorPerfilListaDto= null;
+
         }
 
 

@@ -6,6 +6,7 @@ import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,6 +70,16 @@ public class FamiliaController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
 
+    }
+
+    //Se está reusando la exception familyNotFoundException
+    @GetMapping("familias/{familiaId}")
+    public ResponseEntity<?> getFamilia(@PathVariable Long familiaId){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(familiaService.getById(familiaId));
+        }catch(FamilyNotFoundException familyNotFoundException){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(familyNotFoundException.exceptionDto);
+        }
     }
 
     @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")

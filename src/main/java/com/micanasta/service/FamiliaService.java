@@ -23,6 +23,7 @@ public interface FamiliaService {
 
     UsuarioPorFamiliaDto Remove(String userDni);
 
+    FamiliaDataDto getById(Long id) throws FamilyNotFoundException;
     List<CompraDto> getCompra(String familiaNombre, Date fechaInicio, Date fechaFin);
 
     UsuarioPorFamilia editarRolUsuarioFamilia(String adminDni, String userDni) throws UserNotFoundException, UserNotAdminException;

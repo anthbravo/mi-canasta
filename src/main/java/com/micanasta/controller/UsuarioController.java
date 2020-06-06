@@ -4,17 +4,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.micanasta.dto.UsuarioAccesoDto;
 import com.micanasta.dto.UsuarioDataDto;
 import com.micanasta.dto.UsuarioLoginDto;
-import com.micanasta.exception.UserLoginIncorrectException;
-import com.micanasta.exception.UserLoginNotFoundException;
+import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.model.RolPorUsuario;
 import com.micanasta.model.Tienda;
 import com.micanasta.service.FamiliaService;
 import com.micanasta.service.impl.*;
 import com.micanasta.dto.UsuarioUpdateDto;
-import com.micanasta.exception.ActualPasswordNotMatchException;
-import com.micanasta.exception.EmailWrongFormatException;
-import com.micanasta.exception.NewPasswordNotMatchException;
 import com.micanasta.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,6 +51,18 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
         } catch (NewPasswordNotMatchException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
+        }
+    }
+
+    @GetMapping("usuarios/{dni}/usuariosporfamilia")
+    public ResponseEntity<?> GetUsuarioFamilia(@PathVariable String dni){
+        try
+        {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.GetUsuarioFamilia(dni));
+        }
+        catch(UserFamilyNotFoundException exception)
+        {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(exception.exceptionDto);
         }
     }
 }

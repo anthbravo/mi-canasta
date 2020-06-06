@@ -13,6 +13,7 @@ import com.micanasta.exception.*;
 import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.FamiliaService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,8 @@ public class FamiliaServiceImpl implements FamiliaService {
     @Autowired
     private SolicitudRepository solicitudRepository;
 
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
     @Autowired
     private CompraRepository compraRepository;
 
@@ -152,7 +155,7 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     }
 
-    UsuarioPorFamilia asignarIdentitys(String userDni) {
+    public UsuarioPorFamilia asignarIdentitys(String userDni) {
         UsuarioPorFamilia usuario = new UsuarioPorFamilia();
         Optional<UsuarioPorFamilia> usuarioPorFamilia = usuarioPorFamiliaRepository
                 .findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);
@@ -268,5 +271,15 @@ public class FamiliaServiceImpl implements FamiliaService {
         }
 
         return null;
+    }
+
+    @Override
+    public FamiliaDataDto getById(Long id) throws FamilyNotFoundException {
+        Optional <Familia> familia = familiaRepository.findById(id);
+        if(familia.isPresent()) {
+            return modelMapper.map(familia.get(),FamiliaDataDto.class);
+        }
+        throw new FamilyNotFoundException();
+
     }
 }

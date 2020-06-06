@@ -36,3 +36,4 @@ src/main/resources/
 !src/main/resources/application.properties
 !src/main/resources/static/landing/
 src/main/resources/application.properties
+*.properties

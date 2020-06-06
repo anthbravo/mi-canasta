@@ -1,5 +1,5 @@
 class Familia {
-  id?: number;
+  familiaId?: number;
   nombreUnico?: string;
   cantidad?: string;
   aceptaSolicitudes?: boolean;

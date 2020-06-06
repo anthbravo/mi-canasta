@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
+import {  ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home-family',
@@ -8,6 +9,7 @@ import { HomeService } from 'src/app/core/service/home.service';
 })
 export class HomeFamilyComponent implements OnInit {
   switchValue = false;
+  idFamily = -1;
   mock= [
     {
       name: 'Anthony',
@@ -22,10 +24,14 @@ export class HomeFamilyComponent implements OnInit {
       categorias: ['Alimentos']
     }
   ];
-  constructor(private homeService:HomeService) { }
+  constructor(private homeService:HomeService, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.homeService.setStatus({ isLoginView: false });
+    this.route.params.subscribe( (e)=>{
+
+      this.idFamily =  e.id;
+    })
 
   }
 }

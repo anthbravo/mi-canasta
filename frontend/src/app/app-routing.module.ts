@@ -45,6 +45,11 @@ const routes: Routes = [
         loadChildren: ()=>
           import("./modules/requests-received/requests-received.module").then( m=>m.RequestsReceivedModule)
 
+      },
+      {
+        path: "home/sale",
+        loadChildren : ()=>
+          import("./modules/sale/sale.module").then( m=> m.SaleModule)
       }
     ],
   },

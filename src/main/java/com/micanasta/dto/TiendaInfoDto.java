@@ -1,17 +1,20 @@
 package com.micanasta.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
 public class TiendaInfoDto {
-    private long id;
+
 
     private String descripcion;
 
     private String direccion;
 
-    private int limite;
-
-    private String latitud;
-
-    private String longitud;
-
     private String horario;
+
+    private List<StockInfoDto> stock;
 }

@@ -12,5 +12,6 @@ public interface TiendaService {
     StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto);
     TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId)throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException;
     List<TiendaDto> getAllTiendas();
+    TiendaInfoDto getTiendaInfo(long idTienda);
     List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id);
 }

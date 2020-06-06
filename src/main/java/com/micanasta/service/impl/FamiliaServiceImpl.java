@@ -1,16 +1,13 @@
 package com.micanasta.service.impl;
 
-import com.micanasta.dto.CrearFamiliaDTO;
-import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.dto.FamiliaDTO;
-import com.micanasta.dto.HistorialDto;
-import com.micanasta.dto.UsuarioPorFamiliaDto;
+import com.micanasta.dto.*;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
 import com.micanasta.exception.*;
 import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.FamiliaService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +41,8 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     @Autowired
     private HistorialRepository historialRepository;
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Override
     @Transactional
@@ -227,5 +226,15 @@ public class FamiliaServiceImpl implements FamiliaService {
         }).collect(Collectors.toList());
 
         return historialesDto;
+    }
+
+    @Override
+    public FamiliaDataDto getById(Long id) throws FamilyNotFoundException {
+        Optional <Familia> familia = familiaRepository.findById(id);
+        if(familia.isPresent()) {
+            return modelMapper.map(familia.get(),FamiliaDataDto.class);
+        }
+        throw new FamilyNotFoundException();
+
     }
 }

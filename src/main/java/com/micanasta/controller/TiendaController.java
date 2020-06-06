@@ -1,5 +1,8 @@
 package com.micanasta.controller;
 
+import com.micanasta.dto.SolicitudBusquedaDto;
+import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.dto.TiendaInfoDto;
 import com.micanasta.dto.RolPorUsuarioDataDto;
 import com.micanasta.dto.StockUpdateDto;
 import com.micanasta.dto.TiendaBusquedaMiembrosDto;
@@ -48,15 +51,12 @@ public class TiendaController {
     }
 
     @PostMapping("/tiendas/{idTienda}/usuario/{dni}/usuariosportienda")
-    public ResponseEntity<?> PostNewUserInShop(long idTienda,String dni){
-        try
-        {
-           return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(dni,idTienda));
-        }catch (UserAddedShopExceedLimitException userAdded)
-        {
+    public ResponseEntity<?> PostNewUserInShop(long idTienda, String dni) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(dni, idTienda));
+        } catch (UserAddedShopExceedLimitException userAdded) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAdded.exceptionDto);
-        }catch (UserAddedShopIncorrectException userIncorrect)
-        {
+        } catch (UserAddedShopIncorrectException userIncorrect) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userIncorrect.exceptionDto);
         }
     }
@@ -67,6 +67,24 @@ public class TiendaController {
         return ResponseEntity.status(miembrosGrupoDistruibuidoraPorTienda != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
                 .body(miembrosGrupoDistruibuidoraPorTienda);
     }
+    @GetMapping("/tiendas")
+    public ResponseEntity<?> getAllTiendas() {
+        try {
+            return ResponseEntity.ok().body(tiendaService.getAllTiendas());
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
+
+    @GetMapping("/tiendas/{idTienda}/stockNombre")
+    public ResponseEntity<?> getTiendaInfo(@PathVariable long idTienda) {
+
+        TiendaInfoDto tiendaInfoDto = tiendaService.getTiendaInfo(idTienda);
+        return ResponseEntity.status(tiendaInfoDto != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                .body(tiendaInfoDto);
+
+    }
 }
+
 

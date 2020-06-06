@@ -73,6 +73,7 @@ public class TiendaServiceimpl implements TiendaService {
         stockRepository.save(stock);
         return stockDtoConverter.convertToDto(stock);
     }
+
     public TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
     {
         Usuario usuario = usuarioRepository.findByDni(dni);
@@ -94,7 +95,49 @@ public class TiendaServiceimpl implements TiendaService {
             }else throw new UserAddedShopExceedLimitException();
         }else throw new UserAddedShopIncorrectException();
     }
+    @Transactional
+    @Override
+    public TiendaInfoDto getTiendaInfo(long idTienda) {
 
+        Tienda tienda = tiendaRepository.getById(idTienda);
+
+        if (tienda != null) {
+            List<Stock> stocks = stockRepository.getByStockIdentityTiendaId(idTienda);
+            List<StockInfoDto> stockNombre = new ArrayList<>();
+            TiendaInfoDto result = new TiendaInfoDto();
+
+
+            for (Stock stock : stocks) {
+
+                StockInfoDto stockInfoDto = new StockInfoDto();
+                stockInfoDto.setNombre(stock.getStockIdentity().getProducto().getDescripcion());
+                stockInfoDto.setCantidad(stock.getCantidad());
+                stockNombre.add(stockInfoDto);
+            }
+            result.setDescripcion(tienda.getDescripcion());
+            result.setDireccion(tienda.getDireccion());
+            result.setHorario(tienda.getHorario());
+            result.setStock(stockNombre)
+            ;
+
+
+            return result;
+        }
+        else return null;
+    }
+
+    public List<TiendaDto>getAllTiendas(){
+
+        List<TiendaDto> tiendasDto = new ArrayList<>();
+        List<Tienda> tiendas= tiendaRepository.findAll();
+        if(tiendas!=null) {
+            for (Tienda tienda : tiendas) {
+                tiendasDto.add(tiendaDtoConverter.convertToDto(tienda));
+            }
+            return tiendasDto;
+        }
+        else return null;
+    }
     @Override
     public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
         List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;

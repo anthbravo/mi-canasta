@@ -1,11 +1,11 @@
 package com.micanasta.dto;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioPorFamiliaDto {
+
+public class UsuarioPorTiendaDto {
     private String dni;
-    private long familiaId;
+    private long tiendaId;
 }

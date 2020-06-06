@@ -22,4 +22,5 @@ public class UsuarioPorFamiliaDtoConverter {
         return modelMapper.map(usuarioPorFamiliaDto, UsuarioPorFamilia.class);
 
     }
+
 }

@@ -1,18 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  text-decoration: none;
-  outline: none;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 @import "~ng-zorro-antd/ng-zorro-antd.min.css";
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
 *{
-  padding: 0;
+  padding: 0 ;
   margin: 0;
   box-sizing: border-box;
   list-style: none;
@@ -59,4 +51,7 @@
 button:disabled{
   opacity: .3;
   cursor: not-allowed;
+}
+.ant-switch-checked, .ant-tabs-ink-bar{
+  background-color: #F76A8C !important;
 }

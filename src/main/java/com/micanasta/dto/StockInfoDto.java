@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioPorFamiliaDto {
-    private String dni;
-    private long familiaId;
+
+public class StockInfoDto {
+    private String nombre ;
+    private float cantidad;
 }

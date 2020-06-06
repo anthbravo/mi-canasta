@@ -16,12 +16,12 @@ import java.io.Serializable;
 @Embeddable
 public class StockIdentity implements Serializable {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producto_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Producto producto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tienda_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Tienda tienda;

@@ -1,9 +1,6 @@
 package com.micanasta.service;
 
-import com.micanasta.dto.StockDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaDto;
-import com.micanasta.dto.TiendaUsuarioDto;
+import com.micanasta.dto.*;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
 
@@ -15,4 +12,5 @@ public interface TiendaService {
     StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto);
     TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId)throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException;
     List<TiendaDto> getAllTiendas();
+    List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id);
 }

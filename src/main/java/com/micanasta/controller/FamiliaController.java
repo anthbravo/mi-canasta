@@ -31,7 +31,7 @@ public class FamiliaController {
         } catch (ExistingFamilyFoundException existingFamilyFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Se ha creado el grupo familiar");
+        return ResponseEntity.status(HttpStatus.OK).body("Se ha creado el grupo familiar");
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")
@@ -69,5 +69,16 @@ public class FamiliaController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
 
+    }
+
+    @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> editarRolUsuarioFamilia(@PathVariable String dni, String adminDni ) throws UserNotFoundException, UserNotAdminException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(familiaService.editarRolUsuarioFamilia(dni, adminDni));
+        } catch (UserNotFoundException userNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundException.exceptionDto);
+        } catch (UserNotAdminException userNotAdminException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        }
     }
 }

@@ -14,4 +14,8 @@ public class RolPorUsuarioServiceImpl implements RolPorUsuarioService {
     public RolPorUsuario findByDni(String dni){
         return rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni);
     }
+
+    public  RolPorUsuario editarRol(String dni){
+        return rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni);
+    }
 }

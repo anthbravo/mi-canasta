@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class HistorialCreateDto {
+public class CompraCreateDto {
 
     private float cantidad;
 

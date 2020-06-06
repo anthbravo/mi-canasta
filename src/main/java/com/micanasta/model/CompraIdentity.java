@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Embeddable
-public class HistorialIdentity implements Serializable {
+public class CompraIdentity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "familia_id")

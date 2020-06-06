@@ -3,7 +3,7 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
 import com.micanasta.dto.FamiliaDTO;
-import com.micanasta.dto.HistorialDto;
+import com.micanasta.dto.CompraDto;
 import com.micanasta.dto.UsuarioPorFamiliaDto;
 import com.micanasta.dto.converter.FamiliaDTOConverter;
 import com.micanasta.dto.converter.UsuarioPorFamiliaDtoConverter;
@@ -43,7 +43,7 @@ public class FamiliaServiceImpl implements FamiliaService {
     private SolicitudRepository solicitudRepository;
 
     @Autowired
-    private HistorialRepository historialRepository;
+    private CompraRepository compraRepository;
 
     @Override
     @Transactional
@@ -181,51 +181,51 @@ public class FamiliaServiceImpl implements FamiliaService {
         return usuarioPorFamiliaDto;
     }
 
-    public List<Historial> filtrarPorFecha(String familiaNombre, Date fechaInicio, Date fechaFinal) {
-        List<Historial> historiales = historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
-        // List<Historial> historialesAux = historiales;
-        // historialesAux.clear();
+    public List<Compra> filtrarPorFecha(String familiaNombre, Date fechaInicio, Date fechaFinal) {
+        List<Compra> compras = compraRepository.getByCompraIdentityFamiliaNombreUnico(familiaNombre);
+        // List<Compra> comprasAux = compras;
+        // comprasAux.clear();
 
         /*
-         * historiales.stream().filter(x->x.getFechaCompra().after(fechaInicio)&&x.
-         * getFechaCompra().before(fechaFinal) ).forEach(x->historialesAux.add(x));
+         * compras.stream().filter(x->x.getFechaCompra().after(fechaInicio)&&x.
+         * getFechaCompra().before(fechaFinal) ).forEach(x->comprasAux.add(x));
          */
 
         /*
-         * for (Historial historial : historiales.) {
-         * if(historial.getFechaCompra().after(fechaInicio) &&
-         * historial.getFechaCompra().before(fechaFinal)){
-         * historialesAux.add(historial); } }
+         * for (Compra compra : compras.) {
+         * if(compra.getFechaCompra().after(fechaInicio) &&
+         * compra.getFechaCompra().before(fechaFinal)){
+         * comprasAux.add(compra); } }
          */
-        return historiales;
+        return compras;
     }
 
     @Override
-    public List<HistorialDto> getHistorial(String familiaNombre, Date fechaInicio, Date fechaFinal) {
-        List<HistorialDto> historialesDto;
-        // List<Historial>
-        // historiales=historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
+    public List<CompraDto> getCompra(String familiaNombre, Date fechaInicio, Date fechaFinal) {
+        List<CompraDto> comprasDto;
+        // List<Compra>
+        // compras=compraRepository.getByCompraIdentityFamiliaNombreUnico(familiaNombre);
 
-        List<Historial> historialesAux = historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre);
-        historialesAux.clear();
+        List<Compra> comprasAux = compraRepository.getByCompraIdentityFamiliaNombreUnico(familiaNombre);
+        comprasAux.clear();
 
-        for (Historial historial : historialRepository.getByHistorialIdentityFamiliaNombreUnico(familiaNombre)) {
-            if (historial.getFechaCompra().after(fechaInicio) && historial.getFechaCompra().before(fechaFinal)) {
-                historialesAux.add(historial);
+        for (Compra compra : compraRepository.getByCompraIdentityFamiliaNombreUnico(familiaNombre)) {
+            if (compra.getFechaCompra().after(fechaInicio) && compra.getFechaCompra().before(fechaFinal)) {
+                comprasAux.add(compra);
             }
         }
 
-        historialesDto = historialesAux.stream().map(x -> {
-            HistorialDto historialDto = new HistorialDto();
-            historialDto.setDni(x.getDni());
-            historialDto.setCantidad(x.getCantidad());
-            historialDto.setFechaCompra(x.getFechaCompra());
-            historialDto.setFamiliaId(x.getHistorialIdentity().getFamilia().getId());
-            historialDto.setProductoId(x.getHistorialIdentity().getProducto().getId());
-            historialDto.setTiendaId(x.getHistorialIdentity().getTienda().getId());
-            return historialDto;
+        comprasDto = comprasAux.stream().map(x -> {
+            CompraDto compraDto = new CompraDto();
+            compraDto.setDni(x.getDni());
+            compraDto.setCantidad(x.getCantidad());
+            compraDto.setFechaCompra(x.getFechaCompra());
+            compraDto.setFamiliaId(x.getCompraIdentity().getFamilia().getId());
+            compraDto.setProductoId(x.getCompraIdentity().getProducto().getId());
+            compraDto.setTiendaId(x.getCompraIdentity().getTienda().getId());
+            return compraDto;
         }).collect(Collectors.toList());
 
-        return historialesDto;
+        return comprasDto;
     }
 }

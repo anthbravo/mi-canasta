@@ -23,8 +23,6 @@ public interface FamiliaService {
 
     UsuarioPorFamiliaDto Remove(String userDni);
 
-    List<HistorialDto> getHistorial(String familiaNombre, Date fechaInicio, Date fechaFin);
-
     FamiliaDataDto getById(Long id) throws FamilyNotFoundException;
     List<CompraDto> getCompra(String familiaNombre, Date fechaInicio, Date fechaFin);
 

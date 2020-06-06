@@ -45,8 +45,6 @@ public class FamiliaServiceImpl implements FamiliaService {
     private SolicitudRepository solicitudRepository;
 
     @Autowired
-    private HistorialRepository historialRepository;
-    @Autowired
     private ModelMapper modelMapper = new ModelMapper();
     @Autowired
     private CompraRepository compraRepository;
@@ -157,7 +155,7 @@ public class FamiliaServiceImpl implements FamiliaService {
 
     }
 
-    UsuarioPorFamilia asignarIdentitys(String userDni) {
+    public UsuarioPorFamilia asignarIdentitys(String userDni) {
         UsuarioPorFamilia usuario = new UsuarioPorFamilia();
         Optional<UsuarioPorFamilia> usuarioPorFamilia = usuarioPorFamiliaRepository
                 .findByUsuarioPorFamiliaIdentityUsuarioDni(userDni);

@@ -67,6 +67,14 @@ public class TiendaController {
         return ResponseEntity.status(miembrosGrupoDistruibuidoraPorTienda != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
                 .body(miembrosGrupoDistruibuidoraPorTienda);
     }
+    @GetMapping("/tiendas")
+    public ResponseEntity<?> getAllTiendas() {
+        try {
+            return ResponseEntity.ok().body(tiendaService.getAllTiendas());
+        } catch (Exception e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
 
     @GetMapping("/tiendas/{idTienda}/stockNombre")

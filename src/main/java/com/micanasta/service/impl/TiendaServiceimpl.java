@@ -126,6 +126,18 @@ public class TiendaServiceimpl implements TiendaService {
         else return null;
     }
 
+    public List<TiendaDto>getAllTiendas(){
+
+        List<TiendaDto> tiendasDto = new ArrayList<>();
+        List<Tienda> tiendas= tiendaRepository.findAll();
+        if(tiendas!=null) {
+            for (Tienda tienda : tiendas) {
+                tiendasDto.add(tiendaDtoConverter.convertToDto(tienda));
+            }
+            return tiendasDto;
+        }
+        else return null;
+    }
     @Override
     public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
         List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;

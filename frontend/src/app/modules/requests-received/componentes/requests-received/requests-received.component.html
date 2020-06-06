@@ -1,0 +1,17 @@
+<div class="request-received-container">
+  <div class="request-received__title">
+    <h2>Solicitudes Enviadas</h2>
+  </div>
+  <div class="request-received__allow">
+    <p>Desactivar solicitudes</p>
+
+    <nz-switch [(ngModel)]="switchValue"></nz-switch>
+  </div>
+  <div class="request-received__list">
+    <app-request-received-card
+      *ngFor="let request of mock"
+      [request]="request"
+
+    ></app-request-received-card>
+  </div>
+</div>

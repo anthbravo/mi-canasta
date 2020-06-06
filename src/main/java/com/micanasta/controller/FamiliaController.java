@@ -25,9 +25,9 @@ public class FamiliaController {
     private FamiliaService familiaService;
 
     @PostMapping("/familias")
-    public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {
+    public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDTO) {
         try {
-             familiaService.crearGrupoFamiliar(familiaDto);
+             familiaService.crearGrupoFamiliar(familiaDTO);
         } catch (ExistingFamilyFoundException existingFamilyFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
@@ -44,10 +44,10 @@ public class FamiliaController {
 
     }
 
-    @GetMapping("/familias/{nombreFamilia}/historiales")
-    public ResponseEntity<?> getHistorial(@PathVariable String nombreFamilia, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
+    @GetMapping("/familias/{nombreFamilia}/compras")
+    public ResponseEntity<?> getCompra(@PathVariable String nombreFamilia, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
                                           @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd")  Date fechaFin){
-        return ResponseEntity.status(HttpStatus.OK).body(familiaService.getHistorial(nombreFamilia, fechaInicio,
+        return ResponseEntity.status(HttpStatus.OK).body(familiaService.getCompra(nombreFamilia, fechaInicio,
                 fechaFin));
     }
 

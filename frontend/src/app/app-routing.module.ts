@@ -26,7 +26,7 @@ const routes: Routes = [
 
       },
       {
-        path: 'home/family',
+        path: 'home/family/:id',
         loadChildren: ()=>
           import("./modules/home-family/home-family.module").then((m)=>m.HomeFamilyModule)
       },
@@ -50,6 +50,11 @@ const routes: Routes = [
         loadChildren: ()=>
           import("./modules/requests-received/requests-received.module").then( m=>m.RequestsReceivedModule)
 
+      },
+      {
+        path: "home/sale",
+        loadChildren : ()=>
+          import("./modules/sale/sale.module").then( m=> m.SaleModule)
       }
     ],
   },

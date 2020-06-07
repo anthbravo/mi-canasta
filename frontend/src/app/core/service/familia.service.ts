@@ -15,11 +15,17 @@ export class FamiliaService {
       .toPromise();
   }
 
-  async getFamilia(nombreFamilia:string){
+  async listarFamilia(id:any){
+    return await this.httpClient.get<Familia>(`${environment.url_api}/familias/${id}`)
+    .toPromise();
+  }
+
+  async listaMiembrosFamilia(nombreFamilia:string){
     return await this.httpClient
       .get(`${environment.url_api}/familias/${nombreFamilia}/usuarios`)
       .toPromise()
   }
+
 
   async eliminarIntegrante(nombreFamilia:string,dni:string){
     return await this.httpClient

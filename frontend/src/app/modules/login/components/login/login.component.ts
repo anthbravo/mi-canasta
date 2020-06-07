@@ -56,9 +56,17 @@ export class LoginComponent implements OnInit {
       );
 
 
+      if (usuarioAutenticacion.familia != null) {
+        this.route.navigate([
+          `/home/family/${usuarioAutenticacion.familia.familiaId}`,
+        ]);
+      } else {
+        this.route.navigate(['/home']);
+      }
+      localStorage.setItem('dni', this.usuario.dni);
+
       this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
-      localStorage.setItem("dni",this.usuario.dni);
-      this.route.navigate(['/home']);
+
       this.homeService.setStatus({ isLoginView: false });
     } catch (error) {
       if (

@@ -7,15 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SelectComponent implements OnInit {
   listOfOption: Array<{ value: string; label: string }> = [];
-  listOfSelectedValue = ['a10', 'c12'];
+  listOfSelectedValue = ["Administrador"];
 
   @Input()
   options:any;
   ngOnInit(): void {
-    const children: string[] = [];
-    for (let i = 10; i < 10000; i++) {
-      children.push(`${i.toString(36)}${i}`);
-    }
+    const children: string[] = ["Administrador", "Comprador"];
+
     this.listOfOption = children.map((item) => {
       return {
         value: item,

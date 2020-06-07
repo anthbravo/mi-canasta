@@ -55,10 +55,9 @@ export class LoginComponent implements OnInit {
         this.usuario
       );
 
-      localStorage.setItem("dni",usuarioAutenticacion.dni);
 
       this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
-
+      localStorage.setItem("dni",this.usuario.dni);
       this.route.navigate(['/home']);
       this.homeService.setStatus({ isLoginView: false });
     } catch (error) {

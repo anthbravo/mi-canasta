@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-solicitud',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolicitudComponent implements OnInit {
 
-  constructor() { }
+  constructor( private route: Router) {
+  }
 
   ngOnInit(): void {
   }
-
+  async volverAInicio(){
+    this.route.navigate(['/home']);
+  }
 }

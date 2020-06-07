@@ -1,5 +1,5 @@
-class Solicitud {
-    nombreUnico?: string;
+export class Solicitud {
+    familiaNombre?: string;
     dni?: string;
   }
   

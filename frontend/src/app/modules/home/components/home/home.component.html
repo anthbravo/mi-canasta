@@ -21,6 +21,7 @@
     ></app-button-shared>
 
     <app-button-shared
+      [loading]="loadingUnirseFamiliaButton"
       [disable]="grupoFamiliar.length < 1"
       [text]="'Unirse'"
       [type]="'small'"
@@ -35,6 +36,14 @@
     title="Lo sentimos"
     description="El nombre del grupo  familiar ya existe"
     (closeEvent)="cerrarModal()"
+  >
+  </app-error-modal>
+
+  <app-error-modal
+    *ngIf="errorFlagModalUnirse"
+    title="Lo sentimos"
+    description="El grupo familiar no existe o no acepta solicitudes"
+    (closeEvent)="cerrarModalUnirse()"
   >
   </app-error-modal>
 </div>

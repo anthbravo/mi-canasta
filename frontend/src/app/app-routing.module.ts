@@ -36,6 +36,11 @@ const routes: Routes = [
           import("./modules/home-dealers/home-dealers.module").then((m)=>m.HomeDealersModule)
       },
       {
+        path: 'home/solicitudes',
+        loadChildren: ()=>
+          import("./modules/home-solicitud/home-solicitud.module").then((m)=>m.HomeSolicitudModule)
+      },
+      {
         path: 'home/request-sent',
         loadChildren: ()=>
           import("./modules/requests-sent/requests-sent.module").then((m)=>m.RequestsSentModule)

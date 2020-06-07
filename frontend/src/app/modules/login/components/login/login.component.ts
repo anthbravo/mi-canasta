@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
         this.usuario
       );
 
+
       if (usuarioAutenticacion.familia != null) {
         this.route.navigate([
           `/home/family/${usuarioAutenticacion.familia.familiaId}`,
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.route.navigate(['/home']);
       }
-      localStorage.setItem('dni', usuarioAutenticacion.dni);
+      localStorage.setItem('dni', this.usuario.dni);
 
       this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
 

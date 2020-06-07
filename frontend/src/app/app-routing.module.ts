@@ -40,6 +40,16 @@ const routes: Routes = [
         loadChildren: ()=>
           import("./modules/home-solicitud/home-solicitud.module").then((m)=>m.HomeSolicitudModule)
       },
+        path: 'home/request-sent',
+        loadChildren: ()=>
+          import("./modules/requests-sent/requests-sent.module").then((m)=>m.RequestsSentModule)
+      },
+      {
+        path:'home/request-received',
+        loadChildren: ()=>
+          import("./modules/requests-received/requests-received.module").then( m=>m.RequestsReceivedModule)
+
+      }
     ],
   },
   {

@@ -1,0 +1,40 @@
+.card-container-request{
+  width: 264px;
+  margin: 0 auto 12px;
+  background: #fafafa;
+  position: relative;
+  padding: 16px 0 24px 0;
+}
+
+.card-container-request__title{
+  margin: 18px 0 24px 0;
+  width: 100%;
+}
+.card-container-request__title h3{
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+}
+
+.card-container-request p{
+  text-align: center;
+  width: 100%;
+}
+.card-container-request__description__info{
+  font-size: 16px;
+  color: #535353;
+  margin: 0 0 4px 0;
+}
+
+.card-container-request__description__status{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-container-request__button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 32px 0 24px 0;
+}

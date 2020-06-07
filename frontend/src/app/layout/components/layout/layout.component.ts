@@ -15,11 +15,15 @@ export class LayoutComponent implements OnInit {
     // console.log(this.route.url);
     // if (this.route.url.includes('login')) {
     //   this.isLoginView = true;
+
     // }
-    // this.homeService.pageStatus.subscribe(item=>{
-    //   this.isLoginView =  item.isLoginView
-    // })
-    // this.isLoginView =  !this.route.url.includes("login")
+    this.homeService.pageStatus.subscribe(item=>{
+      this.isLoginView =  item.isLoginView
+    })
+
+
+
+    //this.isLoginView =  !this.route.url.includes("login")
   }
 
 

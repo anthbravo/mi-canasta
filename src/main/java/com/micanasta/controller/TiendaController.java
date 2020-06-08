@@ -79,7 +79,7 @@ public class TiendaController {
         }
     }
 
-    @GetMapping("/tiendas/RolesXPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
+    @GetMapping("/tiendas/RolesPorPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
     public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
 
 

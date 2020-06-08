@@ -14,11 +14,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "historiales")
-public class Historial {
+@Table(name = "compras")
+public class Compra {
 
     @EmbeddedId
-    private HistorialIdentity historialIdentity;
+    private CompraIdentity compraIdentity;
 
     @NotNull
     private float cantidad;
@@ -28,4 +28,7 @@ public class Historial {
 
     @NotNull
     private String dni;
+
+    @NotNull
+    private boolean confirmacion;
 }

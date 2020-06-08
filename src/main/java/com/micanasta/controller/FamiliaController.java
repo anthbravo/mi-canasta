@@ -6,6 +6,7 @@ import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
 import com.micanasta.model.Familia;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,13 +26,13 @@ public class FamiliaController {
     private FamiliaService familiaService;
 
     @PostMapping("/familias")
-    public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDto) {
+    public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDTO) {
         try {
-             familiaService.crearGrupoFamiliar(familiaDto);
+             familiaService.crearGrupoFamiliar(familiaDTO);
         } catch (ExistingFamilyFoundException existingFamilyFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Se ha creado el grupo familiar");
+        return ResponseEntity.status(HttpStatus.OK).body("Se ha creado el grupo familiar");
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")
@@ -44,10 +45,10 @@ public class FamiliaController {
 
     }
 
-    @GetMapping("/familias/{nombreFamilia}/historiales")
-    public ResponseEntity<?> getHistorial(@PathVariable String nombreFamilia, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
+    @GetMapping("/familias/{nombreFamilia}/compras")
+    public ResponseEntity<?> getCompra(@PathVariable String nombreFamilia, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
                                           @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd")  Date fechaFin){
-        return ResponseEntity.status(HttpStatus.OK).body(familiaService.getHistorial(nombreFamilia, fechaInicio,
+        return ResponseEntity.status(HttpStatus.OK).body(familiaService.getCompra(nombreFamilia, fechaInicio,
                 fechaFin));
     }
 
@@ -69,5 +70,26 @@ public class FamiliaController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
 
+    }
+
+    //Se está reusando la exception familyNotFoundException
+    @GetMapping("familias/{familiaId}")
+    public ResponseEntity<?> getFamilia(@PathVariable Long familiaId){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(familiaService.getById(familiaId));
+        }catch(FamilyNotFoundException familyNotFoundException){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(familyNotFoundException.exceptionDto);
+        }
+    }
+
+    @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    public ResponseEntity<?> editarRolUsuarioFamilia(@PathVariable String dni, String adminDni ) throws UserNotFoundException, UserNotAdminException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(familiaService.editarRolUsuarioFamilia(dni, adminDni));
+        } catch (UserNotFoundException userNotFoundException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundException.exceptionDto);
+        } catch (UserNotAdminException userNotAdminException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException.exceptionDto);
+        }
     }
 }

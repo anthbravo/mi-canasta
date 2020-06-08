@@ -26,7 +26,7 @@ const routes: Routes = [
 
       },
       {
-        path: 'home/family',
+        path: 'home/family/:id',
         loadChildren: ()=>
           import("./modules/home-family/home-family.module").then((m)=>m.HomeFamilyModule)
       },
@@ -35,6 +35,27 @@ const routes: Routes = [
         loadChildren: ()=>
           import("./modules/home-dealers/home-dealers.module").then((m)=>m.HomeDealersModule)
       },
+      {
+        path: 'home/solicitudes',
+        loadChildren: ()=>
+          import("./modules/home-solicitud/home-solicitud.module").then((m)=>m.HomeSolicitudModule)
+      },
+      {
+        path: 'home/request-sent',
+        loadChildren: ()=>
+          import("./modules/requests-sent/requests-sent.module").then((m)=>m.RequestsSentModule)
+      },
+      {
+        path:'home/request-received',
+        loadChildren: ()=>
+          import("./modules/requests-received/requests-received.module").then( m=>m.RequestsReceivedModule)
+
+      },
+      {
+        path: "home/sale",
+        loadChildren : ()=>
+          import("./modules/sale/sale.module").then( m=> m.SaleModule)
+      }
     ],
   },
   {

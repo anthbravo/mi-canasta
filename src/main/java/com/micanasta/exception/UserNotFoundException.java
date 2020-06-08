@@ -1,4 +1,3 @@
-
 package com.micanasta.exception;
 
 import com.micanasta.dto.ExceptionDto;

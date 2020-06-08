@@ -11,6 +11,9 @@ import com.micanasta.exception.UserNotFoundException;
 import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.TiendaService;
+import com.micanasta.service.UsuarioService;
+import lombok.var;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +50,11 @@ public class TiendaServiceimpl implements TiendaService {
     @Autowired
     RolPerfilRepository rolPerfilRepository;
 
+    @Autowired
+    UsuarioService usuarioService;
+
+    @Autowired
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public TiendaDto getById(long id) {
@@ -72,7 +80,8 @@ public class TiendaServiceimpl implements TiendaService {
         return stockDtoConverter.convertToDto(stock);
     }
 
-    public TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
+    public TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
+    {
         Usuario usuario = usuarioRepository.findByDni(dni);
         if (usuario != null) {
             long cantidadUsuarios = usuarioPorTiendaRepository.countById(tiendaId);
@@ -167,6 +176,81 @@ public class TiendaServiceimpl implements TiendaService {
         }
         return result;
     }
+    @Transactional
+    @Override
+    public TiendaInfoDto getTiendaInfo(long idTienda) {
+
+        Tienda tienda = tiendaRepository.getById(idTienda);
+
+        if (tienda != null) {
+            List<Stock> stocks = stockRepository.getByStockIdentityTiendaId(idTienda);
+            List<StockInfoDto> stockNombre = new ArrayList<>();
+            TiendaInfoDto result = new TiendaInfoDto();
+
+
+            for (Stock stock : stocks) {
+
+                StockInfoDto stockInfoDto = new StockInfoDto();
+                stockInfoDto.setNombre(stock.getStockIdentity().getProducto().getDescripcion());
+                stockInfoDto.setCantidad(stock.getCantidad());
+                stockNombre.add(stockInfoDto);
+            }
+            result.setDescripcion(tienda.getDescripcion());
+            result.setDireccion(tienda.getDireccion());
+            result.setHorario(tienda.getHorario());
+            result.setStock(stockNombre)
+            ;
+
+
+            return result;
+        }
+        else return null;
+    }
+
+    public List<TiendaDto>getAllTiendas(){
+
+        List<TiendaDto> tiendasDto = new ArrayList<>();
+        List<Tienda> tiendas= tiendaRepository.findAll();
+        if(tiendas!=null) {
+            for (Tienda tienda : tiendas) {
+                tiendasDto.add(tiendaDtoConverter.convertToDto(tienda));
+            }
+            return tiendasDto;
+        }
+        else return null;
+    }
+    @Override
+    public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
+        List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;
+
+        Optional<List<UsuarioPorTienda>> miembrosGrupoDistruibuidoraPorTienda = usuarioPorTiendaRepository
+                .findByUsuarioPorTiendaIdentityTiendaId(id);
+
+        if (miembrosGrupoDistruibuidoraPorTienda.isPresent() && miembrosGrupoDistruibuidoraPorTienda.get().size() > 0) {
+
+            tiendaBusquedaMiembrosDtos = miembrosGrupoDistruibuidoraPorTienda.get().stream().map((miembro) -> {
+                TiendaBusquedaMiembrosDto tiendaBusquedaMiembrosDto = new TiendaBusquedaMiembrosDto();
+
+                tiendaBusquedaMiembrosDto.setDni(miembro.getUsuarioPorTiendaIdentity().getUsuario().getDni());
+                tiendaBusquedaMiembrosDto.setNombre(miembro.getUsuarioPorTiendaIdentity().getUsuario().getNombre());
+                tiendaBusquedaMiembrosDto.setApellidoPaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoPaterno());
+                tiendaBusquedaMiembrosDto.setApellidoMaterno(miembro.getUsuarioPorTiendaIdentity().getUsuario().getApellidoMaterno());
+                //rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario().getDni());
+
+                tiendaBusquedaMiembrosDto.setRolId(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario()
+                        .getDni()).getRolPorUsuarioIdentity().getRolPerfil().getId());
+                tiendaBusquedaMiembrosDto.setDescripción(rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(miembro.getUsuarioPorTiendaIdentity().getUsuario()
+                        .getDni()).getRolPorUsuarioIdentity().getRolPerfil().getDescripcion());
+
+                return tiendaBusquedaMiembrosDto;
+
+            }).collect(Collectors.toList());
+        } else {
+            tiendaBusquedaMiembrosDtos = null;
+        }
+        return tiendaBusquedaMiembrosDtos;
+    }
+
 }
 
 

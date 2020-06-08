@@ -1,5 +1,6 @@
 package com.micanasta.repository;
 
+import com.micanasta.model.RolPerfil;
 import com.micanasta.model.RolPorUsuario;
 import com.micanasta.model.RolPorUsuarioIdentity;
 import org.springframework.data.jpa.repository.JpaRepository;

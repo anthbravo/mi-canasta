@@ -17,8 +17,8 @@ public interface TiendaService {
     StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto);
     TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId)throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException;
     RolPorUsuario asignarRolPorUsuario(String dni, Long id);
-
-
-
     List<RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni, boolean cambiarRol) throws UserNotFoundException, UserNotAdminException;
+    List<TiendaDto> getAllTiendas();
+    TiendaInfoDto getTiendaInfo(long idTienda);
+    List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id);
 }

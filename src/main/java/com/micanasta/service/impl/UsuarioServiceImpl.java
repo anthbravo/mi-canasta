@@ -2,10 +2,7 @@ package com.micanasta.service.impl;
 
 import com.micanasta.dto.*;
 import com.micanasta.exception.*;
-import com.micanasta.model.Familia;
-import com.micanasta.model.RolPorUsuario;
-import com.micanasta.model.Tienda;
-import com.micanasta.model.Usuario;
+import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.UsuarioService;
 import org.modelmapper.ModelMapper;
@@ -146,4 +143,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioUpdateDto;
     }
 
+    @Override
+    public UsuarioFamiliaGetDto GetUsuarioFamilia(String dni) throws UserFamilyNotFoundException {
+        Long familiaId = usuarioPorFamiliaRepository.findByDni(dni);
+        if (familiaId != null){
+            UsuarioFamiliaGetDto usuarioFamiliaGetDto = new UsuarioFamiliaGetDto();
+            usuarioFamiliaGetDto.setDni(dni);
+            usuarioFamiliaGetDto.setFamiliaId(familiaId);
+            return usuarioFamiliaGetDto;
+        }
+        throw new UserFamilyNotFoundException();
+    }
 }

@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
       ) {
         throw new Error('FormatContrasenaException');
       }
-
       const usuarioAutenticacion = await this.authService.authentication(
         this.usuario
       );

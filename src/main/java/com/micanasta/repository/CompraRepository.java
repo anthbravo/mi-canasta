@@ -12,6 +12,9 @@ import java.util.List;
 public interface CompraRepository extends JpaRepository<Compra, CompraIdentity> {
 
     List<Compra> getByCompraIdentityFamiliaNombreUnico(String Nombre);
+    List<Compra> getByCompraIdentityFamiliaIdAndDni(long familiaId, String dni);
+
+    Compra getByCompraIdentityFamiliaIdAndCompraIdentityProductoIdAndCompraIdentityTiendaId(long familiaId, long productoId, long tiendaId);
 
 }
 

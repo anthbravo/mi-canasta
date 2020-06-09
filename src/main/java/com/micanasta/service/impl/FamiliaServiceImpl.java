@@ -72,26 +72,36 @@ public class FamiliaServiceImpl implements FamiliaService {
         }
     }
 
-    public Familia desactivarSolicitudes(String nombreFamilia, String dni) throws FamilyNotFoundException {
+    public Familia desactivarSolicitudes(String nombreFamilia, boolean aceptaSolicitudes) throws FamilyNotFoundException {
         Familia nombreFam;
         nombreFam = familiaRepository.findByNombreUnico(nombreFamilia);
-
-        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
-
         if (nombreFam == null) {
             throw new FamilyNotFoundException();
         } else {
-            Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
-            familia.setNombreUnico(nombreFamilia);
-            familia.setAceptacionSolicitudes(false);
-            familiaRepository.save(familia);
+            if (aceptaSolicitudes == true) {
 
-            solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
-            if (solicitud.isPresent()) {
-                Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
-                solicitudRepository.delete(solicitudes);
+                List<Solicitud> solicituds = solicitudRepository.findAll();
+                Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
+                familia.setNombreUnico(nombreFamilia);
+                familia.setAceptacionSolicitudes(false);
+                familiaRepository.save(familia);
+
+                for (Solicitud solicitud : solicituds) {
+                    if (solicitud.getSolicitudIdentity().getFamilia().getNombreUnico() == nombreFamilia) {
+                        solicitudRepository.delete(solicitud);
+                    }
+                }
+                return familia;
             }
-            return familia;
+            else {
+                Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
+                familia.setNombreUnico(nombreFamilia);
+                familia.setAceptacionSolicitudes(true);
+                familiaRepository.save(familia);
+                return familia;
+            }
+
+
         }
     }
 

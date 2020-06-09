@@ -53,10 +53,10 @@ public class FamiliaController {
                 fechaFin));
     }
 
-    @PutMapping("/familias/{nombreFamilia}")
-    public ResponseEntity<?> desactivarSolicitudes(@PathVariable("nombreFamilia")  String nombreFamilia, String dni){
+    @PutMapping("/familias/{idFamilia}")
+    public ResponseEntity<?> desactivarSolicitudes(@PathVariable("idFamilia")  String nombreFamilia, boolean aceptaSolicitudes){
         try{
-            familiaService.desactivarSolicitudes(nombreFamilia, dni);
+            familiaService.desactivarSolicitudes(nombreFamilia, aceptaSolicitudes);
         } catch (FamilyNotFoundException familyNotFoundException){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
         }

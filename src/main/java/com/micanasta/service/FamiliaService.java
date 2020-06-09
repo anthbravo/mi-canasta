@@ -17,7 +17,7 @@ public interface FamiliaService {
 
     Familia crearGrupoFamiliar(CrearFamiliaDTO familiaDTO) throws ExistingFamilyFoundException;
 
-    Familia desactivarSolicitudes(String nombreFamilia, String dni) throws FamilyNotFoundException;
+    Familia desactivarSolicitudes(String nombreFamilia, boolean aceptaSolicitudes) throws FamilyNotFoundException;
 
     List<FamiliaBusquedaMiembrosDto> buscarMiembrosGrupoFamiliarPorNombreFamilia(String nombreFamilia);
 

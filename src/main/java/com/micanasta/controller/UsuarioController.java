@@ -66,4 +66,12 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(exception.exceptionDto);
         }
     }
+    @DeleteMapping("usuarios/{dni}/familias/{idFamilia}")
+    public ResponseEntity<?> cancelarSolicitud(@PathVariable("dni") String dni, @PathVariable("idFamilia") Long idFamilia ) throws SolicitudeNotFoundException{
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.cancelarSolicitud(dni,idFamilia));
+        } catch (SolicitudeNotFoundException solicitudeNotFoundException){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
+        }
+    }
 }

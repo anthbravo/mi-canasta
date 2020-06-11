@@ -72,36 +72,27 @@ public class FamiliaServiceImpl implements FamiliaService {
         }
     }
 
-    public Familia desactivarSolicitudes(String nombreFamilia, boolean aceptaSolicitudes) throws FamilyNotFoundException {
+    public Familia desactivarSolicitudes(Long idFamilia, FamiliaNoIdDto familiaNoIdDto) throws FamilyNotFoundException {
         Familia nombreFam;
-        nombreFam = familiaRepository.findByNombreUnico(nombreFamilia);
+        nombreFam = familiaRepository.encontrarPorId(idFamilia);
+
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia);
+
         if (nombreFam == null) {
             throw new FamilyNotFoundException();
         } else {
-            if (aceptaSolicitudes == true) {
+            Familia familia = familiaRepository.encontrarPorId(idFamilia);
+            familia.setNombreUnico(familiaNoIdDto.getNombreUnico());
+            familia.setAceptacionSolicitudes(familiaNoIdDto.isAceptacionSolicitudes());
+            familia.setCantidad(familiaNoIdDto.getCantidad());
+            familiaRepository.save(familia);
 
-                List<Solicitud> solicituds = solicitudRepository.findAll();
-                Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
-                familia.setNombreUnico(nombreFamilia);
-                familia.setAceptacionSolicitudes(false);
-                familiaRepository.save(familia);
-
-                for (Solicitud solicitud : solicituds) {
-                    if (solicitud.getSolicitudIdentity().getFamilia().getNombreUnico() == nombreFamilia) {
-                        solicitudRepository.delete(solicitud);
-                    }
-                }
-                return familia;
+            solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia);
+            if (solicitud.isPresent()) {
+                Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia).get();
+               solicitudRepository.delete(solicitudes);
             }
-            else {
-                Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
-                familia.setNombreUnico(nombreFamilia);
-                familia.setAceptacionSolicitudes(true);
-                familiaRepository.save(familia);
-                return familia;
-            }
-
-
+            return familia;
         }
     }
 

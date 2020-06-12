@@ -19,4 +19,26 @@
     <div class="member-container__select">
       <app-select  [options]="data"></app-select>
     </div>
+
+    <app-confirmation-modal>
+      (yesEvent)="deleteUsuariofromFamilia()"
+      (noEvent)="cerrarModalConfirmacion()"
+      *ngIf="isShowConfirmationModal"
+      [title]="'Confirmación'"
+      [description]="'¿Desea eliminar al usuario seleccionado?'"
+    </app-confirmation-modal>
+
+  <app-error-modal
+    *ngIf="errorFlagModal"
+    title="'Lo sentimos'"
+    description="El usuario a borrar es un administrador"
+    (closeEvent)="cerrarModal()"
+  ></app-error-modal>
+
+  <app-error-modal
+    *ngIf="errorFlagModalAdmin"
+    title="'Lo sentimos'"
+    description="'No cuenta con privilegios de administardor'"
+    (closeEvent)="cerrarModalAdmin()"
+  ></app-error-modal>
 </div>

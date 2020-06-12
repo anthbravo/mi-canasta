@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
+import { UsuarioService } from 'src/app/core/service/usuario.service';
+import { Rol } from '../../../../core/model/rol.model';
 
 @Component({
     selector: 'app-home-family',
@@ -10,29 +12,17 @@ import { FamiliaService } from 'src/app/core/service/familia.service';
 })
 export class HomeFamilyComponent implements OnInit {
     switchValue = false;
-
     nombreFamilia = '';
     idFamily = -1;
-    mock = [
-        {
-            name: 'Anthony',
-            dni: '10101010',
-            roles: ['Admin', 'Comprador'],
-            categorias: ['Mercancia'],
-        },
-        {
-            name: 'Jimena',
-            dni: '1245789',
-            roles: ['Comprador'],
-            categorias: ['Alimentos'],
-        },
-    ];
-
+    aceptaSolicitudes= false;
+    roles:any = [];
+    userIsAdmin = false;
     integrantes:any  = [];
     constructor(
         private homeService: HomeService,
         private route: ActivatedRoute,
-        private familiaService: FamiliaService
+        private familiaService: FamiliaService,
+        private usuarioService: UsuarioService
     ) {}
 
     ngOnInit(): void {
@@ -41,6 +31,7 @@ export class HomeFamilyComponent implements OnInit {
             this.idFamily = e.id;
             this.listarFamilia();
         });
+        this.getRolUsuario();
     }
 
     async listarMiembros() {
@@ -68,4 +59,20 @@ export class HomeFamilyComponent implements OnInit {
             console.log(error);
         }
     }
+    // Arreglar eso según el json de get usuario
+    async getRolUsuario(){
+        console.log("Obtener Rol del Usuario Logeado");
+         try {
+          const res = await this.usuarioService.getUsuario(localStorage.getItem("dni"));
+          this.roles = res.rol;
+          console.log(res);
+          for(let i=0; i < this.roles.length; i++){
+            if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
+            console.log(this.userIsAdmin);
+          }        
+        }
+        catch (error) {
+          console.log(error);        
+        }
+      }
 }

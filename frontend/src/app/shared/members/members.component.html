@@ -12,20 +12,22 @@
         <p>{{ person.dni }}</p>
       </div>
       <div class="member-container__delete-btn">
-          <button>Remover</button>
+          <button
+          (click)="abrirModalConfirmacion()"
+          >Remover</button>
       </div>
     </div>
 
     <div class="member-container__select">
       <app-select  [options]="data"></app-select>
     </div>
-
-    <app-confirmation-modal>
+    
+    <app-confirmation-modal
+      *ngIf="isShowConfirmationModal"
       (yesEvent)="deleteUsuariofromFamilia()"
       (noEvent)="cerrarModalConfirmacion()"
-      *ngIf="isShowConfirmationModal"
       [title]="'Confirmación'"
-      [description]="'¿Desea eliminar al usuario seleccionado?'"
+      [description]="'¿Desea eliminar al usuario seleccionado?'">
     </app-confirmation-modal>
 
   <app-error-modal

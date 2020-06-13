@@ -31,7 +31,7 @@ export class HomeFamilyComponent implements OnInit {
             this.idFamily = e.id;
             this.listarFamilia();
         });
-        this.getRolUsuario();
+        //nthis.getRolUsuario();
     }
 
     async listarMiembros() {
@@ -41,7 +41,8 @@ export class HomeFamilyComponent implements OnInit {
             );
 
             this.integrantes= result;
-
+            // No trae nada
+            console.log(result);
         } catch (error) {
             console.log(error);
         }
@@ -52,8 +53,8 @@ export class HomeFamilyComponent implements OnInit {
             const result = await this.familiaService.listarFamilia(
                 this.idFamily
                 );
-                this.nombreFamilia = result.nombre;
-                this.switchValue =  result.aceptaSolicitudes;
+                this.nombreFamilia = result.nombreUnico;
+                this.switchValue =  result.aceptacionSolicitudes;
                 this.listarMiembros();
             } catch (error) {
             console.log(error);

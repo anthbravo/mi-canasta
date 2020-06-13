@@ -9,13 +9,14 @@
   </div>
 
   <div class="family-container__list-members">
-      <app-members
+    <app-members
       [person]="user"
       [nombreFamilia] = "nombreFamilia"
       [idFamilia]="idFamily"
       [dni]="user.dni"
       [userIsAdmin]="userIsAdmin"
-      *ngFor="let user of integrantes"></app-members>
+      *ngFor="let user of integrantes">
+    </app-members>
 
     </div>
 </div>

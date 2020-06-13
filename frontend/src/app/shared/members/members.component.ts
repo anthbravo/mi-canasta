@@ -30,7 +30,7 @@ export class MembersComponent implements OnInit {
   constructor(private familiaService: FamiliaService, private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    this.getRolUsuario();
+    //this.getRolUsuario();
   }
 
   async deleteUsuariofromFamilia(){

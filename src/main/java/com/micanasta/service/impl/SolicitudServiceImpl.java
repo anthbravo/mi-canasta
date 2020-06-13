@@ -102,15 +102,5 @@ public class SolicitudServiceImpl implements SolicitudService {
         return false;
     }
 
-    public Optional<Solicitud> cancelarSolicitud(String dni) throws SolicitudeNotFoundException {
-        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
-        solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
-        if (solicitud.isPresent()) {
-            Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
-            solicitudRepository.delete(solicitudes);
-        } else {
-            throw new SolicitudeNotFoundException();
-        }
-        return null;
-    }
+
 }

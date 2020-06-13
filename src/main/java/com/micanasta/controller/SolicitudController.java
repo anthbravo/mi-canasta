@@ -42,14 +42,4 @@ public class SolicitudController {
                 .body(solicitudBusquedaDto);
 
     }
-
-    @DeleteMapping("/solicitudes/{dni}")
-    public ResponseEntity<?> cancelarSolicitud(@PathVariable("dni") String dni) throws SolicitudeNotFoundException{
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(solicitudService.cancelarSolicitud(dni));
-        } catch (SolicitudeNotFoundException solicitudeNotFoundException){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
-        }
-    }
-
 }

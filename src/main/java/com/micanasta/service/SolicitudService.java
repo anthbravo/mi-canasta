@@ -19,6 +19,6 @@ public interface SolicitudService {
 
     boolean borrarSolicitud(SolicitudUsuarioDto solicitudUsuarioDto);
 
-    Optional<Solicitud> cancelarSolicitud(String dni) throws SolicitudeNotFoundException;
+
 
 }

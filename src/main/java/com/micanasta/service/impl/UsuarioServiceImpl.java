@@ -30,6 +30,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioPorTiendaRepository usuarioPorTiendaRepository;
     @Autowired
     private RolPorUsuarioRepository rolPorUsuarioRepository;
+    @Autowired
+    private SolicitudRepository solicitudRepository;
 
     @Autowired
     private ModelMapper modelMapper = new ModelMapper();
@@ -153,5 +155,20 @@ public class UsuarioServiceImpl implements UsuarioService {
             return usuarioFamiliaGetDto;
         }
         throw new UserFamilyNotFoundException();
+    }
+    public Solicitud cancelarSolicitud(String dni, Long idFamilia) throws SolicitudeNotFoundException {
+        Usuario usuario = usuarioRepository.findByDni(dni);
+        Optional<Familia> optionalFamilia = familiaRepository.findById(idFamilia);
+        if (usuario != null && optionalFamilia.isPresent()) {
+            SolicitudIdentity solicitudIdentity = new SolicitudIdentity();
+            solicitudIdentity.setUsuario(usuario);
+            Familia familia = optionalFamilia.get();
+            solicitudIdentity.setFamilia(familia);
+            Solicitud solicitud = new Solicitud();
+            solicitud.setSolicitudIdentity(solicitudIdentity);
+            solicitudRepository.delete(solicitud);
+            return solicitud;
+        }
+        return null;
     }
 }

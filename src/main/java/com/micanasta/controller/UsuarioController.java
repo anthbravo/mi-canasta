@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class UsuarioController {
+public class  UsuarioController {
     @Autowired
     private UsuarioServiceImpl usuarioService;
     @Autowired
@@ -40,7 +40,6 @@ public class UsuarioController {
             return ResponseEntity.status(400).body(userLoginIncorrectException.exceptionDto);
         }
     }
-
     @PutMapping("usuarios/{dni}")
     public ResponseEntity<?> Update(@PathVariable String dni, @RequestBody UsuarioUpdateDto usuarioUpdateDto)
             throws EmailWrongFormatException, NewPasswordNotMatchException, ActualPasswordNotMatchException {
@@ -54,6 +53,10 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
         }
     }
+    @GetMapping("usuarios/{dni}")
+    public ResponseEntity<?> GetUsuario(@PathVariable String dni){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByDni(dni));
+    }
 
     @GetMapping("usuarios/{dni}/usuariosporfamilia")
     public ResponseEntity<?> GetUsuarioFamilia(@PathVariable String dni){
@@ -66,4 +69,13 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(exception.exceptionDto);
         }
     }
+    @DeleteMapping("usuarios/{dni}/familias/{idFamilia}")
+    public ResponseEntity<?> cancelarSolicitud(@PathVariable("dni") String dni, @PathVariable("idFamilia") Long idFamilia ) throws SolicitudeNotFoundException{
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.cancelarSolicitud(dni,idFamilia));
+        } catch (SolicitudeNotFoundException solicitudeNotFoundException){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
+        }
+    }
+
 }

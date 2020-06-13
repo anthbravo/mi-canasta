@@ -2,6 +2,7 @@ package com.micanasta.controller;
 
 import com.micanasta.dto.CrearFamiliaDTO;
 import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.dto.FamiliaNoIdDto;
 import com.micanasta.exception.*;
 import com.micanasta.model.Familia;
 import com.micanasta.service.FamiliaService;
@@ -53,10 +54,10 @@ public class FamiliaController {
                 fechaFin));
     }
 
-    @PutMapping("/familias/{nombreFamilia}")
-    public ResponseEntity<?> desactivarSolicitudes(@PathVariable("nombreFamilia")  String nombreFamilia, String dni){
+    @PutMapping("/familias/{idFamilia}")
+    public ResponseEntity<?> desactivarSolicitudes(@PathVariable("idFamilia")Long idFamilia ,FamiliaNoIdDto familiaNoIdDto){
         try{
-            familiaService.desactivarSolicitudes(nombreFamilia, dni);
+            familiaService.desactivarSolicitudes(idFamilia,familiaNoIdDto);
         } catch (FamilyNotFoundException familyNotFoundException){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(familyNotFoundException.exceptionDto);
         }

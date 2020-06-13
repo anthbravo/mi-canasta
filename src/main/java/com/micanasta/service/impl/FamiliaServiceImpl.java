@@ -72,24 +72,25 @@ public class FamiliaServiceImpl implements FamiliaService {
         }
     }
 
-    public Familia desactivarSolicitudes(String nombreFamilia, String dni) throws FamilyNotFoundException {
+    public Familia desactivarSolicitudes(Long idFamilia, FamiliaNoIdDto familiaNoIdDto) throws FamilyNotFoundException {
         Familia nombreFam;
-        nombreFam = familiaRepository.findByNombreUnico(nombreFamilia);
+        nombreFam = familiaRepository.encontrarPorId(idFamilia);
 
-        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia);
 
         if (nombreFam == null) {
             throw new FamilyNotFoundException();
         } else {
-            Familia familia = familiaRepository.findByNombreUnico(nombreFamilia);
-            familia.setNombreUnico(nombreFamilia);
-            familia.setAceptacionSolicitudes(false);
+            Familia familia = familiaRepository.encontrarPorId(idFamilia);
+            familia.setNombreUnico(familiaNoIdDto.getNombreUnico());
+            familia.setAceptacionSolicitudes(familiaNoIdDto.isAceptacionSolicitudes());
+            familia.setCantidad(familiaNoIdDto.getCantidad());
             familiaRepository.save(familia);
 
-            solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+            solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia);
             if (solicitud.isPresent()) {
-                Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni).get();
-                solicitudRepository.delete(solicitudes);
+                Solicitud solicitudes = solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia).get();
+               solicitudRepository.delete(solicitudes);
             }
             return familia;
         }

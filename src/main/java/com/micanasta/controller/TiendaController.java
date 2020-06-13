@@ -1,5 +1,8 @@
 package com.micanasta.controller;
-
+import com.micanasta.dto.RolPorPerfilListaDto;
+import com.micanasta.dto.SolicitudBusquedaDto;
+import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.exception.*;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.StockUpdateDto;
 import com.micanasta.dto.TiendaInfoDto;
@@ -76,6 +79,22 @@ public class TiendaController {
             return ResponseEntity.noContent().build();
         }
     }
+
+    @GetMapping("/tiendas/RolesPorPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
+    public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
+
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.switchRolPerfil(userDni,adminDni,cambiarRol));
+        }catch (UserNotFoundException userNotFoundExeption) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundExeption.exceptionDto);
+        }catch (UserNotAdminException userNotAdminException)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException);
+        }
+
+    }
+
 
 
     @GetMapping("/tiendas/{idTienda}/stockNombre")

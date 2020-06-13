@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class UsuarioController {
+public class  UsuarioController {
     @Autowired
     private UsuarioServiceImpl usuarioService;
     @Autowired
@@ -40,7 +40,6 @@ public class UsuarioController {
             return ResponseEntity.status(400).body(userLoginIncorrectException.exceptionDto);
         }
     }
-
     @PutMapping("usuarios/{dni}")
     public ResponseEntity<?> Update(@PathVariable String dni, @RequestBody UsuarioUpdateDto usuarioUpdateDto)
             throws EmailWrongFormatException, NewPasswordNotMatchException, ActualPasswordNotMatchException {
@@ -53,6 +52,10 @@ public class UsuarioController {
         } catch (NewPasswordNotMatchException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
         }
+    }
+    @GetMapping("usuarios/{dni}")
+    public ResponseEntity<?> GetUsuario(@PathVariable String dni){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByDni(dni));
     }
 
     @GetMapping("usuarios/{dni}/usuariosporfamilia")
@@ -74,4 +77,5 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
         }
     }
+
 }

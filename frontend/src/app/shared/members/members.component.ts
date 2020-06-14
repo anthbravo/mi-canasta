@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FamiliaService } from '../../core/service/familia.service';
-import { UsuarioService } from '../../core/service/usuario.service';
 import { RolPorUsuario } from '../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
+import { ErrorGeneric } from 'src/app/core/model/error.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-members',
@@ -21,32 +22,63 @@ export class MembersComponent implements OnInit {
   dni = "";
   @Input()
   userIsAdmin = false;
+  @Input()
+  numIntegrantes: number;
+  @Input()
+  unicoAdmin: boolean;
 
   roles:RolPorUsuario[] = [];
-
+  descriptionErrorModal: string;
+  descriptionConfirModal: string;
   errorFlagModal = false;
-  errorFlagModalAdmin = false;
   userToDeleteIsAdmin = false;
   isShowConfirmationModal = false;
+  error: ErrorGeneric;
 
   data = [1,2,3,4,5,6,7]
   constructor(
     private familiaService: FamiliaService,
-    private rolService: RolService
+    private rolService: RolService,
+    private route: Router
     ) { }
 
   ngOnInit(): void {
     this.getRolUsuario();
   }
 
-  async deleteUsuariofromFamilia(){
-    console.log("Borrar usuario de familia");
+  deleteUsuarioFromFamilia(){
+    if( localStorage.getItem("dni") == this.dni ){
+      this.deleteYo();
+    }
+    else {
+      this.deleteOtroUsuario();
+    }
+  }
+
+  async deleteYo(){
+    try {
+      if(this.numIntegrantes > 1 && this.unicoAdmin == true){
+        this.descriptionErrorModal = "Debe asignar otro administrador para poder salir del grupo familiar";
+        this.errorFlagModal = true;
+        this.cerrarModalConfirmacion();
+      }
+      else {
+        const res = await this.familiaService.eliminarIntegrante(this.nombreFamilia, this.dni);
+        this.route.navigate(['/home']);
+      }
+    }
+    catch (error) {
+      console.log(error);        
+   }
+ }
+
+  async deleteOtroUsuario(){
      try {
       if(this.userIsAdmin == true){
         if(this.userToDeleteIsAdmin == true){
+          this.descriptionErrorModal = "No puede eliminar a un administrador";
           this.errorFlagModal = true;
           this.cerrarModalConfirmacion();
-          // El usuario a borrar es un administrador
         }
         else{
           const res = await this.familiaService.eliminarIntegrante(this.nombreFamilia, this.dni);
@@ -55,9 +87,9 @@ export class MembersComponent implements OnInit {
         }
       }
       else {
-        this.errorFlagModalAdmin = true;
+        this.descriptionErrorModal = "No se cuenta con privilegios de administrador";
+        this.errorFlagModal = true;
         this.cerrarModalConfirmacion();
-        // No cuenta con privilegios de administardor
       }
     }
     catch (error) {
@@ -66,29 +98,32 @@ export class MembersComponent implements OnInit {
   }
 
   async getRolUsuario(){
-    console.log("Obtener Rol del Usuario");
      try {
       
       const res = await this.rolService.getRol(this.dni);
       this.roles = res;
-      console.log(res);
-      console.log(this.roles);
       for(let i=0; i < this.roles.length; i++){
         if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
       }        
     }
     catch (error) {
-      console.log(error);        
+      console.log(error);
     }
   }
 
   cerrarModal() {
     this.errorFlagModal = false;
   }
-  cerrarModalAdmin(){
-     this.errorFlagModalAdmin = false;
-  }
+
   abrirModalConfirmacion(){
+    if( localStorage.getItem("dni") == this.dni ){
+      if(this.numIntegrantes == 1)
+        this.descriptionConfirModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
+      else this.descriptionConfirModal="¿Desea abandonar el grupo familiar?";
+    }
+    else {
+      this.descriptionConfirModal="¿Desea eliminar al usuario seleccionado?";
+    }
     this.isShowConfirmationModal=true;
   }
   cerrarModalConfirmacion(){

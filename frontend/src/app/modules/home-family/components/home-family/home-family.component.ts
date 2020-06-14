@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
-import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
+import { Usuario } from 'src/app/core/model/usuario.model';
 
 @Component({
     selector: 'app-home-family',
@@ -18,8 +18,9 @@ export class HomeFamilyComponent implements OnInit {
     aceptaSolicitudes= false;
     roles: RolPorUsuario[] = [];
     userIsAdmin = false;
-    integrantes:any  = [];
-
+    integrantes:Usuario[]  = [];
+    numIntegrantes = 0;
+    unicoAdmin = false;
     constructor(
         private homeService: HomeService,
         private route: ActivatedRoute,
@@ -36,7 +37,14 @@ export class HomeFamilyComponent implements OnInit {
         this.getRolUsuario();
     }
 
-
+    async isUnicoAdmin(){
+        let cont = 0;
+        for(let i = 0; i < this.numIntegrantes; i++){
+            if(await this.isAdmin(this.integrantes[i].dni) == true) cont++;
+        }
+        if(this.userIsAdmin==true && cont==1) this.unicoAdmin = true;
+        console.log(this.unicoAdmin);
+    }
 
     async listarMiembros() {
         try {
@@ -45,6 +53,8 @@ export class HomeFamilyComponent implements OnInit {
             );
 
             this.integrantes= result;
+            this.numIntegrantes = this.integrantes.length;
+            this.isUnicoAdmin();
         } catch (error) {
             console.log(error);
         }
@@ -62,9 +72,8 @@ export class HomeFamilyComponent implements OnInit {
             console.log(error);
         }
     }
-    // Arreglar eso según el json de get usuario
+
     async getRolUsuario(){
-        console.log("Obtener Rol del Usuario Logeado");
          try {
           const res = await this.rolService.getRol(localStorage.getItem("dni"));
           this.roles = res;
@@ -75,5 +84,22 @@ export class HomeFamilyComponent implements OnInit {
         catch (error) {
           console.log(error);        
         }
-      }
+    }
+
+    async isAdmin(dniIntegrante: string){
+        let cont = 0;
+        let rolesAux: RolPorUsuario[] = [];
+        try {
+         const res = await this.rolService.getRol(dniIntegrante);
+         rolesAux = res;
+         for(let i=0; i < rolesAux.length; i++){
+           if(rolesAux[i].rolPerfilId == 1) cont++;
+         }
+         if(cont > 0) return true;
+         else return false;
+       }
+       catch (error) {
+         console.log(error);        
+       }
+   }
 }

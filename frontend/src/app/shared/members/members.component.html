@@ -24,23 +24,17 @@
     
     <app-confirmation-modal
       *ngIf="isShowConfirmationModal"
-      (yesEvent)="deleteUsuariofromFamilia()"
+      (yesEvent)="deleteUsuarioFromFamilia()"
       (noEvent)="cerrarModalConfirmacion()"
       [title]="'Confirmación'"
-      [description]="'¿Desea eliminar al usuario seleccionado?'">
+      [description]="descriptionConfirModal">
     </app-confirmation-modal>
 
   <app-error-modal
     *ngIf="errorFlagModal"
     title="Lo sentimos"
-    description="El usuario a borrar es un administrador"
+    description="{{descriptionErrorModal}}"
     (closeEvent)="cerrarModal()"
   ></app-error-modal>
 
-  <app-error-modal
-    *ngIf="errorFlagModalAdmin"
-    title="Lo sentimos"
-    description="No cuenta con privilegios de administardor"
-    (closeEvent)="cerrarModalAdmin()"
-  ></app-error-modal>
 </div>

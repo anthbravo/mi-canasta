@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Familia, FamiliaCreate } from '../model/familia.model';
+import { Usuario } from 'src/app/core/model/usuario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class FamiliaService {
 
   async listaMiembrosFamilia(nombreFamilia:string){
     return await this.httpClient
-      .get(`${environment.url_api}/familias/${nombreFamilia}/usuarios`)
+      .get<Array<Usuario>>(`${environment.url_api}/familias/${nombreFamilia}/usuarios`)
       .toPromise()
   }
 

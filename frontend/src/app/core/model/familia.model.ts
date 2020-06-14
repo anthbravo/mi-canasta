@@ -1,14 +1,14 @@
 class Familia {
-  familiaId?: number;
-  nombre?: string;
+  id?: number;
+  nombreUnico?: string;
   cantidad?: number;
-  aceptaSolicitudes?: boolean;
+  aceptacionSolicitudes?: boolean;
 }
 
 class FamiliaCreate {
   familiaNombre?: string;
   dni?: string;
-  aceptaSolicitudes?:boolean =  true;
+  aceptacionSolicitudes?:boolean =  true;
 
 }
 

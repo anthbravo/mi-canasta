@@ -3,3 +3,8 @@ export class Rol {
   descripcion: string;
   perfilId: number;
 }
+
+export class RolPorUsuario {
+  dni: string;
+  rolPerfilId: number;
+}

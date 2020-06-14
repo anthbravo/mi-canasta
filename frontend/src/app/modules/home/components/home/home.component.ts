@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.loadingCreaFamiliarButton = true;
     try {
       let newFamily =  new FamiliaCreate()
-      newFamily.aceptaSolicitudes = true;
+      newFamily.aceptacionSolicitudes = true;
       newFamily.dni =  localStorage.getItem("dni");
       newFamily.familiaNombre =  this.grupoFamiliar;
 

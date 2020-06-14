@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FamiliaService } from '../../core/service/familia.service';
+import { UsuarioService } from '../../core/service/usuario.service';
+import { RolPorUsuario } from '../../core/model/rol.model';
+import { RolService } from 'src/app/core/service/rol.service';
 
 @Component({
   selector: 'app-members',
@@ -9,11 +13,85 @@ export class MembersComponent implements OnInit {
 
   @Input()
   person:any;
+  @Input()
+  nombreFamilia = "";
+  @Input()
+  idFamilia = -1;
+  @Input()
+  dni = "";
+  @Input()
+  userIsAdmin = false;
+
+  roles:RolPorUsuario[] = [];
+
+  errorFlagModal = false;
+  errorFlagModalAdmin = false;
+  userToDeleteIsAdmin = false;
+  isShowConfirmationModal = false;
 
   data = [1,2,3,4,5,6,7]
-  constructor() { }
+  constructor(
+    private familiaService: FamiliaService,
+    private rolService: RolService
+    ) { }
 
   ngOnInit(): void {
+    this.getRolUsuario();
   }
 
+  async deleteUsuariofromFamilia(){
+    console.log("Borrar usuario de familia");
+     try {
+      if(this.userIsAdmin == true){
+        if(this.userToDeleteIsAdmin == true){
+          this.errorFlagModal = true;
+          this.cerrarModalConfirmacion();
+          // El usuario a borrar es un administrador
+        }
+        else{
+          const res = await this.familiaService.eliminarIntegrante(this.nombreFamilia, this.dni);
+          console.log(res);
+          location.reload();
+        }
+      }
+      else {
+        this.errorFlagModalAdmin = true;
+        this.cerrarModalConfirmacion();
+        // No cuenta con privilegios de administardor
+      }
+    }
+    catch (error) {
+      console.log(error);        
+    }
+  }
+
+  async getRolUsuario(){
+    console.log("Obtener Rol del Usuario");
+     try {
+      
+      const res = await this.rolService.getRol(this.dni);
+      this.roles = res;
+      console.log(res);
+      console.log(this.roles);
+      for(let i=0; i < this.roles.length; i++){
+        if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
+      }        
+    }
+    catch (error) {
+      console.log(error);        
+    }
+  }
+
+  cerrarModal() {
+    this.errorFlagModal = false;
+  }
+  cerrarModalAdmin(){
+     this.errorFlagModalAdmin = false;
+  }
+  abrirModalConfirmacion(){
+    this.isShowConfirmationModal=true;
+  }
+  cerrarModalConfirmacion(){
+    this.isShowConfirmationModal=false;
+  }
 }

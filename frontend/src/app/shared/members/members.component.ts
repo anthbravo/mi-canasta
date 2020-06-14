@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FamiliaService } from '../../core/service/familia.service';
 import { UsuarioService } from '../../core/service/usuario.service';
+import { RolPorUsuario } from '../../core/model/rol.model';
+import { RolService } from 'src/app/core/service/rol.service';
 
 @Component({
   selector: 'app-members',
@@ -20,17 +22,21 @@ export class MembersComponent implements OnInit {
   @Input()
   userIsAdmin = false;
 
-  roles:any = [];
+  roles:RolPorUsuario[] = [];
+
   errorFlagModal = false;
   errorFlagModalAdmin = false;
   userToDeleteIsAdmin = false;
   isShowConfirmationModal = false;
 
   data = [1,2,3,4,5,6,7]
-  constructor(private familiaService: FamiliaService, private usuarioService: UsuarioService) { }
+  constructor(
+    private familiaService: FamiliaService,
+    private rolService: RolService
+    ) { }
 
   ngOnInit(): void {
-    //this.getRolUsuario();
+    this.getRolUsuario();
   }
 
   async deleteUsuariofromFamilia(){
@@ -39,6 +45,7 @@ export class MembersComponent implements OnInit {
       if(this.userIsAdmin == true){
         if(this.userToDeleteIsAdmin == true){
           this.errorFlagModal = true;
+          this.cerrarModalConfirmacion();
           // El usuario a borrar es un administrador
         }
         else{
@@ -49,6 +56,7 @@ export class MembersComponent implements OnInit {
       }
       else {
         this.errorFlagModalAdmin = true;
+        this.cerrarModalConfirmacion();
         // No cuenta con privilegios de administardor
       }
     }
@@ -61,15 +69,14 @@ export class MembersComponent implements OnInit {
     console.log("Obtener Rol del Usuario");
      try {
       
-      const res = await this.usuarioService.getUsuario(this.dni);
-      this.roles = res.rol;
+      const res = await this.rolService.getRol(this.dni);
+      this.roles = res;
       console.log(res);
       console.log(this.roles);
       for(let i=0; i < this.roles.length; i++){
         if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
       }        
     }
-
     catch (error) {
       console.log(error);        
     }

@@ -3,7 +3,8 @@ import { HomeService } from 'src/app/core/service/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
-import { Rol } from '../../../../core/model/rol.model';
+import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
+import { RolService } from 'src/app/core/service/rol.service';
 
 @Component({
     selector: 'app-home-family',
@@ -15,24 +16,27 @@ export class HomeFamilyComponent implements OnInit {
     nombreFamilia = '';
     idFamily = -1;
     aceptaSolicitudes= false;
-    roles:any = [];
+    roles: RolPorUsuario[] = [];
     userIsAdmin = false;
     integrantes:any  = [];
+
     constructor(
         private homeService: HomeService,
         private route: ActivatedRoute,
         private familiaService: FamiliaService,
-        private usuarioService: UsuarioService
+        private rolService: RolService
     ) {}
 
     ngOnInit(): void {
-        this.homeService.setStatus({ isLoginView: false });
+       this.homeService.setStatus({ isLoginView: false });
         this.route.params.subscribe((e) => {
             this.idFamily = e.id;
             this.listarFamilia();
         });
-        //nthis.getRolUsuario();
+        this.getRolUsuario();
     }
+
+
 
     async listarMiembros() {
         try {
@@ -41,8 +45,6 @@ export class HomeFamilyComponent implements OnInit {
             );
 
             this.integrantes= result;
-            // No trae nada
-            console.log(result);
         } catch (error) {
             console.log(error);
         }
@@ -64,12 +66,10 @@ export class HomeFamilyComponent implements OnInit {
     async getRolUsuario(){
         console.log("Obtener Rol del Usuario Logeado");
          try {
-          const res = await this.usuarioService.getUsuario(localStorage.getItem("dni"));
-          this.roles = res.rol;
-          console.log(res);
+          const res = await this.rolService.getRol(localStorage.getItem("dni"));
+          this.roles = res;
           for(let i=0; i < this.roles.length; i++){
             if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
-            console.log(this.userIsAdmin);
           }        
         }
         catch (error) {

@@ -32,15 +32,15 @@
 
   <app-error-modal
     *ngIf="errorFlagModal"
-    title="'Lo sentimos'"
+    title="Lo sentimos"
     description="El usuario a borrar es un administrador"
     (closeEvent)="cerrarModal()"
   ></app-error-modal>
 
   <app-error-modal
     *ngIf="errorFlagModalAdmin"
-    title="'Lo sentimos'"
-    description="'No cuenta con privilegios de administardor'"
+    title="Lo sentimos"
+    description="No cuenta con privilegios de administardor"
     (closeEvent)="cerrarModalAdmin()"
   ></app-error-modal>
 </div>

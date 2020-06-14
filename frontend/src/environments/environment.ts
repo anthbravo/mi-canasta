@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url_api: 'https://mi-canasta.herokuapp.com',
+  url_api: 'http://localhost:9090/',
 };
 
 /*

@@ -5,12 +5,15 @@ import { FamiliaService } from 'src/app/core/service/familia.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
 import { Usuario } from 'src/app/core/model/usuario.model';
+import { FamiliaNoIdDto } from 'src/app/core/model/familia.model';
+
 
 @Component({
     selector: 'app-home-family',
     templateUrl: './home-family.component.html',
     styleUrls: ['./home-family.component.scss'],
 })
+
 export class HomeFamilyComponent implements OnInit {
     switchValue = false;
     nombreFamilia = '';
@@ -102,4 +105,9 @@ export class HomeFamilyComponent implements OnInit {
          console.log(error);        
        }
    }
+
+   async desactivarSolicitudes() {
+    await this.familiaService.desactivarSolicitudes(this.idFamily);
+    }
 }
+

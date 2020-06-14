@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Familia, FamiliaCreate } from '../model/familia.model';
+import { Familia, FamiliaCreate, FamiliaNoIdDto } from '../model/familia.model';
 import { Usuario } from 'src/app/core/model/usuario.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -39,4 +40,11 @@ export class FamiliaService {
       .put(`${environment.url_api}/familias/${nombreFamilia}`,null)
       .toPromise
   }
+
+  async desactivarSolicitudes(idFamilia:number){
+    return await this.httpClient
+      .put(`${environment.url_api}/familias/${idFamilia}`, null)
+      .toPromise
+  }
+
 }

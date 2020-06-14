@@ -9,7 +9,7 @@
       <p *ngSwitchCase="true" > La familia acepta solicitudes </p>
       <p *ngSwitchCase="false" > La familia no acepta solicitudes</p> <p *ngSwitchDefault> </p>
       </span> 
-    <nz-switch [(ngModel)]="switchValue" (ngModelChange)="desactivarSolicitudes($event)" ></nz-switch>
+    <nz-switch [(ngModel)]="switchValue" (ngModelChange)="desactivarSolicitudes()" ></nz-switch>
   </div>
 
   <div class="family-container__list-members">

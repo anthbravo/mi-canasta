@@ -82,9 +82,14 @@ public class FamiliaServiceImpl implements FamiliaService {
             throw new FamilyNotFoundException();
         } else {
             Familia familia = familiaRepository.encontrarPorId(idFamilia);
-            //familia.setNombreUnico(familiaNoIdDto.getNombreUnico());
-            //familia.setAceptacionSolicitudes(familiaNoIdDto.isAceptacionSolicitudes());
-            //familia.setCantidad(familiaNoIdDto.getCantidad());
+            if (familia.isAceptacionSolicitudes() == false) {
+                nombreFam.setAceptacionSolicitudes(true);
+                familiaRepository.save(familia);
+            }
+            else if (familia.isAceptacionSolicitudes() == true) {
+                nombreFam.setAceptacionSolicitudes(false);
+                familiaRepository.save(familia);
+            }
             familiaRepository.save(familia);
 
             solicitudRepository.findBySolicitudIdentityFamiliaId(idFamilia);

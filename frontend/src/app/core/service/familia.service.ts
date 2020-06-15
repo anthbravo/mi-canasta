@@ -4,11 +4,12 @@ import { environment } from 'src/environments/environment';
 import { Familia, FamiliaCreate, FamiliaNoIdDto } from '../model/familia.model';
 import { Usuario } from 'src/app/core/model/usuario.model';
 
-
 @Injectable({
   providedIn: 'root',
 })
+
 export class FamiliaService {
+  
   constructor(private httpClient: HttpClient) {}
 
   async crearFamilia(familia: FamiliaCreate) {
@@ -17,7 +18,7 @@ export class FamiliaService {
       .toPromise();
   }
 
-  async listarFamilia(id:any){
+  async listarFamilia(id: any){
     return await this.httpClient.get<Familia>(`${environment.url_api}/familias/${id}`)
     .toPromise();
   }
@@ -27,7 +28,6 @@ export class FamiliaService {
       .get<Array<Usuario>>(`${environment.url_api}/familias/${nombreFamilia}/usuarios`)
       .toPromise()
   }
-
 
   async eliminarIntegrante(nombreFamilia:string,dni:string){
     return await this.httpClient
@@ -41,10 +41,11 @@ export class FamiliaService {
       .toPromise
   }
 
-  async desactivarSolicitudes(idFamilia:number){
+  async desactivarSolicitudes(idFamilia: number){
     return await this.httpClient
       .put(`${environment.url_api}/familias/${idFamilia}`, null)
-      .toPromise
+      .toPromise();
   }
+
 
 }

@@ -4,12 +4,13 @@
   </div>
 
   <div class="family-container__enable-request">
-    <!-- <p>Desactivar solicitudes</p> $watch ngModel -->
+    <!-- <p>Desactivar solicitudes</p> $watch ngModel 
+    <button (click)='onClick()'>Change Value</button> -->
     <span [ngSwitch]="switchValue">
       <p *ngSwitchCase="true" > La familia acepta solicitudes </p>
-      <p *ngSwitchCase="false" > La familia no acepta solicitudes</p> <p *ngSwitchDefault> </p>
+      <p *ngSwitchCase="false" > La familia no acepta solicitudes</p>  <p *ngSwitchDefault> </p>
       </span> 
-    <nz-switch [(ngModel)]="switchValue" (ngModelChange)="desactivarSolicitudes()" ></nz-switch>
+    <nz-switch [(ngModel)]="switchValue" (click)="ngOnChanges()" > </nz-switch>
   </div>
 
   <div class="family-container__list-members">

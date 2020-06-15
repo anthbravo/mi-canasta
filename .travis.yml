@@ -10,7 +10,7 @@ branches:
 git:
   depth: 3
 script:
-  - ./mvnw test -B
+  - mvn test -B
 email:
     recipients:
       - u201320891@upc.edu.pe

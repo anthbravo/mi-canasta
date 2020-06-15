@@ -1,3 +1,4 @@
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
 import { ActivatedRoute } from '@angular/router';
@@ -5,12 +6,15 @@ import { FamiliaService } from 'src/app/core/service/familia.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
 import { Usuario } from 'src/app/core/model/usuario.model';
+import { FamiliaNoIdDto } from 'src/app/core/model/familia.model';
+
 
 @Component({
     selector: 'app-home-family',
     templateUrl: './home-family.component.html',
     styleUrls: ['./home-family.component.scss'],
 })
+
 export class HomeFamilyComponent implements OnInit {
     switchValue = false;
     nombreFamilia = '';
@@ -35,6 +39,15 @@ export class HomeFamilyComponent implements OnInit {
             this.listarFamilia();
         });
         this.getRolUsuario();
+    }
+
+    ngOnChanges(){
+        try{
+            this.familiaService.desactivarSolicitudes(this.idFamily);
+            console.log(this.idFamily);
+        } catch (error){
+            console.log(error);
+        }
     }
 
     async isUnicoAdmin(){
@@ -102,4 +115,6 @@ export class HomeFamilyComponent implements OnInit {
          console.log(error);        
        }
    }
+
 }
+

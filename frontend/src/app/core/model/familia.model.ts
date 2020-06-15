@@ -12,4 +12,11 @@ class FamiliaCreate {
 
 }
 
-export { Familia, FamiliaCreate };
+class FamiliaNoIdDto {
+  nombreUnico?: string;
+  aceptacionSolicitudes?: boolean;
+  cantidad?: number;
+}
+
+
+export { Familia, FamiliaCreate, FamiliaNoIdDto };

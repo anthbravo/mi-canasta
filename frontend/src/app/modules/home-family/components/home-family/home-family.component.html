@@ -2,10 +2,15 @@
   <div class="family-container__title">
     <h2>Participantes</h2>
   </div>
-  <div class="family-container__enable-request">
-    <p>Desactivar solicitudes</p>
-    <nz-switch [(ngModel)]="switchValue"></nz-switch>
 
+  <div class="family-container__enable-request">
+    <!-- <p>Desactivar solicitudes</p> $watch ngModel 
+    <button (click)='onClick()'>Change Value</button> -->
+    <span [ngSwitch]="switchValue">
+      <p *ngSwitchCase="true" > La familia acepta solicitudes </p>
+      <p *ngSwitchCase="false" > La familia no acepta solicitudes</p>  <p *ngSwitchDefault> </p>
+      </span> 
+    <nz-switch [(ngModel)]="switchValue" (click)="ngOnChanges()" > </nz-switch>
   </div>
 
   <div class="family-container__list-members">
@@ -20,6 +25,5 @@
       [unicoAdmin] = "unicoAdmin"
       >
     </app-members>
-
     </div>
 </div>

@@ -29,6 +29,4 @@ build/
 
 ## Build projects ##
 node_installation/
-# backend/src/main/resources/
-# src/main/resources/application.properties
-# *.properties
+backend/src/main/resources/

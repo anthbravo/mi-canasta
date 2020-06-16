@@ -1,0 +1,39 @@
+<div class="user-container">
+    <div class="field-container margin">
+        <div>
+            <img class = "image-left" src="assets/ic_settings.svg" alt="">
+            <img class = "image-right" src="assets/ic_change.svg" alt=""
+            v-on:click="changeProfile">
+        </div>
+        <br>
+        <img id='barcode' 
+        :src="src"
+        alt="" 
+        title="User" 
+        class="center"
+        width="100" 
+        height="100" />
+        <br>
+        <h1 class="user-h1"> {{ user.nombre +" "+ user.apellidoPaterno }} </h1>
+        <label class="user-label-dni"> {{ user.dni }} </label><br><br>
+        <label class="user-label-title"> Correo </label>
+        <label class="user-label"> {{ user.correoElectronico }} </label><br>
+        <label class="user-label-title"> {{ descriptionRoles }} </label>
+        <li
+        *ngFor="let rol of roles"; index as rol.rolPerfilId
+        >
+            <label  class="user-label" *ngIf="
+            (rol.rolPerfilId == 1 && userType == 0) ||
+            (rol.rolPerfilId == 3 && userType == 1)">
+                <img  src="assets/ic_crown.svg" alt="">
+                Administrador
+            </label>
+            <label  class="user-label" *ngIf="
+            (rol.rolPerfilId == 2 && userType == 0) ||
+            (rol.rolPerfilId == 4 && userType == 1)">
+                <img  src="assets/ic_shop-cart.svg" alt="">
+                {{ responsable }}
+            </label>
+        </li>
+    </div>
+</div>

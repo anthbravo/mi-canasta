@@ -60,7 +60,7 @@ const routes: Routes = [
       {
         path: "home/user",
         loadChildren : ()=>
-          import("./modules/home-user/home-user.module").then( m=> m.HomeUserModule)
+          import("./modules/home-user/home-user.module").then( (m)=> m.HomeUserModule)
       }
     ],
   },

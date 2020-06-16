@@ -16,7 +16,7 @@ export class HomeUserComponent implements OnInit {
   src: string ="";
   user: Usuario = {};
   descriptionRoles: string ="Roles en Grupo Familiar";
-  userType:number = 1; //familia
+  userType:number = 0; //familia
   responsable: string ="Responsable de compra";
   roles: RolPorUsuario[]=[];
 
@@ -55,6 +55,15 @@ export class HomeUserComponent implements OnInit {
   }
 
   changeProfile(){
-
+    if(this.userType == 0){
+      this.responsable = "Responsable de venta";
+      this.descriptionRoles = "Roles en Tienda";
+      this.userType = 1;
+    }
+    else {
+      this.responsable = "Responsable de compra";
+      this.descriptionRoles = "Roles en Grupo Familiar";
+      this.userType = 0;
+    }
   }
 }

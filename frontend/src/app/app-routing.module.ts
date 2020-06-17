@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout/layout.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HomeFamilyComponent } from './modules/home-family/components/home-family/home-family.component';
+import { HomeUserModule } from './modules/home-user/home-user.module';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
         path: "home/sale",
         loadChildren : ()=>
           import("./modules/sale/sale.module").then( m=> m.SaleModule)
+      },
+      {
+        path: "home/user",
+        loadChildren : ()=>
+          import("./modules/home-user/home-user.module").then( (m)=> m.HomeUserModule)
       }
     ],
   },

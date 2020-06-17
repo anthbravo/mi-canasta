@@ -6,10 +6,9 @@ class Familia {
 }
 
 class FamiliaCreate {
-  familiaNombre?: string;
+  nombreUnico?: string;
   dni?: string;
-  aceptacionSolicitudes?:boolean =  true;
-
+  aceptacionSolicitudes?: boolean;
 }
 
 class FamiliaNoIdDto {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Familia, FamiliaCreate, FamiliaNoIdDto } from '../model/familia.model';
 import { Usuario } from 'src/app/core/model/usuario.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,36 +15,36 @@ export class FamiliaService {
 
   async crearFamilia(familia: FamiliaCreate) {
     return await this.httpClient
-      .post(`${environment.url_api}/familias`, familia)
+      .post(`${environment.url_api}/familias`, familia, AuthService.getHeaderWithAuthorization())
       .toPromise();
   }
 
   async listarFamilia(id: any){
-    return await this.httpClient.get<Familia>(`${environment.url_api}/familias/${id}`)
+    return await this.httpClient.get<Familia>(`${environment.url_api}/familias/${id}`, AuthService.getHeaderWithAuthorization())
     .toPromise();
   }
 
   async listaMiembrosFamilia(nombreFamilia:string){
     return await this.httpClient
-      .get<Array<Usuario>>(`${environment.url_api}/familias/${nombreFamilia}/usuarios`)
-      .toPromise()
+      .get<Array<Usuario>>(`${environment.url_api}/familias/${nombreFamilia}/usuarios`, AuthService.getHeaderWithAuthorization())
+      .toPromise();
   }
 
   async eliminarIntegrante(nombreFamilia:string,dni:string){
     return await this.httpClient
-      .delete(`${environment.url_api}/familias/${nombreFamilia}/usuarios/${dni}`)
-      .toPromise()
+      .delete(`${environment.url_api}/familias/${nombreFamilia}/usuarios/${dni}`, AuthService.getHeaderWithAuthorization())
+      .toPromise();
   }
 
   async actualizarFamiliar(nombreFamilia:string){
     return await this.httpClient
-      .put(`${environment.url_api}/familias/${nombreFamilia}`,null)
-      .toPromise
+      .put(`${environment.url_api}/familias/${nombreFamilia}`, null, AuthService.getHeaderWithAuthorization())
+      .toPromise();
   }
 
   async desactivarSolicitudes(idFamilia: number){
     return await this.httpClient
-      .put(`${environment.url_api}/familias/${idFamilia}`, null)
+      .put(`${environment.url_api}/familias/${idFamilia}`, null, AuthService.getHeaderWithAuthorization())
       .toPromise();
   }
 

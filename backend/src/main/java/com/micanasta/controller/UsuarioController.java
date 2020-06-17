@@ -1,24 +1,33 @@
 package com.micanasta.controller;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.micanasta.dto.UsuarioAccesoDto;
-import com.micanasta.dto.UsuarioDataDto;
-import com.micanasta.dto.UsuarioLoginDto;
-import com.micanasta.exception.*;
-import com.micanasta.model.Familia;
-import com.micanasta.model.RolPorUsuario;
-import com.micanasta.model.Tienda;
-import com.micanasta.service.FamiliaService;
-import com.micanasta.service.impl.*;
-import com.micanasta.dto.UsuarioUpdateDto;
-import com.micanasta.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.micanasta.dto.UsuarioLoginDto;
+import com.micanasta.dto.UsuarioUpdateDto;
+import com.micanasta.exception.ActualPasswordNotMatchException;
+import com.micanasta.exception.EmailWrongFormatException;
+import com.micanasta.exception.NewPasswordNotMatchException;
+import com.micanasta.exception.SolicitudeNotFoundException;
+import com.micanasta.exception.UserFamilyNotFoundException;
+import com.micanasta.exception.UserLoginIncorrectException;
+import com.micanasta.exception.UserLoginNotFoundException;
+import com.micanasta.service.impl.RolPorUsuarioServiceImpl;
+import com.micanasta.service.impl.UsuarioPorFamiliaServiceImpl;
+import com.micanasta.service.impl.UsuarioPorTiendaServiceImpl;
+import com.micanasta.service.impl.UsuarioServiceImpl;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class  UsuarioController {
     @Autowired
     private UsuarioServiceImpl usuarioService;

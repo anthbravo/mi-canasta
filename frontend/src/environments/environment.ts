@@ -5,6 +5,9 @@
 export const environment = {
   production: false,
   url_api: 'https://mi-canasta.herokuapp.com',
+  TOKEN_AUTH_USERNAME: 'crisis',
+  TOKEN_AUTH_PASSWORD: 'adrenalina',
+  TOKEN_NAME: 'access_token'
 };
 
 /*

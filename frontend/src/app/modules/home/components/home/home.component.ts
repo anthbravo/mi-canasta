@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
     private familiaService: FamiliaService,
     private route: Router,
     private homeService: HomeService,
-    private solicitudService: SolicitudService
+    private solicitudService: SolicitudService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +40,19 @@ export class HomeComponent implements OnInit {
     try {
       let newFamily =  new FamiliaCreate()
       newFamily.aceptacionSolicitudes = true;
-      newFamily.dni =  localStorage.getItem("dni");
-      newFamily.familiaNombre =  this.grupoFamiliar;
+      newFamily.dni =  sessionStorage.getItem("dni");
+      newFamily.nombreUnico =  this.grupoFamiliar;
 
-      const res = await this.familiaService.crearFamilia(newFamily);
+      const res: any = await this.familiaService.crearFamilia(newFamily);
+      
+      let usuarioAutenticacion = this.authService.getUsuarioAutenticacion();
+
+      usuarioAutenticacion.familia = res;
+
+      this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
+
+      this.route.navigate(['/home/family/' + res.id]);
+      
     } catch (error) {
       console.log(error);
       this.loadingCreaFamiliarButton = false;
@@ -55,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.loadingUnirseFamiliaButton = true;
     try {
       let newSolicitud =  new Solicitud()
-      newSolicitud.dni =  localStorage.getItem("dni");
+      newSolicitud.dni =  sessionStorage.getItem("dni");
       newSolicitud.familiaNombre =  this.grupoFamiliar;
       const res = await this.solicitudService.crearSolicitud(newSolicitud);
       console.log(res);

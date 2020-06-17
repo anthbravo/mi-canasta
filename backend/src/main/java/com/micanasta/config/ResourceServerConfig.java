@@ -31,7 +31,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
 				.authorizeRequests().antMatchers("/heartbeat/**").anonymous().antMatchers("/swagger-ui.html")
 				.anonymous().antMatchers("/webjars/**").anonymous().antMatchers("/usuarios").anonymous()
-				.antMatchers("/familias").anonymous().antMatchers("**").authenticated();
+				.antMatchers("**").access("#oauth2.hasScope('write')");
 	}
 
 }

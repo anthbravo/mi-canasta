@@ -88,7 +88,7 @@ export class HomeFamilyComponent implements OnInit {
 
     async getRolUsuario(){
          try {
-          const res = await this.rolService.getRol(localStorage.getItem("dni"));
+          const res = await this.rolService.getRol(sessionStorage.getItem("dni"));
           this.roles = res;
           for(let i=0; i < this.roles.length; i++){
             if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;

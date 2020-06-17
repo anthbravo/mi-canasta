@@ -38,11 +38,10 @@ public class FamiliaController {
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDTO) {
         try {
-             familiaService.crearGrupoFamiliar(familiaDTO);
+        	return ResponseEntity.status(HttpStatus.OK).body(familiaService.crearGrupoFamiliar(familiaDTO));
         } catch (ExistingFamilyFoundException existingFamilyFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Se ha creado el grupo familiar");
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")

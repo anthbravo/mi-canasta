@@ -16,7 +16,7 @@ export class HomeUserComponent implements OnInit {
   src: string ="";
   user: Usuario = {};
   descriptionRoles: string ="Roles en Grupo Familiar";
-  userType:number = 0; //familia
+  userType:number = 1; //familia
   responsable: string ="Responsable de compra";
   roles: RolPorUsuario[]=[];
 

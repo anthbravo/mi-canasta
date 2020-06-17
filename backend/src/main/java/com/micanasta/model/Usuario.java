@@ -3,6 +3,8 @@ package com.micanasta.model;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,71 +16,82 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
-    @Id
-    @Column(unique = true)
-    private String dni;
+	@Id
+	@Column(unique = true)
+	private String dni;
 
-    @NotNull
-    private String nombre;
+	@NotNull
+	private String nombre;
 
-    @NotNull
-    public String apellidoPaterno;
+	@NotNull
+	public String apellidoPaterno;
 
+	@NotNull
+	public String apellidoMaterno;
 
-    @NotNull
-    public String apellidoMaterno;
+	@NotNull
+	private String contrasena;
 
-    @NotNull
-    private String contrasena;
+	@NotNull
+	private String correoElectronico;
 
-    @NotNull
-    private String correoElectronico;
+	@NotNull
+	private Date fechaNacimiento;
 
-    public String getDni() {
-        return dni;
-    }
+	public String getDni() {
+		return dni;
+	}
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
-    }
+	public String getApellidoPaterno() {
+		return apellidoPaterno;
+	}
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
+	public void setApellidoPaterno(String apellidoPaterno) {
+		this.apellidoPaterno = apellidoPaterno;
+	}
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
-    }
+	public String getApellidoMaterno() {
+		return apellidoMaterno;
+	}
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
+	public void setApellidoMaterno(String apellidoMaterno) {
+		this.apellidoMaterno = apellidoMaterno;
+	}
 
-    public String getContrasena() {
-        return contrasena;
-    }
+	public String getContrasena() {
+		return contrasena;
+	}
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
+	public String getCorreoElectronico() {
+		return correoElectronico;
+	}
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
+	public void setCorreoElectronico(String correoElectronico) {
+		this.correoElectronico = correoElectronico;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 }

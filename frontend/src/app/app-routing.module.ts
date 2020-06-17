@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/components/layout/layout.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { GuardService } from './core/service/guard.service';
+import { HomeUserModule } from './modules/home-user/home-user.module';
 
 const routes: Routes = [
     {
@@ -76,6 +77,12 @@ const routes: Routes = [
                     import('./modules/sale/sale.module').then(
                         (m) => m.SaleModule
                     ),
+            },
+            {
+                path: "home/user",              
+                canActivate: [GuardService],
+                loadChildren : ()=>
+                  import("./modules/home-user/home-user.module").then( (m)=> m.HomeUserModule)
             },
         ],
     },

@@ -1,0 +1,55 @@
+.field-container {
+  margin: 18px 40px 160px 40px;
+  display: flex;
+  flex-direction: column;
+  
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user-h1 {
+    text-align: center;
+    font-size: 23px;
+    font-weight: bold;
+    color: #000;
+}
+
+.br {
+    text-align: center;
+}
+
+.user-label-dni {
+    text-align: center;
+    color: #F76A8C;
+    font-size: 20px;
+}
+
+.user-label-title {
+    text-align: left;
+    color: #F76A8C;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-label {
+    text-align: left;
+    color: #000;
+    font-size: 18px;
+}
+
+.image-left {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+}
+
+.image-right {
+    display: block;
+    float: right;
+    width: 30px;
+    height: 30px;
+}

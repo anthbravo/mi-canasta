@@ -56,5 +56,6 @@ export class HomeUserComponent implements OnInit {
 
   changeProfile(){
 
+    
   }
 }

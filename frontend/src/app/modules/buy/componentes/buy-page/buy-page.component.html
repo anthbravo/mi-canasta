@@ -1,0 +1,27 @@
+<div style="display: flex; flex-direction: column;">
+
+
+
+</div>
+<div class="buy-container">
+  <div class="buy-container__header">
+    <h2>{{ nombre }}</h2>
+    <p color-rojo>{{ dni }}</p>
+  </div>
+  <div class="buy-container__slider" *ngFor="let item of products">
+    <div class="buy-container__slider-header">
+      <p>{{ item.name }}</p>
+      <nz-input-number [nzMin]="item.minValue" [nzMax]="item.maxValue" [nzStep]="1" [(ngModel)]="item.defaultValue">
+      </nz-input-number>
+
+
+    </div>
+    <div class="buy-container__slider-indicators">
+      <nz-slider [nzMarks]="setLimitsLegend(item)" [nzMin]="item.minValue" [nzMax]="item.maxValue" [nzStep]="1" [(ngModel)]="item.defaultValue"></nz-slider>
+    </div>
+
+
+
+
+  </div>
+</div>

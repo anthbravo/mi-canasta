@@ -62,7 +62,6 @@ const routes: Routes = [
         loadChildren : ()=>
           import('./modules/buy/buy.module').then( (m)=> m.buyModule)
       },
-
     ],
   },
   {

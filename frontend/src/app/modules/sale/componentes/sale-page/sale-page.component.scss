@@ -15,7 +15,6 @@
   font-size: 18px;
   text-align: center;
 }
-
 .sale-container__slider {
   margin: 0 0 64px 0;
 }
@@ -28,4 +27,22 @@
   font-size: 16px;
   font-weight: 600;
   color: #000;
+}
+
+
+.sale-container__button{
+  border-radius: 6px;
+  border: none;
+  color: #ffffff;
+  background: #FF5A82;
+  padding: 12px 32px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  margin: 0 38px;
 }

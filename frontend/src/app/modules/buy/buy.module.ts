@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { BuyRoutingModule } from './buy-routing.module';
 import { BuyPageComponent } from './componentes/buy-page/buy-page.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

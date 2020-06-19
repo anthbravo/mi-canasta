@@ -13,15 +13,17 @@
       <p>{{ item.name }}</p>
       <nz-input-number [nzMin]="item.minValue" [nzMax]="item.maxValue" [nzStep]="1" [(ngModel)]="item.defaultValue">
       </nz-input-number>
-
-
     </div>
+
     <div class="buy-container__slider-indicators">
       <nz-slider [nzMarks]="setLimitsLegend(item)" [nzMin]="item.minValue" [nzMax]="item.maxValue" [nzStep]="1" [(ngModel)]="item.defaultValue"></nz-slider>
     </div>
+  </div>
 
-
-
-
+  <button class="buy-container__button">
+    Modificar Pedido
+  </button>
+    
+    <div>
   </div>
 </div>

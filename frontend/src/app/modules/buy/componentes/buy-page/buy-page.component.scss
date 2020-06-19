@@ -28,33 +28,21 @@
   font-weight: 600;
   color: #000;
 }
-.login-container__button {
+
+
+.buy-container__button{
+  border-radius: 6px;
+  border: none;
+  color: #ffffff;
+  background: #FF5A82;
+  padding: 12px 32px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 24px;
-}
-
-.home-container{
-
-
-  .field-container{
-    margin: 128px 0 160px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    & input{
-      text-align: center;
-    }
-  }
-  .grupo-familiar-label{
-    text-align: center;
-  }
-  &__list-button{
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-
+  margin: 0 32px;
 }

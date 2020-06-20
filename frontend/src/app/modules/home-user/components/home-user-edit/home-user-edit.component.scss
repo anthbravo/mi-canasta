@@ -1,0 +1,45 @@
+.field-container {
+    margin: 0px 40px 0px 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.user-edit-container h1 {
+    justify-content: right;
+    align-items: right;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 12px 0 8px 0;
+}
+
+.user-edit-container__form-container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+.user-edit-container__button {
+    justify-content: center;
+    align-items: center;
+    margin: auto auto auto auto
+}
+
+.user-edit-button {
+    margin: 12px auto 0 auto;
+}
+
+.input-shared-container {
+  margin-bottom: 14px;
+}
+
+.image-back {
+    display: block;
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin-right: 6px;
+    margin-top: 6px;
+}

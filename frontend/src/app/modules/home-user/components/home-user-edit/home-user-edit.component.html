@@ -1,0 +1,62 @@
+<div class="user-edit-container">
+    <div class="field-container margin">
+        <img class = "image-back" src="assets/ic_back.svg" alt=""
+        (click)="volver()">
+        <h1 class="user-edit-container__header h1">
+            Editar información
+        </h1>
+        <div class="user-edit-container__form-container">
+            <div class="input-shared-container">
+                <label>Correo</label>
+                <input
+                    class="input-shared-component"
+                    [(ngModel)]="correo"
+                />
+            </div>
+            <div class="input-shared-container">
+                <label>Contraseña Actual</label>
+                <input
+                    type="password"
+                    class="input-shared-component"
+                    [(ngModel)]="contrasena"
+                />
+            </div>
+            <div class="input-shared-container">
+                <label>Nueva contraseña</label>
+                <input
+                    class="input-shared-component"
+                    type="password"
+                    placeholder="Opcional"
+                    [(ngModel)]="nuevaContrasena"
+                />
+            </div>
+            <div class="input-shared-container">
+                <label>Repetir contraseña</label>
+                <input
+                    class="input-shared-component"
+                    type="password"
+                    placeholder="Opcional"
+                    [(ngModel)]="repetirContrasena"
+                />
+            </div>
+            <div class="user-edit-container__button">
+                <app-button-shared
+                class="user-edit-button"
+                [text]="'Actualizar'"
+                [type]="'large'"
+                [bgColor]="'red'"
+                [loading]="loadingButton"
+                [disabled]="contrasena.length < 1"
+                (event)="putUsuario()"
+                />
+            </div>
+        </div>
+    </div>
+    <app-error-modal
+        (closeEvent)="closeModal()"
+        *ngIf="isShowModal"
+        [title]="modalTitle"
+        [description]="modalDescription"
+    ></app-error-modal>
+
+</div>

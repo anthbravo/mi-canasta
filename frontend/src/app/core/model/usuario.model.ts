@@ -1,5 +1,6 @@
 import { Familia } from './familia.model';
 import { Rol } from './rol.model';
+
 class Usuario {
   dni?: string;
   contrasena?: string;
@@ -20,4 +21,11 @@ class UsuarioAutenticacion {
   rol?: Array<Rol>;
 }
 
-export { Usuario, UsuarioAutenticacion };
+class UsuarioPut {
+  correoElectronico?: string;
+  contrasena?: string;
+  nuevaContrasena?: string;
+  repetirContrasena?: string;
+}
+
+export { Usuario, UsuarioAutenticacion, UsuarioPut };

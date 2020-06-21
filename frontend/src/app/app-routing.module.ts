@@ -79,11 +79,18 @@ const routes: Routes = [
                     ),
             },
             {
-                path: "home/user",              
+                path: "home/user",
                 canActivate: [GuardService],
                 loadChildren : ()=>
                   import("./modules/home-user/home-user.module").then( (m)=> m.HomeUserModule)
             },
+            {
+                path: "home/dealers/location",
+                loadChildren: ()=>
+                    import("./modules/dealers-location/dealers-location.module").then(
+                        (m)=> m.DealersLocationModule
+                    )
+            }
         ],
     },
     {

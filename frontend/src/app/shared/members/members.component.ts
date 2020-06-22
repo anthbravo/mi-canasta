@@ -26,6 +26,8 @@ export class MembersComponent implements OnInit {
   numIntegrantes: number;
   @Input()
   unicoAdmin: boolean;
+  @Input()
+  idTienda: any;
 
   roles:RolPorUsuario[] = [];
   descriptionErrorModal: string;

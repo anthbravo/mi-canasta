@@ -1,0 +1,11 @@
+class Tienda {
+    id?: number;
+    descripcion?: string;
+    direccion?: string;
+    limite?: number;
+    latitud?: string;
+    longitud?: string;
+    horario?: string;
+}
+
+export { Tienda };

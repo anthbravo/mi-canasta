@@ -8,21 +8,29 @@
   </div>
 
   <div class="dealers-container__add">
-    <button>
+    <button (click)="postUsuarioInTienda()"  >
       <img src="assets/ic_plus.svg" alt="plus" />
     </button>
+    
     <div class="input-shared-container">
       <input
         class="input-shared-component"
         type="text"
-        placeholder="Ingrese un dni"
+        placeholder="Ingrese un DNI"
         maxlength="8"
       />
     </div>
   </div>
 
-  <div class="dealers-container__list">
-    <app-members [person]="user" *ngFor="let user of mock"></app-members>
+  <div class="member-container__personal">
+    <app-members
+      *ngFor="let user of integrantes"
+      [person]="user"
+      [dni]="user.dni"
+      [userIsAdmin]="userIsAdmin"
+      [numIntegrantes] = "numIntegrantes"
+      [unicoAdmin] = "unicoAdmin" >
+    </app-members>
 
   </div>
 </div>

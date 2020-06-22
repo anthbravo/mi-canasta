@@ -80,12 +80,12 @@ public class TiendaServiceimpl implements TiendaService {
         return stockDtoConverter.convertToDto(stock);
     }
 
-    public TiendaUsuarioDto postUsuarioInTienda(String dni, long tiendaId) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
+    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)  throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
     {
         Usuario usuario = usuarioRepository.findByDni(dni);
         if (usuario != null) {
-            long cantidadUsuarios = usuarioPorTiendaRepository.countById(tiendaId);
-            Optional<Tienda> tienda = tiendaRepository.findById(tiendaId);
+            long cantidadUsuarios = usuarioPorTiendaRepository.countById(idTienda);
+            Optional<Tienda> tienda = tiendaRepository.findById(idTienda);
             if (tienda.isPresent() && (cantidadUsuarios + 1 <= tienda.get().getLimite())) {
                 UsuarioPorTienda usuarioPorTienda = new UsuarioPorTienda();
                 UsuarioPorTiendaIdentity usuarioPorTiendaIdentity = new UsuarioPorTiendaIdentity();

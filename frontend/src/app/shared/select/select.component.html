@@ -1,2 +1,13 @@
-<nz-select nzMode="unique" nzPlaceHolder="Seleccione el rol" [nzOptions]="listOfOption" [(ngModel)]="listOfSelectedValue">
+<nz-select
+ [(ngModel)]="listOfSelectedValue"
+ [nzOptions]="listOfOption" 
+ ngModel="listOfSelectedValue"
+ nzPlaceHolder="Seleccione para cambiar el rol">
+ <nz-option nzValue="Administrador" nzLabel="Administrador"></nz-option>
+ <nz-option nzValue="Comprador" nzLabel="Comprador"></nz-option>
 </nz-select>
+
+<!-- <nz-select nzMode="unique" 
+nzPlaceHolder="Seleccione el rol" 
+[nzOptions]="listOfOption"
+[(ngModel)]="listOfSelectedValue"></nz-select> --> 

@@ -28,6 +28,8 @@ export class MembersComponent implements OnInit {
   unicoAdmin: boolean;
   @Input()
   idTienda: any;
+  @Input()
+  rol: any = false;
 
   roles:RolPorUsuario[] = [];
   descriptionErrorModal: string;
@@ -105,7 +107,12 @@ export class MembersComponent implements OnInit {
       const res = await this.rolService.getRol(this.dni);
       this.roles = res;
       for(let i=0; i < this.roles.length; i++){
-        if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
+        if(this.roles[i].rolPerfilId == 1) {
+        this.userToDeleteIsAdmin=true;
+        this.rol = true;
+        }else{
+          this.rol = false;
+        }
       }        
     }
     catch (error) {

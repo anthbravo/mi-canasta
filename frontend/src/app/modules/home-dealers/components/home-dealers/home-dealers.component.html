@@ -18,19 +18,20 @@
         type="text"
         placeholder="Ingrese un DNI"
         maxlength="8"
+        [(ngModel)]="dni"
       />
     </div>
   </div>
 
-  <div class="member-container__personal">
-    <app-members
+  <div class="seller-container__personal">
+    <app-sellers
       *ngFor="let user of integrantes"
       [person]="user"
       [dni]="user.dni"
       [userIsAdmin]="userIsAdmin"
       [numIntegrantes] = "numIntegrantes"
       [unicoAdmin] = "unicoAdmin" >
-    </app-members>
+    </app-sellers>
 
   </div>
 </div>

@@ -1,0 +1,20 @@
+<div class="seller-container">
+    <div class="seller-container__information">
+      <div class="seller-container__roles">
+          <!-- <img *ngIf="person.roles.includes('Admin')" src="assets/ic_crown.svg" alt="">
+          <img *ngIf="person.roles.includes('Comprador')" src="assets/ic_shop-cart.svg" alt=""> -->
+          <img  src="assets/ic_crown.svg" alt="">
+          <img  src="assets/ic_shop-cart.svg" alt="">
+
+      </div>
+      <div class="seller-container__personal">
+        <h2>{{ person.nombre }} {{person.apellidoPaterno}}</h2>
+        <p>{{ person.dni }}</p>
+      </div>
+
+    </div>
+    <div class="seller-container__select">
+      <app-select  [options]="data"></app-select>
+    </div>
+
+</div>

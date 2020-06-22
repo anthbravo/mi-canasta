@@ -32,7 +32,7 @@ const routes: Routes = [
           import('./modules/home-family/home-family.module').then((m)=>m.HomeFamilyModule)
       },
       {
-        path: 'home/dealers',
+        path: 'home/dealers/:id',
         loadChildren: ()=>
           import('./modules/home-dealers/home-dealers.module').then((m)=>m.HomeDealersModule)
       },

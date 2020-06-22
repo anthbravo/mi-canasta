@@ -1,6 +1,7 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearSolicitudDto;
+import com.micanasta.dto.SolicitudAcceptedDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
@@ -20,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -102,5 +106,16 @@ public class SolicitudServiceImpl implements SolicitudService {
         return false;
     }
 
+    @Override
+    public List<SolicitudAcceptedDto> GetSolicitudesByFamiliaId(Long idFamilia) {
 
+        List<Solicitud> solicituds = solicitudRepository.findAllBySolicitudIdentityFamiliaId(idFamilia);
+
+
+        List<SolicitudAcceptedDto> solicitudAcceptedDtos = new ArrayList<>();
+        for (Solicitud solicitud: solicituds){
+         solicitudAcceptedDtos.add(modelMapper.map(solicitud,SolicitudAcceptedDto.class));
+        }
+        return solicitudAcceptedDtos;
+    }
 }

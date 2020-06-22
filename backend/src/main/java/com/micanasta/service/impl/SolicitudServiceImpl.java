@@ -114,7 +114,7 @@ public class SolicitudServiceImpl implements SolicitudService {
 
         List<SolicitudAcceptedDto> solicitudAcceptedDtos = new ArrayList<>();
         for (Solicitud solicitud: solicituds){
-         solicitudAcceptedDtos.add(modelMapper.map(solicitud,SolicitudAcceptedDto.class));
+         solicitudAcceptedDtos.add(solicitudDtoConverter.convertSolicitudAcceptedToDto(solicitud));
         }
         return solicitudAcceptedDtos;
     }

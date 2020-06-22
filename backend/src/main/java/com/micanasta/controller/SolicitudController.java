@@ -53,4 +53,14 @@ public class SolicitudController {
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @DeleteMapping("/solicitudes/{dni}")
+    public ResponseEntity<?> denegarSolicitud(@PathVariable(name = "dni") String dni){
+        try{
+
+        }catch(){
+
+        }
+
+    }
 }

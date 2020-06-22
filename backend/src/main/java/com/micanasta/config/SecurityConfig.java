@@ -1,6 +1,7 @@
 package com.micanasta.config;
 
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,10 +20,9 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 
-//TODO:Crear los beans para poder ser inyectados luego en otras
+//TODO:Crear los beans para poder ser inyectados luego en otras	
 //clases de configuracion
 @Configuration
 @EnableWebSecurity //csrf()

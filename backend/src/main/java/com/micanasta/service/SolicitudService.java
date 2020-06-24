@@ -7,6 +7,7 @@ import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.exception.SolicitudeNotFoundException;
+import com.micanasta.exception.SolicitudeTroubleException;
 import com.micanasta.model.Solicitud;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface SolicitudService {
     boolean borrarSolicitud(SolicitudUsuarioDto solicitudUsuarioDto);
 
     List<SolicitudAcceptedDto> GetSolicitudesByFamiliaId(Long idFamilia);
+
+    boolean deleteSolicitudByDni(String dni) throws SolicitudeTroubleException;
 }

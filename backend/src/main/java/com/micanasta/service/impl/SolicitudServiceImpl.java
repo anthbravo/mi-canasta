@@ -7,6 +7,7 @@ import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.SolicitudeTroubleException;
 import com.micanasta.model.Familia;
 import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.model.Solicitud;
@@ -20,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,5 +119,18 @@ public class SolicitudServiceImpl implements SolicitudService {
          solicitudAcceptedDtos.add(solicitudDtoConverter.convertSolicitudAcceptedToDto(solicitud));
         }
         return solicitudAcceptedDtos;
+    }
+
+    @Override
+    public boolean deleteSolicitudByDni(String dni) throws SolicitudeTroubleException {
+        try {
+            Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+            if (solicitud.isPresent()){
+            solicitudRepository.delete(solicitud.get());
+            return true;
+            }
+            throw new SolicitudeTroubleException();
+
+        }catch (Exception ex) {throw new SolicitudeTroubleException();}
     }
 }

@@ -3,7 +3,8 @@ package com.micanasta.controller;
 import javax.validation.Valid;
 
 import com.micanasta.dto.SolicitudAcceptedDto;
-import org.apache.coyote.Response;
+import com.micanasta.exception.SolicitudeTroubleException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,10 +58,10 @@ public class SolicitudController {
     @DeleteMapping("/solicitudes/{dni}")
     public ResponseEntity<?> denegarSolicitud(@PathVariable(name = "dni") String dni){
         try{
-
-        }catch(){
-
+            boolean res = solicitudService.deleteSolicitudByDni(dni);
+            return ResponseEntity.status(HttpStatus.OK).body("Se ha eliminado la solicitud");
+        }catch(SolicitudeTroubleException exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getExceptionDto());
         }
-
     }
 }

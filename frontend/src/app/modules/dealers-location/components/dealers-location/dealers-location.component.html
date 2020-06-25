@@ -1,0 +1,30 @@
+<div class="dealers-location-container">
+    <div class="dealers-location-container__title">
+        <h2>Filtrar</h2>
+        <nz-select ngModel="Arroz">
+            <nz-option nzValue="Arroz" nzLabel="Arroz"></nz-option>
+            <nz-option nzValue="Leche" nzLabel="Leche"></nz-option>
+        </nz-select>
+    </div>
+
+    <div class="dealers-location-container__body">
+        <div class="dealers-location-container__body__filter">
+            <div (click)="changeOption(i)"  *ngFor="let filter of filterOptionsMap; let i =  index">
+                <img *ngIf="i === actualFilterSelected" [src]="filter.iconActivate" alt="">
+                <img *ngIf="i !== actualFilterSelected" [src]="filter.iconDesactivate" alt="">
+            </div>
+
+        </div>
+        <div class="dealers-location-container__body__map">
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15"
+                (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+                    [opacity]="marker.alpha" [markerDraggable]="true" (markerClick)="selectMarker($event)">
+                </agm-marker>
+
+            </agm-map>
+
+        </div>
+    </div>
+
+</div>

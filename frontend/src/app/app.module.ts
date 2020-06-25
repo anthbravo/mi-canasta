@@ -13,14 +13,26 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-
+import { AgmCoreModule } from '@agm/core';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule, LayoutModule, FormsModule, HttpClientModule, BrowserAnimationsModule, ReactiveFormsModule],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        CoreModule,
+        LayoutModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        AgmCoreModule.forRoot({
+            apiKey: "AIzaSyA6-mMi_39xgm7npBNeEcngLsVoPA0NGLw"
+        })
+    ],
+    providers: [{ provide: NZ_I18N, useValue: en_US }],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

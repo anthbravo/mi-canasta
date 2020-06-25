@@ -1,21 +1,27 @@
 package com.micanasta.controller;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
-import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.service.SolicitudService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RequiredArgsConstructor
 public class SolicitudController {
     @Autowired

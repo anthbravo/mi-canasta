@@ -1,30 +1,30 @@
 package com.micanasta.controller;
-import com.micanasta.dto.RolPorPerfilListaDto;
-import com.micanasta.dto.SolicitudBusquedaDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.exception.*;
-import com.micanasta.dto.SolicitudBusquedaDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaInfoDto;
-import com.micanasta.dto.RolPorUsuarioDataDto;
-import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaBusquedaMiembrosDto;
-import com.micanasta.exception.UserAddedShopExceedLimitException;
-import com.micanasta.exception.UserAddedShopIncorrectException;
-import com.micanasta.model.UsuarioPorTienda;
-import com.micanasta.service.TiendaService;
-import com.micanasta.service.UsuarioService;
-import io.swagger.models.Response;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.dto.TiendaBusquedaMiembrosDto;
+import com.micanasta.dto.TiendaInfoDto;
+import com.micanasta.exception.UserAddedShopExceedLimitException;
+import com.micanasta.exception.UserAddedShopIncorrectException;
+import com.micanasta.exception.UserNotAdminException;
+import com.micanasta.exception.UserNotFoundException;
+import com.micanasta.service.TiendaService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RequiredArgsConstructor
 public class TiendaController {
     @Autowired

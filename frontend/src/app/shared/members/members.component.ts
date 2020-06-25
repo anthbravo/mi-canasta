@@ -51,7 +51,7 @@ export class MembersComponent implements OnInit {
   }
 
   deleteUsuarioFromFamilia(){
-    if( localStorage.getItem("dni") == this.dni ){
+    if( sessionStorage.getItem("dni") == this.dni ){
       this.deleteYo();
     }
     else {
@@ -125,7 +125,7 @@ export class MembersComponent implements OnInit {
   }
 
   abrirModalConfirmacion(){
-    if( localStorage.getItem("dni") == this.dni ){
+    if( sessionStorage.getItem("dni") == this.dni ){
       if(this.numIntegrantes == 1)
         this.descriptionConfirModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
       else this.descriptionConfirModal="¿Desea abandonar el grupo familiar?";

@@ -1,16 +1,18 @@
 package com.micanasta.controller;
 
-import com.micanasta.model.Heartbeat;
-import com.micanasta.service.HeartbeatService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.micanasta.model.Heartbeat;
+import com.micanasta.service.HeartbeatService;
 
 @RestController
 @RequestMapping("/heartbeat")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 public class HeartbeatController {
 
     @Autowired

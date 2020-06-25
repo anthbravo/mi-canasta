@@ -59,7 +59,7 @@ public class SolicitudController {
     public ResponseEntity<?> denegarSolicitud(@PathVariable(name = "dni") String dni){
         try{
             boolean res = solicitudService.deleteSolicitudByDni(dni);
-            return ResponseEntity.status(HttpStatus.OK).body("Se ha eliminado la solicitud");
+            return ResponseEntity.status(HttpStatus.OK).build();
         }catch(SolicitudeTroubleException exception){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getExceptionDto());
         }

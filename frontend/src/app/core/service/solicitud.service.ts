@@ -20,7 +20,7 @@ export class SolicitudService {
             )
             .toPromise();
     }
-
+    //deniega la solicitud entrante
     async denegarSolicitud(dni?: string) {
         return await this.httpClient
             .delete(

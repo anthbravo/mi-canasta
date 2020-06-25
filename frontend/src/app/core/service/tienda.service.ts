@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/core/model/usuario.model';
-import { Tienda } from 'src/app/core/model/tienda.model';
+import { Tienda, TiendaUsuarioDto } from 'src/app/core/model/tienda.model';
 
 
 @Injectable({
@@ -14,8 +14,8 @@ export class TiendaService {
   constructor(private httpClient: HttpClient) {}
 
   async postUsuarioInTienda(idTienda: number, dni: string) {
-    return await this.httpClient
-      .post(`${environment.url_api}/tiendas/${idTienda}/usuario/${dni}/usuariosportienda`, null)
+    return await this.httpClient.post
+    (`${environment.url_api}/tiendas/${idTienda}/usuario/${dni}/usuariosportienda?dni=${dni}&idTienda=${idTienda}`, null)
       .toPromise();
   }
 

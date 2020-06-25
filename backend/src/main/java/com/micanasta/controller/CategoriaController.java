@@ -19,13 +19,11 @@ public class CategoriaController {
 
     @GetMapping("/categorias/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
-
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getById(id));
     }
 
     @GetMapping("/categorias/{id}/limites")
     public ResponseEntity<?> getLimiteById(@PathVariable long id) {
-
         return ResponseEntity.status(HttpStatus.OK).body(categoriaService.getLimiteById(id));
     }
 }

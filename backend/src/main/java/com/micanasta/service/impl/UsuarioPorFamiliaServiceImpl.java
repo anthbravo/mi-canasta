@@ -28,7 +28,7 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
 
         Usuario usuario = usuarioRepository.findByDni(solicitudUsuarioDto.dni);
         Optional<Familia> optionalFamilia = familiaRepository.findById(solicitudUsuarioDto.familiaId);
-
+        RolPorUsuario rolPorUsuario = new RolPorUsuario();
         if(usuario != null && optionalFamilia.isPresent())
         {
             UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity = new UsuarioPorFamiliaIdentity();
@@ -38,9 +38,29 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
             UsuarioPorFamilia usuarioPorFamilia = new UsuarioPorFamilia();
             usuarioPorFamilia.setUsuarioPorFamiliaIdentity(usuarioPorFamiliaIdentity);
             usuarioPorFamiliaRepository.save(usuarioPorFamilia);
+            rolPorUsuario = asignarRolPorUsuario(usuario.getDni(),(long)2);
+            rolPorUsuarioRepository.save(rolPorUsuario);
             return true;
         }
-     throw new SolicitudeTroubleException();
+        throw new SolicitudeTroubleException();
+    }
+    RolPorUsuario asignarRolPorUsuario(String dni, Long id) {
+
+        RolPerfil rolPerfil = new RolPerfil();
+        rolPerfil.setId(id);
+
+        Usuario usuario = new Usuario();
+        usuario.setDni(dni);
+
+        RolPorUsuarioIdentity rolPorUsuarioIdentity = new RolPorUsuarioIdentity();
+        rolPorUsuarioIdentity.setUsuario(usuario);
+        rolPorUsuarioIdentity.setRolPerfil(rolPerfil);
+
+        RolPorUsuario rolPorUsuario = new RolPorUsuario();
+        rolPorUsuario.setRolPorUsuarioIdentity(rolPorUsuarioIdentity);
+
+        return rolPorUsuario;
+
     }
 
     @Override

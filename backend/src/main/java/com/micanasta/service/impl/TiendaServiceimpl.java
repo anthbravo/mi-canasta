@@ -80,8 +80,7 @@ public class TiendaServiceimpl implements TiendaService {
         return stockDtoConverter.convertToDto(stock);
     }
 
-    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)  throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException
-    {
+    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)  throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
         Usuario usuario = usuarioRepository.findByDni(dni);
         if (usuario != null) {
             long cantidadUsuarios = usuarioPorTiendaRepository.countById(idTienda);
@@ -97,10 +96,14 @@ public class TiendaServiceimpl implements TiendaService {
                 tiendaUsuarioDto.setDni(usuario.getDni());
                 tiendaUsuarioDto.setDescripcion(tienda.get().getDescripcion());
                 tiendaUsuarioDto.setId((tienda.get().getId()));
+                RolPorUsuario rolPorUsuario = new RolPorUsuario();
+                rolPorUsuario = asignarRolPorUsuario(usuario.getDni(), (long) 4);
+                rolPorUsuarioRepository.save(rolPorUsuario);
                 return tiendaUsuarioDto;
             } else throw new UserAddedShopExceedLimitException();
         } else throw new UserAddedShopIncorrectException();
     }
+
 
     public RolPorUsuario asignarRolPorUsuario(String dni, Long id) {
 

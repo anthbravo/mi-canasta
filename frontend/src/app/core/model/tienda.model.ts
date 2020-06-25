@@ -8,10 +8,4 @@ class Tienda {
     horario?: string;
 }
 
-class TiendaUsuarioDto {
-    id?: number;
-    descripcion?: string;
-    dni?: string;
-}
-
-export { Tienda, TiendaUsuarioDto };
+export { Tienda };

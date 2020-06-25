@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
 import { Usuario } from 'src/app/core/model/usuario.model';
 import { TiendaService } from 'src/app/core/service/tienda.service';
-import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-home-dealers',
@@ -24,7 +23,7 @@ export class HomeDealersComponent implements OnInit {
       private homeService: HomeService,
       private tiendaService: TiendaService,
       private route: ActivatedRoute,
-      private rolService: RolService,
+      private rolService: RolService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +40,6 @@ export class HomeDealersComponent implements OnInit {
       const res = await this.tiendaService.postUsuarioInTienda(this.idTienda,
       this.dni,
     );
-      this.listarMiembros();
       console.log(res);
     } catch (error) {
       console.log(error);

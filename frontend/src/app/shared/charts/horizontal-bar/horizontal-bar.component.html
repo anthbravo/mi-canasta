@@ -1,0 +1,12 @@
+<div class="container-horizontal-bard">
+    <div class="line-father">
+        <div class="line" [ngClass]="{
+        'red-chart': item.color==='red',
+        'yellow-chart':item.color==='yellow',
+        'green-chart': item.color==='green',
+        'orange-chart': item.color==='orange'
+        }" [ngStyle]="{ width: (item.value / total) * 100 + '%' }" *ngFor="let item of cards">
+            <p>{{ item.text }}</p>
+        </div>
+    </div>
+</div>

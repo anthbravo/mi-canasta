@@ -10,6 +10,7 @@ import { SelectComponent } from './select/select.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HorizontalBarComponent } from './charts/horizontal-bar/horizontal-bar.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     WarningModalComponent,
     MembersComponent,
     SelectComponent,
+    HorizontalBarComponent,
   ],
   imports: [CommonModule, FormsModule,ReactiveFormsModule, NzSelectModule],
   exports: [
@@ -29,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ErrorModalComponent,
     WarningModalComponent,
     MembersComponent,
-    SelectComponent
+    SelectComponent,
+    HorizontalBarComponent
   ],
 })
 export class SharedModule {}

@@ -27,6 +27,10 @@ export class LoginComponent implements OnInit {
 
     error: ErrorGeneric;
 
+    dataHorizontaBar = [
+        {text: "2kg", color: "red", value: 2},
+        {text: "1kg", color: "orange", value: 1},
+      ]
     constructor(
         private authService: AuthService,
         private route: Router,

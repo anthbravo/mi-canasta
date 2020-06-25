@@ -1,5 +1,7 @@
-<div class="login-container">
-  <div class="login-container__header">
+<div>
+    <div class="login-container">
+        <h2>asdasd</h2>
+        <!-- <div class="login-container__header">
     <img src="assets/ic_logo.svg" alt="Mi canasta" />
     <h1 color-rojo>Mi Canasta</h1>
     <p>Administra tus recursos</p>
@@ -20,6 +22,9 @@
 
     <app-error-modal *ngIf="isShowErrorModal" title="{{ error.title }}" description="{{ error.description }}"
       (closeEvent)="closeErrorModal()">
-    </app-error-modal>
-  </div>
+    </app-error-modal> -->
+        <app-horizontal-bar [cards]="dataHorizontaBar">
+
+        </app-horizontal-bar>
+    </div>
 </div>

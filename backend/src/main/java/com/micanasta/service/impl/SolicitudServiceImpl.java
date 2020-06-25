@@ -123,7 +123,7 @@ public class SolicitudServiceImpl implements SolicitudService {
 
     @Override
     public boolean deleteSolicitudByDni(String dni) throws SolicitudeTroubleException {
-        try {
+
             Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
             if (solicitud.isPresent()){
             solicitudRepository.delete(solicitud.get());
@@ -131,6 +131,6 @@ public class SolicitudServiceImpl implements SolicitudService {
             }
             throw new SolicitudeTroubleException();
 
-        }catch (Exception ex) {throw new SolicitudeTroubleException();}
+
     }
 }

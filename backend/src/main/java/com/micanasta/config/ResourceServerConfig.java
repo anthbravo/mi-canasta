@@ -26,22 +26,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		resources.resourceId(resourceIds).tokenServices(tokenServices);
 	}
 
-//	@Override
-//	public void configure(HttpSecurity http) throws Exception {
-//		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
-//				.authorizeRequests().antMatchers("/heartbeat/**").anonymous().antMatchers("/swagger-ui.html")
-//				.anonymous().antMatchers("/webjars/**").anonymous().antMatchers("/usuarios").anonymous()
-//				.antMatchers("**").access("#oauth2.hasScope('write')");
-//	}
-
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
-				.authorizeRequests().antMatchers("**").anonymous()
-//          .antMatchers("/swagger-ui.html")
-//          .anonymous().antMatchers("/webjars/**").anonymous().antMatchers("/usuarios").anonymous()
-//          .antMatchers("**").access("#oauth2.hasScope('write')")
-		;
+				.authorizeRequests().antMatchers("/heartbeat/**").anonymous().antMatchers("/swagger-ui.html")
+				.anonymous().antMatchers("/webjars/**").anonymous().antMatchers("/usuarios").anonymous()
+				.antMatchers("**").access("#oauth2.hasScope('write')");
 	}
+
+//	@Override
+//	public void configure(HttpSecurity http) throws Exception {
+//		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
+//				.authorizeRequests().antMatchers("**").anonymous();
+//	}
 
 }

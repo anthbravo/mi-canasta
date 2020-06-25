@@ -63,7 +63,7 @@ const routes: Routes = [
                     ),
             },
             {
-                path: 'home/request-received',
+                path: 'home/request-received/:idFam',
                 canActivate: [GuardService],
                 loadChildren: () =>
                     import(
@@ -79,10 +79,12 @@ const routes: Routes = [
                     ),
             },
             {
-                path: "home/user",              
+                path: 'home/user',
                 canActivate: [GuardService],
-                loadChildren : ()=>
-                  import("./modules/home-user/home-user.module").then( (m)=> m.HomeUserModule)
+                loadChildren: () =>
+                    import('./modules/home-user/home-user.module').then(
+                        (m) => m.HomeUserModule
+                    ),
             },
         ],
     },

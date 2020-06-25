@@ -3,10 +3,7 @@ package com.micanasta.service.impl;
 import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.exception.SolicitudeTroubleException;
 import com.micanasta.model.*;
-import com.micanasta.repository.FamiliaRepository;
-import com.micanasta.repository.SolicitudRepository;
-import com.micanasta.repository.UsuarioPorFamiliaRepository;
-import com.micanasta.repository.UsuarioRepository;
+import com.micanasta.repository.*;
 import com.micanasta.service.UsuarioPorFamiliaService;
 import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,8 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
     private FamiliaRepository familiaRepository;
     @Autowired
     private SolicitudRepository solicitudRepository;
-
+    @Autowired
+    private RolPorUsuarioRepository rolPorUsuarioRepository;
 
     @Override
     public boolean AceptaSolicitudUsuario(SolicitudUsuarioDto solicitudUsuarioDto) throws SolicitudeTroubleException{

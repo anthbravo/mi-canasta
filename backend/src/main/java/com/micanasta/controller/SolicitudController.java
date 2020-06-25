@@ -2,16 +2,13 @@ package com.micanasta.controller;
 
 import javax.validation.Valid;
 
+import com.micanasta.dto.SolicitudAcceptedDto;
+import com.micanasta.exception.SolicitudeTroubleException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
@@ -20,6 +17,9 @@ import com.micanasta.exception.FamilyNotFoundException;
 import com.micanasta.service.SolicitudService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,13 +39,29 @@ public class SolicitudController {
         }
     }
 
-    @GetMapping("/solicitudes/{dni}")
-    public ResponseEntity<?> obtenerSolicitud(@PathVariable("dni") String dni) {
+    @GetMapping("/solicitudes")
+    public ResponseEntity<?> obtenerSolicitud(@RequestParam(value="dni", required = false) String dni, @RequestParam(value="familiaId", required=false) Long idFamilia) {
 
-        SolicitudBusquedaDto solicitudBusquedaDto = solicitudService.solicitudPorDni(dni);
+        if (dni!= null && idFamilia == null) {
+            SolicitudBusquedaDto solicitudBusquedaDto = solicitudService.solicitudPorDni(dni);
 
-        return ResponseEntity.status(solicitudBusquedaDto != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
-                .body(solicitudBusquedaDto);
+            return ResponseEntity.status(solicitudBusquedaDto != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
+                    .body(solicitudBusquedaDto);
+        }else if (dni==null && idFamilia != null){
 
+            List<SolicitudAcceptedDto> solicitudAcceptedDtoList = solicitudService.GetSolicitudesByFamiliaId(idFamilia);
+            return ResponseEntity.status(solicitudAcceptedDtoList!=null?HttpStatus.OK:HttpStatus.NO_CONTENT).body(solicitudAcceptedDtoList);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/solicitudes/{dni}")
+    public ResponseEntity<?> denegarSolicitud(@PathVariable(name = "dni") String dni){
+        try{
+            boolean res = solicitudService.deleteSolicitudByDni(dni);
+            return ResponseEntity.status(HttpStatus.OK).body("Se ha eliminado la solicitud");
+        }catch(SolicitudeTroubleException exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getExceptionDto());
+        }
     }
 }

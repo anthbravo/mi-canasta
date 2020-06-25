@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../../core/service/usuario.service';
 import { RolService } from '../../../../core/service/rol.service';
 import { RolPorUsuario } from '../../../../core/model/rol.model';
 import { HomeService } from 'src/app/core/service/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-user',
@@ -23,7 +24,8 @@ export class HomeUserComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private rolService: RolService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private route: Router,
   ) {}
     
   ngOnInit(): void {
@@ -59,11 +61,13 @@ export class HomeUserComponent implements OnInit {
       this.responsable = "Responsable de venta";
       this.descriptionRoles = "Roles en Tienda";
       this.userType = 1;
+      this.route.navigate(['/home/dealers/1']);
     }
     else {
       this.responsable = "Responsable de compra";
       this.descriptionRoles = "Roles en Grupo Familiar";
       this.userType = 0;
+      this.route.navigate(['/home/family/1']);
     }
   }
 }

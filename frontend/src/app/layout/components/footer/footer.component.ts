@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   activedIndex = 1
-  constructor() { }
+  constructor( 
+    private route: Router
+    ) { 
+    
+  }
 
   ngOnInit(): void {
   }
@@ -15,4 +20,21 @@ export class FooterComponent implements OnInit {
   onSelecteFooterIcon(index){
     this.activedIndex =  index
   }
+
+  onSelecteFooterIcon4(){
+    this.route.navigate(['/home/user']);
+    }
+  
+    onSelecteFooterIcon2(){
+    this.route.navigate(['/home/family/1']);
+    }
+
+      
+    onSelecteFooterIcon3(){
+      this.route.navigate(['/home/sale']);
+      }
+
+
+  
+
 }

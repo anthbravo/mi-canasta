@@ -62,6 +62,14 @@ const routes: Routes = [
         loadChildren : ()=>
           import('./modules/buy/buy.module').then( (m)=> m.buyModule)
       },
+      {
+        path: 'home/user',
+        loadChildren: () =>
+            import('./modules/home-user/home-user.module').then(
+                (m) => m.HomeUserModule
+            ),
+      },
+
     ],
   },
   {

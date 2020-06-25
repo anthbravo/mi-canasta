@@ -1,7 +1,7 @@
 <div class="dealers-container">
   <div class="dealers-container__members-quantity">
     <img src="assets/ic_members.svg" alt="members" />
-    <p color-rojo>10/15</p>
+    <p color-rojo>3/15</p>
   </div>
   <div class="dealers-container__title">
     <h2>Lista de distribuidores</h2>
@@ -18,19 +18,20 @@
         type="text"
         placeholder="Ingrese un DNI"
         maxlength="8"
+        [(ngModel)]="dni"
       />
     </div>
   </div>
 
-  <div class="member-container__personal">
-    <app-members
+  <div class="seller-container__personal">
+    <app-sellers
       *ngFor="let user of integrantes"
       [person]="user"
       [dni]="user.dni"
       [userIsAdmin]="userIsAdmin"
       [numIntegrantes] = "numIntegrantes"
       [unicoAdmin] = "unicoAdmin" >
-    </app-members>
+    </app-sellers>
 
   </div>
 </div>

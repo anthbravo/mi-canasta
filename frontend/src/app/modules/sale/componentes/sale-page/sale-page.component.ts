@@ -15,8 +15,8 @@ export class SalePageComponent implements OnInit {
 
   inputValue =  0
   inputValue1 = 1
-  nombre  = "Vivie All"
-  dni = "78451234"
+  nombre  = "Viviana Angeles"
+  dni = "77634087"
   products = [
     { name: "Arroz(Kg)", defaultValue: 3, minValue: 1, maxValue: 5,marks: {1:1, 5:5} },
     { name: "Legumbre(kg)", defaultValue: 1, minValue: 1, maxValue: 2, marks:{1:1,2:2}},

@@ -28,6 +28,8 @@ export class MembersComponent implements OnInit {
   unicoAdmin: boolean;
   @Input()
   idTienda: any;
+  @Input()
+  rol: any = false;
 
   roles:RolPorUsuario[] = [];
   descriptionErrorModal: string;
@@ -49,7 +51,7 @@ export class MembersComponent implements OnInit {
   }
 
   deleteUsuarioFromFamilia(){
-    if( localStorage.getItem("dni") == this.dni ){
+    if( sessionStorage.getItem("dni") == this.dni ){
       this.deleteYo();
     }
     else {
@@ -105,7 +107,12 @@ export class MembersComponent implements OnInit {
       const res = await this.rolService.getRol(this.dni);
       this.roles = res;
       for(let i=0; i < this.roles.length; i++){
-        if(this.roles[i].rolPerfilId == 1) this.userToDeleteIsAdmin=true;
+        if(this.roles[i].rolPerfilId == 1) {
+        this.userToDeleteIsAdmin=true;
+        this.rol = true;
+        }else{
+          this.rol = false;
+        }
       }        
     }
     catch (error) {
@@ -118,7 +125,7 @@ export class MembersComponent implements OnInit {
   }
 
   abrirModalConfirmacion(){
-    if( localStorage.getItem("dni") == this.dni ){
+    if( sessionStorage.getItem("dni") == this.dni ){
       if(this.numIntegrantes == 1)
         this.descriptionConfirModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
       else this.descriptionConfirModal="¿Desea abandonar el grupo familiar?";

@@ -34,13 +34,11 @@ export class RequestReceivedCardComponent implements OnInit {
         }
     }
     async deniedSolicitude() {
-        // try {
-        //     let res = await this.solicitudService.denegarSolicitud(
-        //         this.request.dni
-        //     );
-        this.eventRefresh.emit();
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await this.solicitudService.denegarSolicitud(this.request.dni);
+            this.eventRefresh.emit();
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

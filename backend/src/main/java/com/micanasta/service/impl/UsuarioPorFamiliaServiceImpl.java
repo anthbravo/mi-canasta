@@ -4,6 +4,7 @@ import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.exception.SolicitudeTroubleException;
 import com.micanasta.model.*;
 import com.micanasta.repository.FamiliaRepository;
+import com.micanasta.repository.SolicitudRepository;
 import com.micanasta.repository.UsuarioPorFamiliaRepository;
 import com.micanasta.repository.UsuarioRepository;
 import com.micanasta.service.UsuarioPorFamiliaService;
@@ -21,6 +22,8 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private FamiliaRepository familiaRepository;
+    @Autowired
+    private SolicitudRepository solicitudRepository;
 
 
     @Override
@@ -31,6 +34,8 @@ public class UsuarioPorFamiliaServiceImpl implements UsuarioPorFamiliaService {
         RolPorUsuario rolPorUsuario = new RolPorUsuario();
         if(usuario != null && optionalFamilia.isPresent())
         {
+            Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(solicitudUsuarioDto.dni);
+            solicitudRepository.delete(solicitud.get());
             UsuarioPorFamiliaIdentity usuarioPorFamiliaIdentity = new UsuarioPorFamiliaIdentity();
             usuarioPorFamiliaIdentity.setUsuario(usuario);
             Familia familia = optionalFamilia.get();

@@ -86,6 +86,13 @@ const routes: Routes = [
                         (m) => m.HomeUserModule
                     ),
             },
+            {
+                path: 'home/dealers/location',
+                loadChildren: () =>
+                    import(
+                        './modules/dealers-location/dealers-location.module'
+                    ).then((m) => m.DealersLocationModule),
+            },
         ],
     },
     {

@@ -5,7 +5,7 @@ import { RequestsReceivedComponent } from './componentes/requests-received/reque
 
 const routes: Routes = [
   {
-    path: '', component: RequestsReceivedComponent
+    path: '', component: RequestsReceivedComponent,
   }
 ];
 

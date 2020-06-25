@@ -10,6 +10,14 @@ class Usuario {
   correoElectronico?: string;
 }
 
+class UsuarioGet {
+  dni?: string;
+  nombre?: string;
+  apellidoPaterno?: string;
+  apellidoMaterno?: string;
+  correoElectronico?: string;
+}
+
 class UsuarioAutenticacion {
   dni?: string;
   contrasena?: string;
@@ -28,4 +36,4 @@ class UsuarioPut {
   repetirContrasena?: string;
 }
 
-export { Usuario, UsuarioAutenticacion, UsuarioPut };
+export { Usuario, UsuarioAutenticacion, UsuarioPut, UsuarioGet };

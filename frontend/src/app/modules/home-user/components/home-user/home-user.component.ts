@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/core/model/usuario.model';
+import { Usuario, UsuarioGet } from 'src/app/core/model/usuario.model';
 import { UsuarioService } from '../../../../core/service/usuario.service';
 import { RolService } from '../../../../core/service/rol.service';
 import { RolPorUsuario } from '../../../../core/model/rol.model';
 import { HomeService } from 'src/app/core/service/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-user',
@@ -14,7 +15,7 @@ export class HomeUserComponent implements OnInit {
   loaded:boolean = false;
   dni:string =  "";
   src: string ="";
-  user: Usuario = {};
+  user: UsuarioGet = {};
   descriptionRoles: string ="Roles en Grupo Familiar";
   userType:number = 0; //familia
   responsable: string ="Responsable de compra";
@@ -23,7 +24,8 @@ export class HomeUserComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private rolService: RolService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private route: Router
   ) {}
     
   ngOnInit(): void {
@@ -65,5 +67,9 @@ export class HomeUserComponent implements OnInit {
       this.descriptionRoles = "Roles en Grupo Familiar";
       this.userType = 0;
     }
+  }
+
+  editUser(){
+    this.route.navigate(['/home/user/edit']);
   }
 }

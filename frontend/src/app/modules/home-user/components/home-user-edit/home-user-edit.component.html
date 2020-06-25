@@ -46,9 +46,10 @@
                 [type]="'large'"
                 [bgColor]="'red'"
                 [loading]="loadingButton"
-                [disabled]="contrasena.length < 1"
+                [disable]="contrasena.length < 1"
                 (event)="putUsuario()"
-                />
+                >
+                </app-button-shared>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario, UsuarioPut } from 'src/app/core/model/usuario.model';
+import { Usuario, UsuarioPut, UsuarioGet } from 'src/app/core/model/usuario.model';
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { Router } from '@angular/router';
 
@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
   templateUrl: './home-user-edit.component.html',
   styleUrls: ['./home-user-edit.component.scss']
 })
-export class HomeUserDetailComponent implements OnInit {
+export class HomeUserEditComponent implements OnInit {
 
   correo:string = "";
   contrasena:string = "";
   nuevaContrasena:string = "";
   repetirContrasena:string = "";
-  user: Usuario = {};detail
+  user: UsuarioGet = {};
   loadingButton:boolean = false;
   isShowModal:boolean = false;
   modalDescription:string = "";
@@ -26,6 +26,7 @@ export class HomeUserDetailComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.getUsuario();
   }
 
   async putUsuario(){
@@ -59,13 +60,14 @@ export class HomeUserDetailComponent implements OnInit {
   async getUsuario(){
     try {
         const res = await this.usuarioService.getUsuario(localStorage.getItem("dni"));
-        this.user = res;  
+        this.user = res;
+        console.log(this.user);  
     }
     catch (error) {
         console.log(error);        
     }
   }
-
+  
   volver(){
     this.route.navigate(['/home/user']);
   }

@@ -1,11 +1,13 @@
 package com.micanasta.service.impl;
 
 import com.micanasta.dto.CrearSolicitudDto;
+import com.micanasta.dto.SolicitudAcceptedDto;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.SolicitudUsuarioDto;
 import com.micanasta.dto.converter.SolicitudDtoConverter;
 import com.micanasta.exception.FamilyNotAceptedSolicitudeException;
 import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.SolicitudeTroubleException;
 import com.micanasta.model.Familia;
 import com.micanasta.exception.SolicitudeNotFoundException;
 import com.micanasta.model.Solicitud;
@@ -19,7 +21,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -102,5 +108,29 @@ public class SolicitudServiceImpl implements SolicitudService {
         return false;
     }
 
+    @Override
+    public List<SolicitudAcceptedDto> GetSolicitudesByFamiliaId(Long idFamilia) {
 
+        List<Solicitud> solicituds = solicitudRepository.findAllBySolicitudIdentityFamiliaId(idFamilia);
+
+
+        List<SolicitudAcceptedDto> solicitudAcceptedDtos = new ArrayList<>();
+        for (Solicitud solicitud: solicituds){
+         solicitudAcceptedDtos.add(solicitudDtoConverter.convertSolicitudAcceptedToDto(solicitud));
+        }
+        return solicitudAcceptedDtos;
+    }
+
+    @Override
+    public boolean deleteSolicitudByDni(String dni) throws SolicitudeTroubleException {
+
+            Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+            if (solicitud.isPresent()){
+            solicitudRepository.delete(solicitud.get());
+            return true;
+            }
+            throw new SolicitudeTroubleException();
+
+
+    }
 }

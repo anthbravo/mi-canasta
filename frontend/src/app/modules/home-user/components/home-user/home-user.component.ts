@@ -30,7 +30,7 @@ export class HomeUserComponent implements OnInit {
     
   ngOnInit(): void {
     this.homeService.setStatus({ isLoginView: false });
-    this.dni = localStorage.getItem("dni");
+    this.dni = sessionStorage.getItem("dni");
     this.src = "https://api.qrserver.com/v1/create-qr-code/?data="+this.dni+"&amp;size=100x100";
     this.getUsuario();
     this.getRolUsuario();

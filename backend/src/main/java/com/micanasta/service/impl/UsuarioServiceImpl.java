@@ -132,7 +132,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new EmailWrongFormatException();
 		}
 		if (usuarioUpdateDto.contrasena != null) {
-			if (!usuarioUpdateDto.contrasena.equals(entry.getContrasena())) {
+			if(!bCryptPasswordEncoder.matches(usuarioUpdateDto.contrasena, entry.getContrasena()))
+			{
 				throw new ActualPasswordNotMatchException();
 			}
 		} else {
@@ -149,7 +150,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			if (usuarioUpdateDto.correoElectronico != null)
 				entry.setCorreoElectronico(usuarioUpdateDto.correoElectronico);
 			if (usuarioUpdateDto.nuevaContrasena != null)
-				entry.setContrasena(usuarioUpdateDto.nuevaContrasena);
+				entry.setContrasena(bCryptPasswordEncoder.encode(usuarioUpdateDto.nuevaContrasena));
 			usuarioRepository.save(entry);
 		}
 		return usuarioUpdateDto;

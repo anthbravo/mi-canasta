@@ -1,19 +1,17 @@
-<div class="request-received-card">
-  <div class="request-received-card__title">
-     <h2> {{request.title}}</h2>
-  </div>
-  <div class="request-received-card__body">
-       <h3>{{request.nombre}}</h3>
-       <p>{{request.dni}}</p>
-       <div class="request-received-card__buttons">
-
-          <button class="accept-button">
-              Aceptar
-          </button>
-          <button class="deny-button">
-              Denegar
-          </button>
-       </div>
-  </div>
-
+<div *ngIf="request.render" class="request-received-card">
+    <div class="request-received-card__title">
+        <h2>{{ request.title }}</h2>
+    </div>
+    <div class="request-received-card__body">
+        <h3>{{ request.nombre }}</h3>
+        <p>{{ request.dni }}</p>
+        <div class="request-received-card__buttons">
+            <button class="accept-button" (click)="aceptedSolicitude()">
+                Aceptar
+            </button>
+            <button class="deny-button" (click)="deniedSolicitude()">
+                Denegar
+            </button>
+        </div>
+    </div>
 </div>

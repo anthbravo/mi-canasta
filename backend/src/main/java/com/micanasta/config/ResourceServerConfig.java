@@ -33,4 +33,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.permitAll().antMatchers("/api/v1/**").access("#oauth2.hasScope('write')");
 	}
 
+//	@Override
+//	public void configure(HttpSecurity http) throws Exception {
+//		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
+//				.authorizeRequests().antMatchers("**").anonymous();
+//	}
+
 }

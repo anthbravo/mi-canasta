@@ -12,3 +12,8 @@ export class SolicitudAuth {
     nombreFamilia?: string;
     dni?: string;
 }
+
+export class SolicitudResponse {
+    dni?: string;
+    familiaId?: Number;
+}

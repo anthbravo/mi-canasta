@@ -25,7 +25,7 @@ export class AuthService {
         };
     }
 
-    async authentication(usuario: Usuario) {
+    async authentication(usuario: Usuario):Promise<UsuarioAutenticacion> {
         return await this.httpClient
             .post<UsuarioAutenticacion>(
                 `${environment.url_api}/usuarios`,
@@ -53,7 +53,7 @@ export class AuthService {
         const body = `grant_type=password&username=${usuario.dni}&password=${usuario.contrasena}`;
 
         return await this.httpClient
-            .post(`${environment.url_api}/oauth/token`, body, {
+            .post(`https://mi-canasta.herokuapp.com/oauth/token`, body, {
                 headers: new HttpHeaders()
                     .set(
                         'Content-Type',

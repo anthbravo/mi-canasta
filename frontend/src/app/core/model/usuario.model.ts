@@ -18,6 +18,7 @@ class UsuarioAutenticacion {
   correoElectronico?: string;
   familia?: Familia;
   rol?: Array<Rol>;
+  solicitud?:string
 }
 
 export { Usuario, UsuarioAutenticacion };

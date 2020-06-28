@@ -12,6 +12,7 @@ agm-map {
     &__title{
         margin-top: 24px;
         display: flex;
+        flex-direction: column;
 
         & h2{
             margin: 0;
@@ -29,4 +30,7 @@ agm-map {
             margin: 24px 0 ;
         }
     }
+}
+.selected-input-products{
+    width: 150px;
 }

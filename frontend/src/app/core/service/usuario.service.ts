@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Usuario, UsuarioAutenticacion } from '../model/usuario.model';
+import { Usuario } from '../model/usuario.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UsuarioService {
 
     async getUsuario(dni: string) {
         return await this.httpClient
-            .get<UsuarioAutenticacion>(
+            .get<Usuario>(
                 `${environment.url_api}/usuarios/${dni}`,
                 AuthService.getHeaderWithAuthorization()
             )

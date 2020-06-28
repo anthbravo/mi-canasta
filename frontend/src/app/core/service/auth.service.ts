@@ -35,13 +35,10 @@ export class AuthService {
     }
 
     getUsuarioAutenticacion() {
-        return this.usuarioAutenticacion;
-    }
-
-    loadUsuarioAutenticacion() {
         this.usuarioAutenticacion = JSON.parse(
             sessionStorage.getItem('usuario')
         );
+        return this.usuarioAutenticacion;
     }
 
     saveUsuarioAutenticacion(usuarioAutenticacion: UsuarioAutenticacion) {

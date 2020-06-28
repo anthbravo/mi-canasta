@@ -17,4 +17,6 @@ public class TiendaInfoDto {
     private String horario;
 
     private List<StockInfoDto> stock;
+    
+    private String tipo;
 }

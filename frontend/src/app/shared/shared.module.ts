@@ -1,3 +1,4 @@
+import { SellersComponent } from './members/sellers.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonSharedComponent } from './button/button-shared/button-shared.component';
@@ -20,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     WarningModalComponent,
     MembersComponent,
     SelectComponent,
+    SellersComponent,
   ],
   imports: [CommonModule, FormsModule,ReactiveFormsModule, NzSelectModule],
   exports: [
@@ -29,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ErrorModalComponent,
     WarningModalComponent,
     MembersComponent,
-    SelectComponent
+    SelectComponent,
+    SellersComponent,
   ],
 })
 export class SharedModule {}

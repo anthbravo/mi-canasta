@@ -1,28 +1,37 @@
 <div class="dealers-container">
   <div class="dealers-container__members-quantity">
     <img src="assets/ic_members.svg" alt="members" />
-    <p color-rojo>10/15</p>
+    <p color-rojo>3/15</p>
   </div>
   <div class="dealers-container__title">
     <h2>Lista de distribuidores</h2>
   </div>
 
   <div class="dealers-container__add">
-    <button>
+    <button (click)="postUsuarioInTienda()"  >
       <img src="assets/ic_plus.svg" alt="plus" />
     </button>
+    
     <div class="input-shared-container">
       <input
         class="input-shared-component"
         type="text"
-        placeholder="Ingrese un dni"
+        placeholder="Ingrese un DNI"
         maxlength="8"
+        [(ngModel)]="dni"
       />
     </div>
   </div>
 
-  <div class="dealers-container__list">
-    <app-members [person]="user" *ngFor="let user of mock"></app-members>
+  <div class="seller-container__personal">
+    <app-sellers
+      *ngFor="let user of integrantes"
+      [person]="user"
+      [dni]="user.dni"
+      [userIsAdmin]="userIsAdmin"
+      [numIntegrantes] = "numIntegrantes"
+      [unicoAdmin] = "unicoAdmin" >
+    </app-sellers>
 
   </div>
 </div>

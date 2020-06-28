@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ import com.micanasta.service.TiendaService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class TiendaController {
     @Autowired
@@ -55,9 +57,9 @@ public class TiendaController {
     }
 
     @PostMapping("/tiendas/{idTienda}/usuario/{dni}/usuariosportienda")
-    public ResponseEntity<?> PostNewUserInShop(long idTienda, String dni) {
+    public ResponseEntity<?> postUsuarioInTienda(long idTienda, String dni) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(dni, idTienda));
+            return ResponseEntity.status(HttpStatus.CREATED).body(tiendaService.postUsuarioInTienda(idTienda, dni));
         } catch (UserAddedShopExceedLimitException userAdded) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userAdded.exceptionDto);
         } catch (UserAddedShopIncorrectException userIncorrect) {
@@ -71,6 +73,7 @@ public class TiendaController {
         return ResponseEntity.status(miembrosGrupoDistruibuidoraPorTienda != null ? HttpStatus.OK : HttpStatus.NO_CONTENT)
                 .body(miembrosGrupoDistruibuidoraPorTienda);
     }
+
     @GetMapping("/tiendas")
     public ResponseEntity<?> getAllTiendas() {
         try {

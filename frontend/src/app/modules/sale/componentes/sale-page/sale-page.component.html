@@ -18,7 +18,12 @@
     </div>
     <div class="sale-container__slider-indicators">
       <nz-slider [nzMarks]="setLimitsLegend(item)" [nzMin]="item.minValue" [nzMax]="item.maxValue" [nzStep]="1" [(ngModel)]="item.defaultValue"></nz-slider>
-
     </div>
+    
   </div>
+
+  <button class="sale-container__button">
+    Realizar Pedido
+  </button>
+
 </div>

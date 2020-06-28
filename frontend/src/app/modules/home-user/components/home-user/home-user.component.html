@@ -1,7 +1,8 @@
 <div class="home-user-container" *ngIf = "loaded">
     <div class="field-container margin">
         <div>
-            <img class = "image-left" src="assets/ic_settings.svg" alt="">
+            <img class = "image-left" src="assets/ic_settings.svg" alt=""
+            (click)="editUser()">
             <img class = "image-right" src="assets/ic_change.svg" alt=""
             (click)="changeProfile()">
         </div>

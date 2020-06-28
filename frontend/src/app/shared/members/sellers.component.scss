@@ -1,0 +1,38 @@
+.member-container{
+  display: flex;
+  width: 100%;
+  margin: 32px 0;
+  flex-direction: column;
+}
+
+.member-container__information{
+  display: flex;
+  width: 100%;
+}
+.member-container__roles{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+.member-container__roles img{
+  margin-bottom: 8px;
+}
+.member-container__personal{
+  margin-left: 16px;
+  width: 75%;
+}
+.member-container__personal h2{
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.member-container__personal p{
+  font-size: 14px;
+  font-weight: 400;
+  color: #545454;
+  margin-top: 2px;
+
+}

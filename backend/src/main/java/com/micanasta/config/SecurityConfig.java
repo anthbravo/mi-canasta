@@ -44,12 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private BCryptPasswordEncoder bcrypt;
+    private BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = bcrypt;
         return bCryptPasswordEncoder;
     }
 

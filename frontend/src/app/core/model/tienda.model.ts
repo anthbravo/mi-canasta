@@ -6,6 +6,7 @@ class Tienda {
     latitud?: string;
     longitud?: string;
     horario?: string;
+    tipo?: string;
 }
 
 class TiendaUsuarioDto {

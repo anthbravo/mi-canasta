@@ -29,9 +29,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.exceptionHandling().authenticationEntryPoint(new AuthException()).and().requestMatchers().and()
-				.authorizeRequests().antMatchers("/heartbeat/**").permitAll().antMatchers("/swagger-ui.html")
-				.permitAll().antMatchers("/webjars/**").permitAll().antMatchers("/usuarios").permitAll()
-				.antMatchers("**").access("#oauth2.hasScope('write')");
+				.authorizeRequests().antMatchers("/api/v1/heartbeat/**").permitAll().antMatchers("/api/v1/usuarios")
+				.permitAll().antMatchers("/api/v1/**").access("#oauth2.hasScope('write')");
 	}
 
 }

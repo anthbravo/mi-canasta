@@ -3,11 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  url_api: 'https://mi-canasta.herokuapp.com/api/v1',
-  TOKEN_AUTH_USERNAME: 'crisis',
-  TOKEN_AUTH_PASSWORD: 'adrenalina',
-  TOKEN_NAME: 'access_token'
+    production: false,
+    url_api: 'https://mi-canasta.herokuapp.com/api/v1',
+    url: 'https://mi-canasta.herokuapp.com',
+    TOKEN_AUTH_USERNAME: 'crisis',
+    TOKEN_AUTH_PASSWORD: 'adrenalina',
+    TOKEN_NAME: 'access_token'
 };
 
 /*

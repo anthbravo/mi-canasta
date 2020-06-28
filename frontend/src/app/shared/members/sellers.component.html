@@ -1,0 +1,21 @@
+<div class="member-container">
+  <div class="member-container__information">
+
+    <div class="member-container__roles">
+        <img *ngIf="rol" src="assets/ic_crown.svg" alt="">
+        <img  *ngIf="!rol" src="assets/ic_shop-cart.svg" alt=""> 
+    </div>
+
+    <div class="member-container__personal">
+      <h2>{{ person.nombre }} {{person.apellidoPaterno}}</h2>
+      <p>{{ person.dni }}</p>
+    </div>
+    <div class="member-container__delete-btn">
+    </div>
+  </div>
+
+  <div class="member-container__select">
+    <app-select  [options]="data"></app-select>
+  </div>
+  
+</div>

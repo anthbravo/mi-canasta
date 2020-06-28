@@ -93,7 +93,7 @@ public class FamiliaController {
         }
     }
 
-    @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}")
+    @PutMapping("/familias/{nombreFamilia}/usuarios/{dni}/rolesporusuario")
     public ResponseEntity<?> editarRolUsuarioFamilia(@PathVariable String dni, String adminDni ) throws UserNotFoundException, UserNotAdminException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(familiaService.editarRolUsuarioFamilia(dni, adminDni));

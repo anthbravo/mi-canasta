@@ -1,0 +1,48 @@
+.buy-container {
+  height: calc(100vh - 128px);
+  width: 100%;
+  padding: 60px 32px;
+  overflow-y: hidden;
+}
+.buy-container__header h2 {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #000;
+}
+
+.buy-container__header p {
+  font-size: 18px;
+  text-align: center;
+}
+.buy-container__slider {
+  margin: 0 0 64px 0;
+}
+.buy-container__slider-header {
+  display: flex;
+  align-items: center;
+}
+.buy-container__slider-header p {
+  margin: 0 16px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+}
+
+
+.buy-container__button{
+  border-radius: 6px;
+  border: none;
+  color: #ffffff;
+  background: #FF5A82;
+  padding: 12px 32px;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  margin: 0 32px;
+}

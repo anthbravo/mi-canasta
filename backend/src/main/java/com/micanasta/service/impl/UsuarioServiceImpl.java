@@ -105,10 +105,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 			tiendaDataDto = null;
 		List<RolPorUsuario> rolesPorUsuario = rolPorUsuarioRepository.findAllById(dni);
 		modelMapper.map(rolesPorUsuario, rolPorUsuarioDataDtoList);
-		usuarioDataDto.setUsuarioAccesoDto(ValidateLogin(dni, contrasena));
+		usuarioDataDto.setSolicitud(solicitudPorDni(dni));
+		usuarioDataDto.setUsuario(ValidateLogin(dni, contrasena));
 		usuarioDataDto.setFamilia(familiaDataDto);
 		usuarioDataDto.setTienda(tiendaDataDto);
-		usuarioDataDto.setRolPorUsuario(rolPorUsuarioDataDtoList);
+		usuarioDataDto.setRoles(rolPorUsuarioDataDtoList);
 		return usuarioDataDto;
 
 	}
@@ -183,4 +184,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return null;
 	}
+	
+	public SolicitudBusquedaDto solicitudPorDni(String dni) {
+
+        SolicitudBusquedaDto solicitudBusquedaDto = new SolicitudBusquedaDto();
+
+        Optional<Solicitud> solicitud = solicitudRepository.findBySolicitudIdentityUsuarioDni(dni);
+
+        if (solicitud.isPresent()) {
+            solicitudBusquedaDto.setDni(dni);
+            solicitudBusquedaDto.setNombreFamilia(solicitud.get().getSolicitudIdentity().getFamilia().getNombreUnico());
+        } else {
+            solicitudBusquedaDto = null;
+        }
+
+        return solicitudBusquedaDto;
+    }
 }

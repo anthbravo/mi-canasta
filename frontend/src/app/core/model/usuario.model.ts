@@ -1,13 +1,14 @@
+import { SolicitudAuth } from './solicitud.model';
 import { Familia } from './familia.model';
-import { Rol } from './rol.model';
-
+import { Rol, RolPorUsuario } from './rol.model';
+import { Tienda } from './tienda.model';
 class Usuario {
-  dni?: string;
-  contrasena?: string;
-  nombre?: string;
-  apellidoPaterno?: string;
-  apellidoMaterno?: string;
-  correoElectronico?: string;
+    dni?: string;
+    contrasena?: string;
+    nombre?: string;
+    apellidoPaterno?: string;
+    apellidoMaterno?: string;
+    correoElectronico?: string;
 }
 
 class UsuarioGet {
@@ -19,14 +20,11 @@ class UsuarioGet {
 }
 
 class UsuarioAutenticacion {
-  dni?: string;
-  contrasena?: string;
-  nombre?: string;
-  apellidoPaterno?: string;
-  apellidoMaterno?: string;
-  correoElectronico?: string;
-  familia?: Familia;
-  rol?: Array<Rol>;
+    solicitud?: SolicitudAuth;
+    usuario?: Usuario;
+    familia?: Familia;
+    tienda?: Tienda;
+    rol?: Array<RolPorUsuario>;
 }
 
 class UsuarioPut {

@@ -31,7 +31,6 @@ export class StockComponent implements OnInit {
 
   async getStocksFirst(){
     try {
-      this.authService.loadUsuarioAutenticacion();
       const res = await this.tiendaService.getStocks(this.authService.getUsuarioAutenticacion().tienda.id);
       this.stocksUpdate = res;
     }

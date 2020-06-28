@@ -23,4 +23,19 @@ class UsuarioAutenticacion {
   rol?: Array<Rol>;
 }
 
-export { Usuario, UsuarioAutenticacion };
+class UsuarioGet {
+  dni?: string;
+  nombre?: string;
+  apellidoPaterno?: string;
+  apellidoMaterno?: string;
+  correoElectronico?: string;
+}
+
+class UsuarioPut {
+  correoElectronico?: string;
+  contrasena?: string;
+  nuevaContrasena?: string;
+  repetirContrasena?: string;
+}
+
+export { Usuario, UsuarioAutenticacion, UsuarioGet, UsuarioPut };

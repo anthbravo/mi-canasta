@@ -35,17 +35,15 @@ export class AuthService {
     }
 
     getUsuarioAutenticacion() {
-        return this.usuarioAutenticacion;
-    }
-
-    loadUsuarioAutenticacion() {
         this.usuarioAutenticacion = JSON.parse(
             sessionStorage.getItem('usuario')
         );
+        return this.usuarioAutenticacion;
     }
 
     saveUsuarioAutenticacion(usuarioAutenticacion: UsuarioAutenticacion) {
-        this.usuarioAutenticacion = usuarioAutenticacion;
+        //this.usuarioAutenticacion = usuarioAutenticacion;
+        //Esto se repite en el get de arriba
         sessionStorage.setItem('usuario', JSON.stringify(usuarioAutenticacion));
     }
 
@@ -53,7 +51,7 @@ export class AuthService {
         const body = `grant_type=password&username=${usuario.dni}&password=${usuario.contrasena}`;
 
         return await this.httpClient
-            .post(`${environment.url_api}/oauth/token`, body, {
+            .post(`${environment.url}/oauth/token`, body, {
                 headers: new HttpHeaders()
                     .set(
                         'Content-Type',
@@ -82,7 +80,7 @@ export class AuthService {
             sessionStorage.getItem(environment.TOKEN_NAME)
         ).access_token;
         this.httpClient
-            .get(`${environment.url_api}/tokens/cancel/${access_token}`)
+            .get(`${environment.url}/tokens/cancel/${access_token}`)
             .subscribe(() => {
                 sessionStorage.clear();
                 this.router.navigate(['login']);

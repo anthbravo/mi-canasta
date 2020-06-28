@@ -2,9 +2,17 @@ class Tienda {
     id?: number;
     descripcion?: string;
     direccion?: string;
-    Latitud?: string;
+    latitud?: string;
+    limite?: number;
     longitud?: string;
     horario?: string;
+    tipo?: string;
 }
 
-export { Tienda };
+class TiendaUsuarioDto {
+    id?: number;
+    descripcion?: string;
+    dni?: string;
+}
+
+export { Tienda, TiendaUsuarioDto };

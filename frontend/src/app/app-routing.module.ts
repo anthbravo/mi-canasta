@@ -93,6 +93,14 @@ const routes: Routes = [
                         './modules/dealers-location/dealers-location.module'
                     ).then((m) => m.DealersLocationModule),
             },
+            {
+                path: 'home/stock',
+                canActivate: [GuardService],
+                loadChildren: () =>
+                    import(
+                        './modules/stock/stock.module'
+                    ).then((m) => m.StockModule),
+            },
         ],
     },
     {

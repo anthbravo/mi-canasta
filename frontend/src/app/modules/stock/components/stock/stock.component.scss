@@ -1,0 +1,23 @@
+.field-container {
+    margin: 0px 30px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.stock-container h1 {
+    justify-content: right;
+    align-items: right;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 16px 0 26px 0;
+}
+.stock-container__button {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 36px auto auto auto
+}
+.stock-button {
+    margin: auto auto 0 auto;
+}

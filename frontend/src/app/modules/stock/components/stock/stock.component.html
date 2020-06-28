@@ -1,0 +1,33 @@
+<div class="stock-container">
+    <div class="field-container margin">
+          <h1 class="stock-container__header h1">
+              Stock
+          </h1>
+          <div class="stock-container__form-container">
+              <div class="stock-container__list-stocks">
+                  <app-stock-product
+                    [stockUpdate]="stockUpdate"
+                    *ngFor="let stockUpdate of stocksUpdate">
+                  </app-stock-product>
+              </div>
+          </div>
+          <div class="stock-container__button">
+              <app-button-shared
+                  class="stock-button"
+                  [text]="'Actualizar'"
+                  [type]="'large'"
+                  [bgColor]="'red'"
+                  [loading]="loadingButton"
+                  [disable]="flagAdmin"
+                  (event)="actualizarStock()"
+              >
+              </app-button-shared>
+          </div>
+    </div>
+  <app-error-modal
+    *ngIf="flagModal"
+    [title]="'Confirmación'"
+    [description]="'Los datos fueron actualizados'"
+    (closeEvent)="cerrarModal()"
+  ></app-error-modal>
+</div>

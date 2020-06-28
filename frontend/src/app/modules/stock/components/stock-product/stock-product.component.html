@@ -1,0 +1,8 @@
+<div class="stock-product-container">
+    <input
+     type="number"
+     class="input-number-shared-component"
+     [(ngModel)]="stockUpdate.cantidad">
+    <label *ngIf="loaded"> {{ producto.descripcion }} </label><br>
+    <b>{{ unidad }}</b>
+</div>

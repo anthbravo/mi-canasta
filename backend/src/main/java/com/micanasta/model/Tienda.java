@@ -36,4 +36,7 @@ public class Tienda {
 
     @NotNull
     private String horario;
+    
+    @NotNull
+    private String tipo;
 }

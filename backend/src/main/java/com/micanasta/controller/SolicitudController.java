@@ -22,6 +22,7 @@ import java.awt.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class SolicitudController {
     @Autowired

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
-import { Usuario } from 'src/app/core/model/usuario.model';
+import { Usuario, UsuarioGet } from 'src/app/core/model/usuario.model';
 import { FamiliaNoIdDto } from 'src/app/core/model/familia.model';
 
 
@@ -22,7 +22,7 @@ export class HomeFamilyComponent implements OnInit {
     aceptaSolicitudes= false;
     roles: RolPorUsuario[] = [];
     userIsAdmin = false;
-    integrantes:Usuario[]  = [];
+    integrantes:UsuarioGet[]  = [];
     numIntegrantes = 0;
     unicoAdmin = false;
     constructor(

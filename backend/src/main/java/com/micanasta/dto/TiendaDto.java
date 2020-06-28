@@ -20,4 +20,6 @@ public class TiendaDto {
     private String longitud;
 
     private String horario;
+    
+    private String tipo;
 }

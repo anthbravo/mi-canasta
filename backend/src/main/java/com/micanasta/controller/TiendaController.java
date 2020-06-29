@@ -1,14 +1,9 @@
 package com.micanasta.controller;
-import com.micanasta.dto.RolPorPerfilListaDto;
-import com.micanasta.dto.SolicitudBusquedaDto;
-import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.dto.*;
 import com.micanasta.exception.*;
 import com.micanasta.dto.SolicitudBusquedaDto;
 import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaInfoDto;
-import com.micanasta.dto.RolPorUsuarioDataDto;
 import com.micanasta.dto.StockUpdateDto;
-import com.micanasta.dto.TiendaBusquedaMiembrosDto;
 import com.micanasta.exception.UserAddedShopExceedLimitException;
 import com.micanasta.exception.UserAddedShopIncorrectException;
 import com.micanasta.model.UsuarioPorTienda;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RequiredArgsConstructor
 public class TiendaController {
     @Autowired
@@ -81,8 +75,19 @@ public class TiendaController {
         }
     }
 
+    @PutMapping("/tiendas/{idTienda}/{dni}/updateTienda")
+    public ResponseEntity<?> updateTienda(@PathVariable Long idTienda, @PathVariable String dni,
+                                          @RequestBody TiendaUpdateDto tienda){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.updateTienda(idTienda, dni, tienda));
+        }
+        catch (ActualPasswordNotMatchException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
+        }
+    }
+
     @GetMapping("/tiendas/RolesPorPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
-    public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
+    public ResponseEntity<?> switchRolPerfil(String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
 
 
         try {
@@ -95,7 +100,6 @@ public class TiendaController {
         }
 
     }
-
 
 
     @GetMapping("/tiendas/{idTienda}/stockNombre")

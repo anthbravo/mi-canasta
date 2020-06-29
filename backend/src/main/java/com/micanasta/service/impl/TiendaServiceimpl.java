@@ -4,10 +4,7 @@ import com.micanasta.dto.*;
 import com.micanasta.dto.converter.RolPorPerfilDtoConverter;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
-import com.micanasta.exception.UserAddedShopExceedLimitException;
-import com.micanasta.exception.UserAddedShopIncorrectException;
-import com.micanasta.exception.UserNotAdminException;
-import com.micanasta.exception.UserNotFoundException;
+import com.micanasta.exception.*;
 import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.TiendaService;
@@ -162,7 +159,6 @@ public class TiendaServiceimpl implements TiendaService {
 
     }
 
-
     List<RolPorPerfilListaDto> ListarRolPerfiles(List<RolPerfil> roles){
 
         List<RolPorPerfilListaDto>result = new ArrayList<>();
@@ -209,6 +205,31 @@ public class TiendaServiceimpl implements TiendaService {
         else return null;
     }
 
+    @Transactional
+    @Override
+    public TiendaDto updateTienda(long idTienda, String dni, TiendaUpdateDto tiendaUpdateDto) throws ActualPasswordNotMatchException{
+        Usuario usuario = usuarioRepository.encontrarPorDni(dni);
+        Tienda tienda = tiendaRepository.encontrarPorId(idTienda);
+
+        if(!usuario.getContrasena().equals(tiendaUpdateDto.contrasena)){
+            throw new ActualPasswordNotMatchException();
+        }
+        else {
+            if(tiendaUpdateDto.getDescripcion()!=null)
+                tienda.setDescripcion(tiendaUpdateDto.descripcion);
+            if(tiendaUpdateDto.getDireccion()!=null)
+                tienda.setDireccion(tiendaUpdateDto.getDireccion());
+            if(tiendaUpdateDto.getHorario()!=null)
+                tienda.setHorario(tiendaUpdateDto.getHorario());
+            if(tiendaUpdateDto.getLatitud()!=null)
+                tienda.setLatitud(tiendaUpdateDto.getLatitud());
+            if(tiendaUpdateDto.getLongitud()!=null)
+                tienda.setLongitud(tiendaUpdateDto.getLongitud());
+            tiendaRepository.save(tienda);
+        }
+        return tiendaDtoConverter.convertToDto(tienda);
+    }
+
     public List<TiendaDto>getAllTiendas(){
 
         List<TiendaDto> tiendasDto = new ArrayList<>();
@@ -221,6 +242,7 @@ public class TiendaServiceimpl implements TiendaService {
         }
         else return null;
     }
+
     @Override
     public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
         List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;

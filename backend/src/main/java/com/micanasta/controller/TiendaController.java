@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 @RequiredArgsConstructor
 public class TiendaController {
     @Autowired
@@ -27,6 +28,11 @@ public class TiendaController {
     @GetMapping("/tiendas/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return ResponseEntity.ok().body(tiendaService.getById(id));
+    }
+
+    @GetMapping("/tiendas/{id}/limite")
+    public ResponseEntity<?> getLimiteTienda(@PathVariable long id) {
+        return ResponseEntity.ok().body(tiendaService.getLimiteTienda(id));
     }
 
     @GetMapping("/tiendas/{idTienda}/stocks")

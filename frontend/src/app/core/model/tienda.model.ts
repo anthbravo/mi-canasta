@@ -14,4 +14,28 @@ class TiendaUsuarioDto {
     dni?: string;
 }
 
-export { Tienda, TiendaUsuarioDto };
+class TiendaGet {
+    idTienda?: number;
+    descripcion?: string;
+    direccion?: string;
+    latitud?: string;
+    longitud?: string;
+    horario?: string;
+    contrasena?: string;
+    limite?: number;
+  }
+
+class TiendaPut {
+    descripcion?: string;
+    direccion?: string;
+    latitud?: string;
+    longitud?: string;
+    horario?: string;
+    contrasena?: string;
+  }
+
+class TiendaLimiteDto{
+      limite?: number;
+  }
+
+export { Tienda, TiendaUsuarioDto, TiendaGet, TiendaLimiteDto, TiendaPut };

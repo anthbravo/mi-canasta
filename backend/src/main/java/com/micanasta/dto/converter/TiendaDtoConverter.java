@@ -18,6 +18,6 @@ public class TiendaDtoConverter {
 
     public TiendaDto convertToDto(Tienda tienda) {
         return modelMapper.map(tienda, TiendaDto.class);
-
     }
+
 }

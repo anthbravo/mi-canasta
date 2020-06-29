@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
 import { Usuario } from 'src/app/core/model/usuario.model';
 import { TiendaService } from 'src/app/core/service/tienda.service';
-import { Route } from '@angular/compiler/src/core';
+import { ValidacionService } from 'src/app/core/service/validacion.service';
+import { TiendaLimiteDto } from 'src/app/core/model/tienda.model';
 
 @Component({
   selector: 'app-home-dealers',
@@ -20,6 +21,11 @@ export class HomeDealersComponent implements OnInit {
   integrantes: Usuario[]  = [];
   numIntegrantes = 0;
   unicoAdmin = false;
+  errorFlagModal = false;
+  descriptionErrorModal: string;
+  isShowConfirmationModal = false;
+  tienda: TiendaLimiteDto;
+
   constructor(
       private homeService: HomeService,
       private tiendaService: TiendaService,
@@ -34,19 +40,32 @@ export class HomeDealersComponent implements OnInit {
       this.listarMiembros();
     });
     this.getRolUsuario();
+    this.getLimiteTienda();
+  }
+
+  async getLimiteTienda(){
+    const res = await this.tiendaService.getLimiteTienda(this.idTienda);
+    this.tienda = res;
   }
 
   async postUsuarioInTienda(){
     try{
-      const res = await this.tiendaService.postUsuarioInTienda(this.idTienda,
-      this.dni,
-    );
+      if (this.numIntegrantes < 5 ) {
+      const res = await this.tiendaService.postUsuarioInTienda(this.idTienda, this.dni);
       this.listarMiembros();
       console.log(res);
+      } else if (!ValidacionService.validarDni(this.dni)){
+        this.descriptionErrorModal = 'El DNI ingresado es inválido';
+        this.errorFlagModal = true;
+      } else if (this.numIntegrantes >= 5 ) {
+        this.descriptionErrorModal = 'Se excedió el máximo de usuarios de esta tienda';
+        this.errorFlagModal = true;
+      }
     } catch (error) {
       console.log(error);
     }
   }
+
 
   async isUnicoAdmin(){
     let cont = 0;
@@ -113,6 +132,13 @@ export class HomeDealersComponent implements OnInit {
      catch (error) {
        console.log(error);
      }
- }
+    }
 
+    cerrarModal() {
+      this.errorFlagModal = false;
+    }
+
+    cerrarModalConfirmacion(){
+      this.isShowConfirmationModal=false;
+    }
 }

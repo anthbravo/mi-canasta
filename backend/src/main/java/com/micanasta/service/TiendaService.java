@@ -18,6 +18,6 @@ public interface TiendaService {
     List<TiendaDto> getAllTiendas();
     TiendaInfoDto getTiendaInfo(long idTienda);
     List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id);
-
+    TiendaLimiteDto getLimiteTienda(long id);
     TiendaDto updateTienda(long idTienda, String dni, TiendaUpdateDto tiendaUpdateDto) throws ActualPasswordNotMatchException;
 }

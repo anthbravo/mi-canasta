@@ -68,6 +68,17 @@ public class TiendaServiceimpl implements TiendaService {
         return stocksDto;
     }
 
+    @Override
+    public TiendaLimiteDto getLimiteTienda(long id) {
+        TiendaDto tienda = tiendaDtoConverter.convertToDto(tiendaRepository.getById(id));
+        if (tienda != null) {
+            TiendaLimiteDto limiteDto = new TiendaLimiteDto();
+            limiteDto.setLimite(tienda.getLimite());
+            return limiteDto;
+        } else
+            return null;
+    }
+
     @Transactional
     @Override
     public StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto) {

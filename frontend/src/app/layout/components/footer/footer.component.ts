@@ -26,7 +26,7 @@ export class FooterComponent implements OnInit {
     }
   
     onSelecteFooterIcon2(){
-    this.route.navigate(['/home/family/1']);
+    this.route.navigate(['/home/family/:id']);
     }
 
       

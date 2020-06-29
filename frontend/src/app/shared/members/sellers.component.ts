@@ -57,7 +57,7 @@ export class SellersComponent implements OnInit {
      const res = await this.rolService.getRol(this.dni);
      this.roles = res;
      for(let i=0; i < this.roles.length; i++){
-       if(this.roles[i].rolPerfilId == 1) {
+       if(this.roles[i].rolPerfilId == 3) {
        this.rol = true;
        }else{
          this.rol = false;

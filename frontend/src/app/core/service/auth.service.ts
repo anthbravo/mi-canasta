@@ -25,7 +25,7 @@ export class AuthService {
         };
     }
 
-    async authentication(usuario: Usuario) {
+    async authentication(usuario: Usuario):Promise<UsuarioAutenticacion> {
         return await this.httpClient
             .post<UsuarioAutenticacion>(
                 `${environment.url_api}/usuarios`,

@@ -15,4 +15,10 @@ export class CategoriaService {
       .get<CategoriaGet>(`${environment.url_api}/categorias/${id}`, AuthService.getHeaderWithAuthorization())
       .toPromise();
   }
+
+  async listarDetalleProducto(id:number):Promise<any> {
+      return await this.httpClient
+          .get(`${environment.url_api}/categorias/${id}`,AuthService.getHeaderWithAuthorization())
+          .toPromise();
+  }
 }

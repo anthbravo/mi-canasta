@@ -6,15 +6,38 @@ import { Tienda, TiendaUsuarioDto } from 'src/app/core/model/tienda.model';
 import { AuthService } from './auth.service';
 import { StockGet, StockPut } from '../model/stock.model';
 
-
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-
 export class TiendaService {
-  
-  constructor(private httpClient: HttpClient) {}
 
+    constructor(private httpClient: HttpClient) {}
+
+    async listarTiendas(): Promise<Tienda[]> {
+        return await this.httpClient
+            .get<Tienda[]>(
+                `${environment.url_api}/tiendas`,
+                AuthService.getHeaderWithAuthorization()
+            )
+            .toPromise();
+    }
+
+    async detalleTienda(id:number){
+        return await this.httpClient
+            .get(
+                `${environment.url_api}/tiendas/${id}`,
+                AuthService.getHeaderWithAuthorization()
+            ).toPromise();
+    }
+
+    async listarStock(id:number): Promise<any>{
+        return await this.httpClient
+            .get(
+                `${environment.url_api}/tiendas/${id}/stocks`,
+                AuthService.getHeaderWithAuthorization()
+            )
+    }
+  
   async postUsuarioInTienda(idTienda: number, dni: string) {
     return await this.httpClient.post
     (`${environment.url_api}/tiendas/${idTienda}/usuario/${dni}/usuariosportienda?dni=${dni}&idTienda=${idTienda}`, null, AuthService.getHeaderWithAuthorization())
@@ -44,4 +67,3 @@ export class TiendaService {
       .toPromise();
   }
 }
-

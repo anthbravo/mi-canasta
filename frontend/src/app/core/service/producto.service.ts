@@ -16,4 +16,15 @@ export class ProductoService {
       .get<ProductoGet>(`${environment.url_api}/productos/${id}`, AuthService.getHeaderWithAuthorization())
       .toPromise();
   }
+  
+  async listarDetalleProducto(id:number):Promise<any> {
+        return await this.httpClient
+            .get(`${environment.url_api}/productos/${id}`,AuthService.getHeaderWithAuthorization())
+            .toPromise();
+  }
+  
 }
+
+
+    
+

@@ -11,6 +11,9 @@ justify-content: space-around;
 align-items: center;
 height: 100%;
 }
+.footer-container img{
+    width: 24px;
+}
 .footer-container__list__noselected {
 filter: grayscale(100%) ;
 transition: all .2s ease-in-out;

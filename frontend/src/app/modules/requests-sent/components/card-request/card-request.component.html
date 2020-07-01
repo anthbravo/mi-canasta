@@ -1,16 +1,21 @@
 <div class="card-container-request">
-  <div class="card-container-request__title">
-      <h3>{{request.familyName}}</h3>
-  </div>
-  <div class="card-container-request__description">
-    <p class="card-container-request__description__info">Solicitud enviada</p>
-    <p color-rojo class="card-container-request__description__status">Pendiente</p>
-  </div>
-  <div class="card-container-request__button">
-    <app-button-shared
-      [bgColor]="'red'"
-      [text]="'Cancelar'"
-      [type]="'small'"
-    ></app-button-shared>
-  </div>
+    <div class="card-container-request__title">
+        <h3>{{ request.familyName }}</h3>
+    </div>
+    <div class="card-container-request__description">
+        <p class="card-container-request__description__info">
+            Solicitud enviada
+        </p>
+        <p color-rojo class="card-container-request__description__status">
+            Pendiente
+        </p>
+    </div>
+    <div class="card-container-request__button">
+        <app-button-shared
+            [bgColor]="'red'"
+            [text]="'Cancelar'"
+            [type]="'small'"
+            (click)="cancelarSolicitud()"
+        ></app-button-shared>
+    </div>
 </div>

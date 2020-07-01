@@ -3,6 +3,7 @@ import { Usuario, UsuarioPut, UsuarioGet } from 'src/app/core/model/usuario.mode
 import { UsuarioService } from 'src/app/core/service/usuario.service';
 import { Router } from '@angular/router';
 import { HomeService } from 'src/app/core/service/home.service';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-home-user-edit',
@@ -24,7 +25,8 @@ export class HomeUserEditComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private homeService: HomeService,
-    private route: Router
+    private route: Router,
+    private authService: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class HomeUserEditComponent implements OnInit {
         usuarioPut.correoElectronico=this.correo;
         usuarioPut.nuevaContrasena=this.nuevaContrasena;
         usuarioPut.repetirContrasena=this.repetirContrasena;
-        await this.usuarioService.putUsuario(sessionStorage.getItem("dni"), usuarioPut);
+        await this.usuarioService.putUsuario(this.authService.getUsuarioAutenticacion().usuario.dni, usuarioPut);
 
         this.loadingButton = false;
         this.modalTitle="Éxito";
@@ -62,7 +64,7 @@ export class HomeUserEditComponent implements OnInit {
 
   async getUsuario(){
     try {
-        const res = await this.usuarioService.getUsuario(sessionStorage.getItem("dni"));
+        const res = await this.usuarioService.getUsuario(this.authService.getUsuarioAutenticacion().usuario.dni);
         this.user = res;
         this.correo = this.user.correoElectronico;
     }

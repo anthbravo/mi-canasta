@@ -24,7 +24,7 @@ class UsuarioAutenticacion {
     usuario?: Usuario;
     familia?: Familia;
     tienda?: Tienda;
-    rol?: Array<RolPorUsuario>;
+    roles?: Array<RolPorUsuario>;
 }
 
 class UsuarioPut {

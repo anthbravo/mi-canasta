@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     try {
       let newFamily =  new FamiliaCreate();
       newFamily.aceptacionSolicitudes = true;
-      newFamily.dni =  sessionStorage.getItem("dni");
+      newFamily.dni =  this.authService.getUsuarioAutenticacion().usuario.dni;
       newFamily.nombreUnico =  this.grupoFamiliar;
 
       const res: any = await this.familiaService.crearFamilia(newFamily);
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
     this.loadingUnirseFamiliaButton = true;
     try {
       let newSolicitud =  new SolicitudCreated();
-      newSolicitud.dni =  sessionStorage.getItem("dni");
+      newSolicitud.dni =  this.authService.getUsuarioAutenticacion().usuario.dni;
       newSolicitud.nombreFamilia =  this.grupoFamiliar;
       const res = await this.solicitudService.crearSolicitud(newSolicitud);
       console.log(res);

@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { CategoriaGet } from '../model/categoria.model';
 import { Injectable } from '@angular/core';
-import { ProductoGet } from '../model/Producto.model';
+import { ProductoGet } from '../model/producto.model';
 
 @Injectable({
   providedIn: 'root'

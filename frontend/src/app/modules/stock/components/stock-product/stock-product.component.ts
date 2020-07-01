@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductoGet } from 'src/app/core/model/Producto.model';
+import { ProductoGet } from 'src/app/core/model/producto.model';
 import { ProductoService } from 'src/app/core/service/producto.service';
 import { CategoriaService } from 'src/app/core/service/categoria.service';
 import { StockGet } from 'src/app/core/model/stock.model';

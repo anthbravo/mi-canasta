@@ -13,12 +13,12 @@ import java.io.Serializable;
 @Embeddable
 public class SolicitudIdentity implements Serializable {
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "familia_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Familia familia;

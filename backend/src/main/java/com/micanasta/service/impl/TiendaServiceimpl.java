@@ -113,6 +113,7 @@ public class TiendaServiceimpl implements TiendaService {
         } else throw new UserAddedShopIncorrectException();
     }
 
+
     public RolPorUsuario asignarRolPorUsuario(String dni, Long id) {
 
         RolPerfil rolPerfil = new RolPerfil();

@@ -1,8 +1,18 @@
+import { SolicitudAuth } from './solicitud.model';
 import { Familia } from './familia.model';
-import { Rol } from './rol.model';
+import { Rol, RolPorUsuario } from './rol.model';
+import { Tienda } from './tienda.model';
 class Usuario {
+    dni?: string;
+    contrasena?: string;
+    nombre?: string;
+    apellidoPaterno?: string;
+    apellidoMaterno?: string;
+    correoElectronico?: string;
+}
+
+class UsuarioGet {
   dni?: string;
-  contrasena?: string;
   nombre?: string;
   apellidoPaterno?: string;
   apellidoMaterno?: string;
@@ -10,14 +20,21 @@ class Usuario {
 }
 
 class UsuarioAutenticacion {
-  dni?: string;
-  contrasena?: string;
-  nombre?: string;
-  apellidoPaterno?: string;
-  apellidoMaterno?: string;
+    solicitud?: SolicitudAuth;
+    usuario?: Usuario;
+    familia?: Familia;
+    tienda?: Tienda;
+    roles?: Array<RolPorUsuario>;
+}
+
+class UsuarioPut {
   correoElectronico?: string;
   familia?: Familia;
   rol?: Array<Rol>;
+  solicitud?:string
+  contrasena?: string;
+  nuevaContrasena?: string;
+  repetirContrasena?: string;
 }
 
-export { Usuario, UsuarioAutenticacion };
+export { Usuario, UsuarioAutenticacion, UsuarioPut, UsuarioGet };

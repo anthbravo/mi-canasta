@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/core/model/usuario.model';
 import { TiendaService } from 'src/app/core/service/tienda.service';
 import { ValidacionService } from 'src/app/core/service/validacion.service';
 import { TiendaLimiteDto } from 'src/app/core/model/tienda.model';
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-home-dealers',

@@ -1,11 +1,12 @@
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
+import { AuthService } from 'src/app/core/service/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
-import { Usuario } from 'src/app/core/model/usuario.model';
+import { Usuario, UsuarioGet } from 'src/app/core/model/usuario.model';
 import { FamiliaNoIdDto } from 'src/app/core/model/familia.model';
 
 
@@ -22,14 +23,15 @@ export class HomeFamilyComponent implements OnInit {
     aceptaSolicitudes= false;
     roles: RolPorUsuario[] = [];
     userIsAdmin = false;
-    integrantes:Usuario[]  = [];
+    integrantes:UsuarioGet[]  = [];
     numIntegrantes = 0;
     unicoAdmin = false;
     constructor(
         private homeService: HomeService,
         private route: ActivatedRoute,
         private familiaService: FamiliaService,
-        private rolService: RolService
+        private rolService: RolService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -56,7 +58,6 @@ export class HomeFamilyComponent implements OnInit {
             if(await this.isAdmin(this.integrantes[i].dni) == true) cont++;
         }
         if(this.userIsAdmin==true && cont==1) this.unicoAdmin = true;
-        console.log(this.unicoAdmin);
     }
 
     async listarMiembros() {
@@ -88,8 +89,9 @@ export class HomeFamilyComponent implements OnInit {
 
     async getRolUsuario(){
          try {
-          const res = await this.rolService.getRol(localStorage.getItem("dni"));
-          this.roles = res;
+            const res = await this.rolService.getRol(this.authService.getUsuarioAutenticacion().usuario.dni);
+            this.roles = res;
+          console.log(this.roles);
           for(let i=0; i < this.roles.length; i++){
             if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
           }        

@@ -1,26 +1,36 @@
 package com.micanasta.controller;
 
-import com.micanasta.dto.CrearFamiliaDTO;
-import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
-import com.micanasta.dto.FamiliaNoIdDto;
-import com.micanasta.exception.*;
-import com.micanasta.model.Familia;
-import com.micanasta.service.FamiliaService;
-import com.micanasta.model.Familia;
-import io.swagger.models.Response;
-import lombok.RequiredArgsConstructor;
+import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.Date;
-import java.util.List;
+import com.micanasta.dto.CrearFamiliaDTO;
+import com.micanasta.dto.FamiliaBusquedaMiembrosDto;
+import com.micanasta.exception.ExistingFamilyFoundException;
+import com.micanasta.exception.FamilyNotFoundException;
+import com.micanasta.exception.UserNotAdminException;
+import com.micanasta.exception.UserNotFoundException;
+import com.micanasta.service.FamiliaService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class FamiliaController {
 
@@ -30,11 +40,10 @@ public class FamiliaController {
     @PostMapping("/familias")
     public ResponseEntity<?> crearFamilia(@Valid @RequestBody CrearFamiliaDTO familiaDTO) {
         try {
-             familiaService.crearGrupoFamiliar(familiaDTO);
+        	return ResponseEntity.status(HttpStatus.OK).body(familiaService.crearGrupoFamiliar(familiaDTO));
         } catch (ExistingFamilyFoundException existingFamilyFoundException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(existingFamilyFoundException.exceptionDto);
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Se ha creado el grupo familiar");
     }
 
     @GetMapping("/familias/{nombreFamilia}/usuarios")

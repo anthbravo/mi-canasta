@@ -1,0 +1,47 @@
+<div class="dealers-location-container">
+    <div class="dealers-location-container__title">
+        <h2>Filtrar</h2>
+        <nz-select nzPlaceHolder="Seleccion un producto" (ngModelChange)="changeProduct($event)" class="selected-input-products" [(ngModel)]="productoSeleccionado">
+            <nz-option
+            [nzLabel]="producto.nombre"
+            [nzValue]="producto"
+            *ngFor="let producto of productos"
+            ></nz-option>
+        </nz-select>
+        <!-- <nz-select
+        class="selected-input-products"
+        nzMode="multiple"
+        nzPlaceHolder="Inserted are removed" [(ngModel)]="productosSeleccionados"
+        >
+        <nz-option
+        *ngFor="let producto of productos"
+        [nzLabel]="producto.nombre" [nzValue]="producto.nombre"
+        [nzHide]="!isNotSelected(producto.nombre)"
+      ></nz-option>
+
+        </nz-select> -->
+        <nz-input-number [(ngModel)]="cantidadProducto" [nzMin]="1" [nzMax]="maxQuantity" [nzStep]="1"></nz-input-number>
+
+    </div>
+
+    <div class="dealers-location-container__body">
+        <div class="dealers-location-container__body__filter">
+            <div (click)="changeOption(i)"  *ngFor="let filter of filterOptionsMap; let i =  index">
+                <img *ngIf="filter.flag" [src]="filter.iconActivate" alt="">
+                <img *ngIf="!filter.flag" [src]="filter.iconDesactivate" alt="">
+            </div>
+
+        </div>
+        <div class="dealers-location-container__body__map">
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12"
+                (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+                    [opacity]="marker.alpha" [markerDraggable]="true" (markerClick)="selectMarker($event)">
+                </agm-marker>
+
+            </agm-map>
+
+        </div>
+    </div>
+
+</div>

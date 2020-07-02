@@ -8,5 +8,6 @@ import lombok.Setter;
 public class TiendaUsuarioDto {
     public long id;
     public String descripcion;
-    public String dni;
+    public String dni;    
+    private String tipo;
 }

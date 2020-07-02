@@ -1,0 +1,36 @@
+agm-map {
+    width: 100%;
+    height: 350px;
+  }
+
+
+.dealers-location-container{
+    padding: 0 32px;
+    height: calc(640px  - 128px);
+    overflow: auto;
+
+    &__title{
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+
+        & h2{
+            margin: 0;
+
+        }
+    }
+
+    &__body{
+        display: flex;
+        flex-direction: column;
+        &__filter{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 24px 0 ;
+        }
+    }
+}
+.selected-input-products{
+    width: 150px;
+}

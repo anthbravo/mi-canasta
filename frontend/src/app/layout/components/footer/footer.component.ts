@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { HomeService } from 'src/app/core/service/home.service';
 
 @Component({
   selector: 'app-footer',
@@ -8,33 +8,18 @@ import { Router } from '@angular/router';
 })
 export class FooterComponent implements OnInit {
   activedIndex = 1
-  constructor( 
-    private route: Router
-    ) { 
-    
-  }
+  role = "familia"
+  constructor(private homeService:HomeService) { }
 
   ngOnInit(): void {
+      this.homeService.roleUser.subscribe(item=>{
+          this.role =  item.role
+      })
   }
 
   onSelecteFooterIcon(index){
     this.activedIndex =  index
   }
-
-  onSelecteFooterIcon4(){
-    this.route.navigate(['/home/user']);
-    }
-  
-    onSelecteFooterIcon2(){
-    this.route.navigate(['/home/family/:id']);
-    }
-
-      
-    onSelecteFooterIcon3(){
-      this.route.navigate(['/home/sale']);
-      }
-
-
   
 
 }

@@ -1,47 +1,47 @@
 <div class="dealers-location-container">
-    <div class="dealers-location-container__title">
-        <h2>Filtrar</h2>
-        <nz-select nzPlaceHolder="Seleccion un producto" (ngModelChange)="changeProduct($event)" class="selected-input-products" [(ngModel)]="productoSeleccionado">
-            <nz-option
-            [nzLabel]="producto.nombre"
-            [nzValue]="producto"
-            *ngFor="let producto of productos"
-            ></nz-option>
-        </nz-select>
-        <!-- <nz-select
-        class="selected-input-products"
-        nzMode="multiple"
-        nzPlaceHolder="Inserted are removed" [(ngModel)]="productosSeleccionados"
-        >
-        <nz-option
-        *ngFor="let producto of productos"
-        [nzLabel]="producto.nombre" [nzValue]="producto.nombre"
-        [nzHide]="!isNotSelected(producto.nombre)"
-      ></nz-option>
+    <div *ngIf="loading === false">
 
-        </nz-select> -->
-        <nz-input-number [(ngModel)]="cantidadProducto" [nzMin]="1" [nzMax]="maxQuantity" [nzStep]="1"></nz-input-number>
+        <div class="dealers-location-container__body">
+            <div class="dealers-location-container__body__filter">
+                <div class="icon_container" (click)="changeOption(i)" *ngFor="let filter of filterOptionsMap; let i =  index">
+                    <img *ngIf="filter.flag" [src]="filter.iconActivate" alt="">
+                    <img *ngIf="!filter.flag" [src]="filter.iconDesactivate" alt="">
+                    <p>{{filter.name}}</p>
+                </div>
 
-    </div>
-
-    <div class="dealers-location-container__body">
-        <div class="dealers-location-container__body__filter">
-            <div (click)="changeOption(i)"  *ngFor="let filter of filterOptionsMap; let i =  index">
-                <img *ngIf="filter.flag" [src]="filter.iconActivate" alt="">
-                <img *ngIf="!filter.flag" [src]="filter.iconDesactivate" alt="">
             </div>
+            <div class="dealers-location-container__body__map">
+                <agm-map
+                [clickableIcons]="false"
 
+                [latitude]="lat" [longitude]="lng" [zoom]="12"
+                    (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                    <agm-marker [markerDraggable]="false" *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
+                        [opacity]="marker.alpha" (markerClick)="selectMarker($event)"
+                        [iconUrl]="getPin(marker.tipo)"
+                        >
+                        <agm-info-window [disableAutoPan]="true">
+                            <div class="tooltip-container">
+
+                                <p [ngStyle]="{background: getColor(marker.tipo)}" class="tag">{{marker.tipo}}</p>
+                                <h2>{{marker.name}}</h2>
+                                <p>{{marker.direccion}}</p>
+                                <div class="horario">
+                                    <p class="label">Horario de atención</p>
+                                    <p class="time">{{marker.horario}}</p>
+                                </div>
+                            </div>
+                          </agm-info-window>
+                    </agm-marker>
+
+                </agm-map>
+
+            </div>
         </div>
-        <div class="dealers-location-container__body__map">
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12"
-                (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
-                <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng"
-                    [opacity]="marker.alpha" [markerDraggable]="true" (markerClick)="selectMarker($event)">
-                </agm-marker>
+    </div>
+    <div *ngIf="loading" class="loading">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 
-            </agm-map>
-
-        </div>
     </div>
 
 </div>

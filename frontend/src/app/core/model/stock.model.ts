@@ -1,3 +1,9 @@
+class Stock {
+    tiendaId?: number;
+    productoId?: number;
+    cantidad?: number;
+}
+
 class StockGet {
     productoId?: number;
     tiendaId?: number;
@@ -8,4 +14,4 @@ class StockPut {
     cantidad?: number;
 }
 
-export { StockGet, StockPut };
+export { Stock, StockGet, StockPut };

@@ -7,6 +7,8 @@ import { AgmCoreModule } from '@agm/core';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
     declarations: [DealersLocationComponent],
@@ -16,7 +18,9 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
         DealersLocationRoutingModule,
         AgmCoreModule,
         FormsModule,
-        NzInputNumberModule
+        NzInputNumberModule,
+        NzSpinModule,
+        NzIconModule
     ],
 })
 export class DealersLocationModule {}

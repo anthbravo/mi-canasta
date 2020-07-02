@@ -2,6 +2,7 @@ package com.micanasta.service;
 
 import com.micanasta.dto.*;
 import com.micanasta.exception.*;
+import com.micanasta.model.RolPorUsuario;
 import com.micanasta.model.Solicitud;
 
 import java.util.Optional;
@@ -23,4 +24,8 @@ public interface UsuarioService {
     UsuarioFamiliaGetDto GetUsuarioFamilia(String dni) throws UserFamilyNotFoundException;
 
     Solicitud cancelarSolicitud(String dni,Long idFamilia) throws SolicitudeNotFoundException;
+
+    RolPorUsuario SwitchRolPerfil(String dni);
+
+
 }

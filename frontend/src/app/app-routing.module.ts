@@ -63,7 +63,7 @@ const routes: Routes = [
                     ),
             },
             {
-                path: 'home/request-received/:idFam',
+                path: 'home/request-received',
                 canActivate: [GuardService],
                 loadChildren: () =>
                     import(
@@ -75,33 +75,37 @@ const routes: Routes = [
                 canActivate: [GuardService],
                 loadChildren: () =>
                     import('./modules/sale/sale.module').then(
-                        (m) => m.SaleModule),
+                        (m) => m.SaleModule
+                    ),
             },
             {
                 path: 'home/user',
                 canActivate: [GuardService],
-                loadChildren : ()=>
-                  import("./modules/home-user/home-user.module").then( 
-                      (m)=> m.HomeUserModule)
+                loadChildren: () =>
+                    import('./modules/home-user/home-user.module').then(
+                        (m) => m.HomeUserModule
+                    ),
             },
             {
-                path: "home/dealers/location",
-                loadChildren: ()=>
-                    import("./modules/dealers-location/dealers-location.module").then(
-                        (m)=> m.DealersLocationModule
-                    )
+                path: 'home/dealers/location',
+                loadChildren: () =>
+                    import(
+                        './modules/dealers-location/dealers-location.module'
+                    ).then((m) => m.DealersLocationModule),
             },
             {
                 path: 'home/dealers/:id',
                 canActivate: [GuardService],
-                loadChildren: ()=>
-                  import('./modules/home-dealers/home-dealers.module').then((m)=>m.HomeDealersModule)
+                loadChildren: () =>
+                    import('./modules/home-dealers/home-dealers.module').then(
+                        (m) => m.HomeDealersModule
+                    ),
             },
             {
                 path: 'home/buy',
                 canActivate: [GuardService],
-                loadChildren : ()=>
-                  import('./modules/buy/buy.module').then( (m)=> m.buyModule)
+                loadChildren: () =>
+                    import('./modules/buy/buy.module').then((m) => m.buyModule),
             },
             {
                 path: 'home/stock',

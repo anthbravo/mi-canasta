@@ -6,6 +6,7 @@ import { SolicitudService } from 'src/app/core/service/solicitud.service';
 import { Solicitud } from '../../../../core/model/solicitud.model';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { UsuarioService } from '../../../../core/service/usuario.service';
+import { AuthService } from '../../../../core/service/auth.service';
 
 @Component({
     selector: 'app-requests-received',
@@ -13,27 +14,28 @@ import { UsuarioService } from '../../../../core/service/usuario.service';
     styleUrls: ['./requests-received.component.scss'],
 })
 export class RequestsReceivedComponent implements OnInit {
-    idFam: Number;
     switchValue = false;
     input: any;
     solicitudes = [];
+    usuario: any;
     constructor(
         private homeService: HomeService,
         private solicitudService: SolicitudService,
         private usuarioService: UsuarioService,
         private route: Router,
-        private _route: ActivatedRoute
+        private _route: ActivatedRoute,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
         this.homeService.setStatus({ isLoginView: false });
-        this.idFam = +this._route.snapshot.paramMap.get('idFam');
+        this.usuario = this.authService.getUsuarioAutenticacion();
         this.getSolicitudes();
     }
     async getSolicitudes() {
         try {
             const datos = await this.solicitudService.obtenerSolicitudesPorFamilia(
-                this.idFam
+                this.usuario.familia.id
             );
             this.input = datos;
             this.listarSolicitudes();

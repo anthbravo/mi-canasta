@@ -50,14 +50,14 @@ const routes: Routes = [
         path: 'dealer',
         component: LayoutDealerComponent,
         children: [
-            // {
-            //     path: 'map',
-            //     canActivate: [GuardService],
-            //     loadChildren: () =>
-            //         import(
-            //             './modules/dealers-location/dealers-location.module'
-            //         ).then((m) => m.DealersLocationModule),
-            // },
+            {
+                path: 'map',
+                canActivate: [GuardService],
+                loadChildren: () =>
+                    import(
+                        './modules/dealers-location/dealers-location.module'
+                    ).then((m) => m.DealersLocationModule),
+            },
             {
                 path: 'dealers/:id',
                 canActivate: [GuardService],

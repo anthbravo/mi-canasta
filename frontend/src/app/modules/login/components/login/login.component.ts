@@ -68,6 +68,8 @@ export class LoginComponent implements OnInit {
                 this.route.navigate([
                     `/home/family/${usuarioAutenticacion.familia.id}`,
                 ]);
+            } else if (usuarioAutenticacion.solicitud != null) {
+                this.route.navigate(['/home/request-sent']);
             } else {
                 this.route.navigate(['/home']);
             }

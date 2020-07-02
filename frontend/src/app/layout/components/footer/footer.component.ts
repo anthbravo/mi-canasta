@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from 'src/app/core/service/home.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   activedIndex = 1
-  constructor() { }
+  role = "familia"
+  constructor(private homeService:HomeService) { }
 
   ngOnInit(): void {
+      this.homeService.roleUser.subscribe(item=>{
+          this.role =  item.role
+      })
   }
 
   onSelecteFooterIcon(index){

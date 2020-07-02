@@ -6,6 +6,7 @@ import { DealersLocationComponent } from './components/dealers-location/dealers-
 import { AgmCoreModule } from '@agm/core';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 @NgModule({
     declarations: [DealersLocationComponent],
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
         NzSelectModule,
         DealersLocationRoutingModule,
         AgmCoreModule,
-        FormsModule
+        FormsModule,
+        NzInputNumberModule
     ],
 })
 export class DealersLocationModule {}

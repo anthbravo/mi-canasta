@@ -48,11 +48,11 @@ public class CompraController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
+    //@DateTimeFormat(pattern="yyyy-MM-dd")
     @GetMapping("/compras")
     public ResponseEntity<?> getCompras(@RequestParam long idFamilia, @RequestParam String dni,
-                                            @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaInicio,
-                                            @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date fechaFin) throws Exception {
+                                            @RequestParam Date fechaInicio,
+                                            @RequestParam Date fechaFin) throws Exception {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(compraService.getCompras(idFamilia, dni, fechaInicio
                     , fechaFin));

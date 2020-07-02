@@ -10,6 +10,9 @@ import com.micanasta.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
 
@@ -34,5 +37,12 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public LimiteDto getLimiteById(long id){
         return limiteDtoConverter.convertToDto(limiteRepository.getByCategoriaId(id));
+    }
+
+    @Override
+    public List<CategoriaDto> getAll() {
+        List<CategoriaDto> categoriasDto = categoriaRepository.findAll().stream().map((categoria) ->
+                categoriaDtoConverter.convertToDto((categoria))).collect(Collectors.toList());
+        return categoriasDto;
     }
 }

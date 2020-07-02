@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
       this.authService.saveUsuarioAutenticacion(usuarioAutenticacion);
 
-      this.route.navigate(['/home/family/' + res.id]);
+      this.route.navigate(['/family/members/' + res.id]);
       
     } catch (error) {
       console.log(error);
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
       newSolicitud.nombreFamilia =  this.grupoFamiliar;
       const res = await this.solicitudService.crearSolicitud(newSolicitud);
       console.log(res);
-      this.route.navigate(['/home/solicitudes']);
+      this.route.navigate(['/family/request-sent']);
     } catch (error) {
       console.log(error);
       this.loadingUnirseFamiliaButton = false;

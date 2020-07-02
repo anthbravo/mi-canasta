@@ -10,10 +10,9 @@ import { ProductoService } from 'src/app/core/service/producto.service';
 @Component({
   selector: 'app-limit',
   templateUrl: './limit.component.html',
-  styleUrls: ['./limit.component.scss']
+  styleUrls: ['./limit.component.scss'],
 })
 export class LimitComponent implements OnInit {
-
   categorias: CategoriaGet[] = [];
   compras: CompraGet[] = [];
   fechaInicio: Date;
@@ -26,30 +25,31 @@ export class LimitComponent implements OnInit {
     private authService: AuthService,
     private categoriaService: CategoriaService,
     private productoService: ProductoService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.homeService.setStatus({ isLoginView: false });
-    //this.getCategorias();
+    this.getDates();
+    this.getCategorias();
   }
 
-  async getCategorias(){
+  async getCategorias() {
     try {
-        this.categorias = await this.categoriaService.getCategorias();
-        for(let i=0; i<this.categorias.length; i++){
-          const res2 = await this.categoriaService.getLimite(this.categorias[i].id);
-          this.categorias[i].limite = res2.cantidadXPersona;
-          this.categorias[i].restante = res2.cantidadXPersona;
-        }
-        this.getDates();
-        await this.getCompras();
+      this.categorias = await this.categoriaService.getCategorias();
+      for (let i = 0; i < this.categorias.length; i++) {
+        const res2 = await this.categoriaService.getLimite(
+          this.categorias[i].id
+        );
+        this.categorias[i].limite = res2.cantidadXPersona;
+        this.categorias[i].restante = res2.cantidadXPersona;
       }
-    catch(error){
+      await this.getCompras();
+    } catch (error) {
       console.log(error);
     }
   }
 
-  getDates(){
+  getDates() {
     var auxiliarDate = new Date();
     auxiliarDate.setHours(0, 0, 0, 0);
 
@@ -60,40 +60,41 @@ export class LimitComponent implements OnInit {
       auxiliarDate.setDate(auxiliarDate.getDate() - auxiliarDate.getDay() + 7)
     );
     this.fechaFin.setHours(23, 59, 59);
-    
   }
 
-  async getCompras(){
-    try{
+  async getCompras() {
+    try {
       const res = await this.compraService.getCompras(
         this.authService.getUsuarioAutenticacion().familia.id,
-        this.fechaInicio, this.fechaFin,
+        this.fechaInicio,
+        this.fechaFin,
         this.authService.getUsuarioAutenticacion().usuario.dni
       );
       this.compras = res;
       await this.getLimiteRestante();
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   }
-  
-  async getLimiteRestante(){
-    try{
-      for(let i=0; i < this.compras.length; i++){
+
+  async getLimiteRestante() {
+    try {
+      for (let i = 0; i < this.compras.length; i++) {
         let idProducto = this.compras[i].productoId;
         const producto = await this.productoService.getProducto(idProducto);
-        const categoria = await this.categoriaService.getCategoria(producto.categoriaId);
-        for(let j=0; j<this.categorias.length; j++){
-          if(this.categorias[j].id == categoria.id){
-            this.categorias[j].restante -= producto.cantidadUnit * this.compras[i].cantidad;
+        const categoria = await this.categoriaService.getCategoria(
+          producto.categoriaId
+        );
+        for (let j = 0; j < this.categorias.length; j++) {
+          if (this.categorias[j].id == categoria.id) {
+            this.categorias[j].restante -=
+              producto.cantidadUnit * this.compras[i].cantidad;
           }
         }
       }
       this.visible = true;
       console.log(this.categorias);
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   }

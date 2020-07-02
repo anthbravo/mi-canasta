@@ -1,21 +1,18 @@
 <div>
-    <div>
-        <h1>Semana</h1>
-        <h2>02/02/2020   02/03/2020</h2>
+  <div class="limit">
+    <h1 class="limit__title">Semana</h1>
+    <div class="limit__date">
+      <p>{{ fechaInicio | date: "d/MM/yyyy" }}</p>
+      <p>{{ fechaFin | date: "d/MM/yyyy" }}</p>
     </div>
-    <div *ngIf="visible">
-        <!-- <app-limit-category
-            *ngFor="let categoria of categorias"
-            [limite] = "categoria.limite"
-            [descripcion] ="categoria.descripcion"
-            [restante] = "categoria.restante"
-        >
-        </app-limit-category> -->
-        <app-limit-category
-            [limite] = "4"
-            [descripcion] ="'Hola'"
-            [restante] = "4"
-        >
-        </app-limit-category>
-    </div>
+  </div>
+  <div>
+    <app-limit-category
+      *ngFor="let categoria of categorias"
+      [limite]="categoria.limite"
+      [descripcion]="categoria.descripcion"
+      [restante]="categoria.restante"
+    >
+    </app-limit-category>
+  </div>
 </div>

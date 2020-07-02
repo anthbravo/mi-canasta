@@ -1,0 +1,30 @@
+.footer-container{
+    position: absolute;
+    height: 64px;
+    bottom: 0;
+    width: 100%;
+  }
+  .footer-container__list {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  }
+  .footer-container img{
+      width: 24px;
+  }
+  .footer-container__list__noselected {
+  filter: grayscale(100%) ;
+  transition: all .2s ease-in-out;
+  opacity: 0.3;
+  }
+  .footer-container__list li{
+    cursor: pointer;
+  }
+  .active {
+  filter: grayscale(0%) !important ;
+  opacity: 1;
+  /* opacity: 0.3; */
+  }
+  

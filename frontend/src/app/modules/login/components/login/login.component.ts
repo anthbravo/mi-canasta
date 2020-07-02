@@ -64,14 +64,18 @@ export class LoginComponent implements OnInit {
             );
             sessionStorage.setItem(environment.TOKEN_NAME, token);
 
-            if (usuarioAutenticacion.familia != null) {
-                this.route.navigate([
-                    `/home/family/${usuarioAutenticacion.familia.id}`,
+            if (usuarioAutenticacion.solicitud != null) {
+                await this.route.navigate(['/family/request-sent']);
+            } else if (usuarioAutenticacion.tienda != null) {
+                await this.route.navigate([
+                    `/dealer/members/${usuarioAutenticacion.tienda.id}`,
                 ]);
-            } else if (usuarioAutenticacion.solicitud != null) {
-                this.route.navigate(['/home/request-sent']);
+            } else if (usuarioAutenticacion.familia != null) {
+                await this.route.navigate([
+                    `/family/members/${usuarioAutenticacion.familia.id}`,
+                ]);
             } else {
-                this.route.navigate(['/home']);
+                await this.route.navigate(['/family/home']);
             }
 
             this.homeService.setStatus({ isLoginView: false });

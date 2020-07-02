@@ -9,6 +9,7 @@ import { SolicitudResponse } from 'src/app/core/model/solicitud.model';
 export class RequestReceivedCardComponent implements OnInit {
     @Input()
     request: any;
+
     solicitudRequest: SolicitudResponse;
 
     @Output()
@@ -19,15 +20,14 @@ export class RequestReceivedCardComponent implements OnInit {
     ngOnInit(): void {}
 
     async aceptedSolicitude() {
-        this.solicitudRequest = {
-            dni: this.request.dni,
-            familiaId: this.request.familiaId,
-        };
         try {
-            const res = await this.solicitudService.aceptarSolicitud(
-                this.solicitudRequest
-            );
-            console.log(res);
+            this.solicitudRequest = {};
+            this.solicitudRequest = {
+                dni: this.request.dni,
+                familiaId: this.request.familiaId,
+            };
+            await this.solicitudService.aceptarSolicitud(this.solicitudRequest);
+
             this.eventRefresh.emit();
         } catch (error) {
             console.log(error);

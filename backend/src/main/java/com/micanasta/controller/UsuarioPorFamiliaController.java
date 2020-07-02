@@ -26,7 +26,11 @@ public class UsuarioPorFamiliaController {
     @PostMapping("/usuariosporfamilia")
     public ResponseEntity<?> AceptaSolicitudUsuario(@RequestBody SolicitudUsuarioDto solicitudUsuarioDto) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioPorFamiliaService.AceptaSolicitudUsuario(solicitudUsuarioDto));
+           boolean response = usuarioPorFamiliaService.AceptaSolicitudUsuario(solicitudUsuarioDto);
+           if (response){
+               return ResponseEntity.status(HttpStatus.CREATED).build();
+           } else{return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();}
+
         } catch (SolicitudeTroubleException solicitudeTroubleException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(solicitudeTroubleException.exceptionDto);
         }

@@ -1,18 +1,18 @@
 <div>
   <div class="limit">
+    <div class="field-container margin">
     <h1 class="limit__title">Semana</h1>
-    <div class="limit__date">
-      <p>{{ fechaInicio | date: "d/MM/yyyy" }}</p>
-      <p>{{ fechaFin | date: "d/MM/yyyy" }}</p>
-    </div>
+      <label>{{ fechaInicio | date: "d/MM/yyyy" }}</label>
+      <label>{{ fechaFin | date: "d/MM/yyyy" }}</label>
   </div>
   <div>
     <app-limit-category
-      *ngFor="let categoria of categorias"
-      [limite]="categoria.limite"
+      *ngFor="let categoria of categoriaAux"
+      [consumido]="categoria.consumido"
       [descripcion]="categoria.descripcion"
       [restante]="categoria.restante"
     >
     </app-limit-category>
+  </div>
   </div>
 </div>

@@ -12,4 +12,11 @@ class CategoriaLimit {
     id?: number;
 }
 
-export { CategoriaGet, CategoriaLimit };
+class CategoriaMostrar {
+    categoriaId?: number;
+    consumido?: number;
+    restante?: number;
+    descripcion?: string;
+}
+
+export { CategoriaGet, CategoriaLimit, CategoriaMostrar };

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
-import { CategoriaGet } from 'src/app/core/model/categoria.model';
+import { CategoriaGet, CategoriaMostrar } from 'src/app/core/model/categoria.model';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { CompraGet } from 'src/app/core/model/compra.model';
 import { CompraService } from 'src/app/core/service/compra.service';
@@ -18,6 +18,8 @@ export class LimitComponent implements OnInit {
   fechaInicio: Date;
   fechaFin: Date;
   visible: boolean = false;
+  categoriaAux: CategoriaMostrar[] = [];
+  //categoriaMostrar: CategoriaMostrar = {};
 
   constructor(
     private homeService: HomeService,
@@ -92,8 +94,17 @@ export class LimitComponent implements OnInit {
           }
         }
       }
-      this.visible = true;
       console.log(this.categorias);
+      for(let i=0; i<this.categorias.length;i++){
+        var categoriaMostrar = new CategoriaMostrar();
+        categoriaMostrar.descripcion = this.categorias[i].descripcion;
+        categoriaMostrar.categoriaId = this.categorias[i].id;
+        categoriaMostrar.restante = this.categorias[i].restante;
+        categoriaMostrar.consumido = this.categorias[i].limite - this.categorias[i].restante;
+        this.categoriaAux.push(categoriaMostrar);
+      }
+      console.log(this.categoriaAux);
+      this.visible = true;
     } catch (error) {
       console.log(error);
     }

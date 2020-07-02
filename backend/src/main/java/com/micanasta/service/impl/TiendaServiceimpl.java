@@ -4,10 +4,7 @@ import com.micanasta.dto.*;
 import com.micanasta.dto.converter.RolPorPerfilDtoConverter;
 import com.micanasta.dto.converter.StockDtoConverter;
 import com.micanasta.dto.converter.TiendaDtoConverter;
-import com.micanasta.exception.UserAddedShopExceedLimitException;
-import com.micanasta.exception.UserAddedShopIncorrectException;
-import com.micanasta.exception.UserNotAdminException;
-import com.micanasta.exception.UserNotFoundException;
+import com.micanasta.exception.*;
 import com.micanasta.model.*;
 import com.micanasta.repository.*;
 import com.micanasta.service.TiendaService;
@@ -58,6 +55,7 @@ public class TiendaServiceimpl implements TiendaService {
 
     @Override
     public TiendaDto getById(long id) {
+
         return tiendaDtoConverter.convertToDto(tiendaRepository.getById(id));
     }
 
@@ -71,6 +69,17 @@ public class TiendaServiceimpl implements TiendaService {
         return stocksDto;
     }
 
+    @Override
+    public TiendaLimiteDto getLimiteTienda(long id) {
+        TiendaDto tienda = tiendaDtoConverter.convertToDto(tiendaRepository.getById(id));
+        if (tienda != null) {
+            TiendaLimiteDto limiteDto = new TiendaLimiteDto();
+            limiteDto.setLimite(tienda.getLimite());
+            return limiteDto;
+        } else
+            return null;
+    }
+
     @Transactional
     @Override
     public StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto) {
@@ -80,7 +89,7 @@ public class TiendaServiceimpl implements TiendaService {
         return stockDtoConverter.convertToDto(stock);
     }
 
-    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)  throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
+    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
         Usuario usuario = usuarioRepository.findByDni(dni);
         if (usuario != null) {
             long cantidadUsuarios = usuarioPorTiendaRepository.countById(idTienda);
@@ -125,60 +134,27 @@ public class TiendaServiceimpl implements TiendaService {
     }
 
     @Transactional
-    @Override
-    public List<RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni, boolean cambiarRol) throws UserNotFoundException, UserNotAdminException {
-        if (cambiarRol == true) {
+    public UsuarioPorTienda cambiarRolUsuario(String dni) throws UserNotFoundException {
+        if (usuarioPorTiendaRepository.findByDni(dni) == null) {
+            throw new UserNotFoundException();
+        } else {
+            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
+                RolPorUsuario rolPorUsuario;
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+                rolPorUsuario = asignarRolPorUsuario(dni, (long) 4);
+                rolPorUsuarioRepository.save(rolPorUsuario);
 
-            if (usuarioPorTiendaRepository.findByDni(adminDni) == null) {
-                throw new UserNotFoundException();
+            } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 4) {
+                RolPorUsuario rolPorUsuario;
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+                rolPorUsuario = asignarRolPorUsuario(dni, (long) 3);
+                rolPorUsuarioRepository.save(rolPorUsuario);
             }
-
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() != 3)
-                throw new UserNotAdminException();
-
-            if (usuarioPorTiendaRepository.findByDni(userDni) == null) {
-                throw new UserNotFoundException();
-            } else {
-                if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
-
-                    if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
-                        RolPorUsuario rolPorUsuario;
-                        rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-                        rolPorUsuario = asignarRolPorUsuario(userDni, (long) 4);
-                        rolPorUsuarioRepository.save(rolPorUsuario);
-
-                    } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 4) {
-                        RolPorUsuario rolPorUsuario;
-                        rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-                        rolPorUsuario = asignarRolPorUsuario(userDni, (long) 3);
-                        rolPorUsuarioRepository.save(rolPorUsuario);
-                    }
-                }
-            }
-
         }
-        List<RolPerfil> roles = rolPerfilRepository.findAll();
-
-        return ListarRolPerfiles(roles);
+        return null;
 
     }
 
-
-    List<RolPorPerfilListaDto> ListarRolPerfiles(List<RolPerfil> roles){
-
-        List<RolPorPerfilListaDto>result = new ArrayList<>();
-
-        for (RolPerfil rolPerfil : roles){
-            RolPorPerfilListaDto rolPorPerfilListaDto = new RolPorPerfilListaDto();
-            rolPorPerfilListaDto.setDescripcion(rolPerfil.getDescripcion());
-            rolPorPerfilListaDto.setId(rolPerfil.getId());
-
-
-            result.add(rolPorPerfilListaDto);
-
-        }
-        return result;
-    }
     @Transactional
     @Override
     public TiendaInfoDto getTiendaInfo(long idTienda) {
@@ -210,6 +186,31 @@ public class TiendaServiceimpl implements TiendaService {
         else return null;
     }
 
+    @Transactional
+    @Override
+    public TiendaDto updateTienda(long idTienda, String dni, TiendaUpdateDto tiendaUpdateDto) throws ActualPasswordNotMatchException{
+        Usuario usuario = usuarioRepository.encontrarPorDni(dni);
+        Tienda tienda = tiendaRepository.encontrarPorId(idTienda);
+
+        if(!usuario.getContrasena().equals(tiendaUpdateDto.contrasena)){
+            throw new ActualPasswordNotMatchException();
+        }
+        else {
+            if(tiendaUpdateDto.getDescripcion()!=null)
+                tienda.setDescripcion(tiendaUpdateDto.descripcion);
+            if(tiendaUpdateDto.getDireccion()!=null)
+                tienda.setDireccion(tiendaUpdateDto.getDireccion());
+            if(tiendaUpdateDto.getHorario()!=null)
+                tienda.setHorario(tiendaUpdateDto.getHorario());
+            if(tiendaUpdateDto.getLatitud()!=null)
+                tienda.setLatitud(tiendaUpdateDto.getLatitud());
+            if(tiendaUpdateDto.getLongitud()!=null)
+                tienda.setLongitud(tiendaUpdateDto.getLongitud());
+            tiendaRepository.save(tienda);
+        }
+        return tiendaDtoConverter.convertToDto(tienda);
+    }
+
     public List<TiendaDto>getAllTiendas(){
 
         List<TiendaDto> tiendasDto = new ArrayList<>();
@@ -222,6 +223,7 @@ public class TiendaServiceimpl implements TiendaService {
         }
         else return null;
     }
+
     @Override
     public List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id) {
         List<TiendaBusquedaMiembrosDto> tiendaBusquedaMiembrosDtos;

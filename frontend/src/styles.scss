@@ -48,6 +48,17 @@
     border-radius: 4px;
 }
 
+.input-number-shared-component{
+  width: 264px;
+    border: none;
+    background: #FAFAFA;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 16px;
+    border-radius: 4px;
+}
+
 button:disabled{
   opacity: .3;
   cursor: not-allowed;

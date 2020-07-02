@@ -1,0 +1,8 @@
+<div class="stock-product-container" *ngIf = "visible">
+    <input
+     type="number"
+     class="input-number-shared-component"
+     [(ngModel)]="stockUpdate.cantidad">
+    <label> {{ producto.descripcion }} </label><br>
+    <b>{{ unidad }}</b>
+</div>

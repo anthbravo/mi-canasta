@@ -3,6 +3,7 @@ package com.micanasta.dto.converter;
 import com.micanasta.dto.CrearSolicitudDto;
 import com.micanasta.dto.SolicitudDto;
 import com.micanasta.dto.TiendaDto;
+import com.micanasta.dto.TiendaUpdateDto;
 import com.micanasta.model.Solicitud;
 import com.micanasta.model.Tienda;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,6 @@ public class TiendaDtoConverter {
 
     public TiendaDto convertToDto(Tienda tienda) {
         return modelMapper.map(tienda, TiendaDto.class);
-
     }
+
 }

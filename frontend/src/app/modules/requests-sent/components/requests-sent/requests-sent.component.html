@@ -1,12 +1,12 @@
 <div class="request-sent-container">
-  <div class="request-sent__title">
-    <h2>Solicitudes Enviadas</h2>
-  </div>
-  <div class="request-sent__list">
-    <app-card-request
-      *ngFor="let request of mock"
-      [request]="request"
-
-    ></app-card-request>
-  </div>
+    <div class="request-sent__title">
+        <h2>Solicitudes Enviadas</h2>
+    </div>
+    <div class="request-sent__list">
+        <app-card-request
+            *ngFor="let request of nombreFam"
+            [request]="request"
+            (eventRefresh)="getSolicitud()"
+        ></app-card-request>
+    </div>
 </div>

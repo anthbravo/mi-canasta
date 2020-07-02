@@ -88,5 +88,11 @@ public class  UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(solicitudeNotFoundException.exceptionDto);
         }
     }
+    @PutMapping("usuarios/rolxusuario/{dni}")
+    public ResponseEntity<?> SwitchRolPerfil(@PathVariable("dni") String dni){
+
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.SwitchRolPerfil(dni));
+
+    }
 
 }

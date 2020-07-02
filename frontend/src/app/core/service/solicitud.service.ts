@@ -20,6 +20,14 @@ export class SolicitudService {
             )
             .toPromise();
     }
+    async obtenerSolicitudes(dni?: string) {
+        return await this.httpClient
+            .get(
+                `${environment.url_api}/solicitudes?dni=${dni}`,
+                AuthService.getHeaderWithAuthorization()
+            )
+            .toPromise();
+    }
     //deniega la solicitud entrante
     async denegarSolicitud(dni?: string) {
         return await this.httpClient

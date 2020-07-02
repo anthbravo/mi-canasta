@@ -4,6 +4,7 @@ import { RolPorUsuario } from '../../core/model/rol.model';
 import { RolService } from 'src/app/core/service/rol.service';
 import { ErrorGeneric } from 'src/app/core/model/error.model';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-members',
@@ -43,7 +44,8 @@ export class MembersComponent implements OnInit {
   constructor(
     private familiaService: FamiliaService,
     private rolService: RolService,
-    private route: Router
+    private route: Router,
+    private authService: AuthService
     ) { }
 
   ngOnInit(): void {
@@ -51,7 +53,7 @@ export class MembersComponent implements OnInit {
   }
 
   deleteUsuarioFromFamilia(){
-    if( sessionStorage.getItem("dni") == this.dni ){
+    if( this.authService.getUsuarioAutenticacion().usuario.dni == this.dni ){
       this.deleteYo();
     }
     else {
@@ -103,7 +105,6 @@ export class MembersComponent implements OnInit {
 
   async getRolUsuario(){
      try {
-      
       const res = await this.rolService.getRol(this.dni);
       this.roles = res;
       for(let i=0; i < this.roles.length; i++){
@@ -125,7 +126,7 @@ export class MembersComponent implements OnInit {
   }
 
   abrirModalConfirmacion(){
-    if( sessionStorage.getItem("dni") == this.dni ){
+    if( this.authService.getUsuarioAutenticacion().usuario.dni == this.dni ){
       if(this.numIntegrantes == 1)
         this.descriptionConfirModal="¿Desea abandonar el grupo familiar? Toda la información de la familia se perderá";
       else this.descriptionConfirModal="¿Desea abandonar el grupo familiar?";

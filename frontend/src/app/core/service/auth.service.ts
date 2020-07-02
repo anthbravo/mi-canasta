@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     saveUsuarioAutenticacion(usuarioAutenticacion: UsuarioAutenticacion) {
-        this.usuarioAutenticacion = usuarioAutenticacion;
+        //this.usuarioAutenticacion = usuarioAutenticacion;
         sessionStorage.setItem('usuario', JSON.stringify(usuarioAutenticacion));
     }
 

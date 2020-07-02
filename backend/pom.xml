@@ -100,77 +100,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.5</version>
-				<configuration>
-					<workingDirectory>${frontend.project.directory}</workingDirectory>
-					<installDirectory>${frontend.project.node.directory}</installDirectory>
-				</configuration>
-				<executions>
-
-					<!-- install node and npm -->
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>v12.18.0</nodeVersion>
-							<npmVersion>6.14.4</npmVersion>
-						</configuration>
-					</execution>
-
-					<!-- install node modules -->
-					<execution>
-						<id>npm install --no-bin-links</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-					</execution>
-
-					<!-- build angular folder: dist -->
-					<execution>
-						<id>ng build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<!-- reference: package.json -->
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-
-				</executions>
-
-			</plugin>
-
-			<!-- copy build project frontend: dist to static folder -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>copy-angular-dist</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<overwrite>true</overwrite>
-							<outputDirectory>${project.basedir}/src/main/resources/static/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/${frontend.project.build.directory}</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+			
 		</plugins>
 	</build>
 

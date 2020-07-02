@@ -5,6 +5,7 @@ import { RequestsSentRoutingModule } from './requests-sent-routing.module';
 import { RequestsSentComponent } from './components/requests-sent/requests-sent.component';
 import { CardRequestComponent } from './components/card-request/card-request.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({

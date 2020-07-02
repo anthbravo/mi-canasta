@@ -47,5 +47,10 @@ export class FamiliaService {
       .toPromise();
   }
 
+  async cambiarRolUsuario(dni:string){
+    return await this.httpClient
+    .put(`${environment.url_api}/familias/${dni}/rolesPorUsuario`, null)
+    .toPromise();
+  }
 
 }

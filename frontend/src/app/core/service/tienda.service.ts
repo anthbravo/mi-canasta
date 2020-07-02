@@ -38,7 +38,11 @@ export class TiendaService {
   async putTienda(idTienda: number, dni: number, putTienda: TiendaPut) {
     return await this.httpClient.put(`${environment.url_api}/tiendas/${idTienda}/${dni}`, putTienda)
     .toPromise();
-}
+  }
 
+  async cambiarRolUsuario(dni:string){
+    return await this.httpClient.put(`${environment.url_api}/tiendas/${dni}/rolesPorUsuario?dni=${dni}`, null)
+    .toPromise();
+  }
 }
 

@@ -14,4 +14,5 @@ export class UsuarioService {
     return await this.httpClient.get<UsuarioAutenticacion>(`${environment.url_api}/usuarios/${dni}`)
     .toPromise();
   }
+
 }

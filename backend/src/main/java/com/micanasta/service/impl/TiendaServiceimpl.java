@@ -55,6 +55,7 @@ public class TiendaServiceimpl implements TiendaService {
 
     @Override
     public TiendaDto getById(long id) {
+
         return tiendaDtoConverter.convertToDto(tiendaRepository.getById(id));
     }
 
@@ -88,7 +89,7 @@ public class TiendaServiceimpl implements TiendaService {
         return stockDtoConverter.convertToDto(stock);
     }
 
-    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)  throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
+    public TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni) throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException {
         Usuario usuario = usuarioRepository.findByDni(dni);
         if (usuario != null) {
             long cantidadUsuarios = usuarioPorTiendaRepository.countById(idTienda);
@@ -132,59 +133,27 @@ public class TiendaServiceimpl implements TiendaService {
     }
 
     @Transactional
-    @Override
-    public List<RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni, boolean cambiarRol) throws UserNotFoundException, UserNotAdminException {
-        if (cambiarRol == true) {
+    public UsuarioPorTienda cambiarRolUsuario(String dni) throws UserNotFoundException {
+        if (usuarioPorTiendaRepository.findByDni(dni) == null) {
+            throw new UserNotFoundException();
+        } else {
+            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
+                RolPorUsuario rolPorUsuario;
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+                rolPorUsuario = asignarRolPorUsuario(dni, (long) 4);
+                rolPorUsuarioRepository.save(rolPorUsuario);
 
-            if (usuarioPorTiendaRepository.findByDni(adminDni) == null) {
-                throw new UserNotFoundException();
+            } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 4) {
+                RolPorUsuario rolPorUsuario;
+                rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(dni);
+                rolPorUsuario = asignarRolPorUsuario(dni, (long) 3);
+                rolPorUsuarioRepository.save(rolPorUsuario);
             }
-
-            if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() != 3)
-                throw new UserNotAdminException();
-
-            if (usuarioPorTiendaRepository.findByDni(userDni) == null) {
-                throw new UserNotFoundException();
-            } else {
-                if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(adminDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
-
-                    if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 3) {
-                        RolPorUsuario rolPorUsuario;
-                        rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-                        rolPorUsuario = asignarRolPorUsuario(userDni, (long) 4);
-                        rolPorUsuarioRepository.save(rolPorUsuario);
-
-                    } else if (rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(userDni).getRolPorUsuarioIdentity().getRolPerfil().getId() == 4) {
-                        RolPorUsuario rolPorUsuario;
-                        rolPorUsuarioRepository.deleteByRolPorUsuarioIdentityUsuarioDni(userDni);
-                        rolPorUsuario = asignarRolPorUsuario(userDni, (long) 3);
-                        rolPorUsuarioRepository.save(rolPorUsuario);
-                    }
-                }
-            }
-
         }
-        List<RolPerfil> roles = rolPerfilRepository.findAll();
-
-        return ListarRolPerfiles(roles);
+        return null;
 
     }
 
-    List<RolPorPerfilListaDto> ListarRolPerfiles(List<RolPerfil> roles){
-
-        List<RolPorPerfilListaDto>result = new ArrayList<>();
-
-        for (RolPerfil rolPerfil : roles){
-            RolPorPerfilListaDto rolPorPerfilListaDto = new RolPorPerfilListaDto();
-            rolPorPerfilListaDto.setDescripcion(rolPerfil.getDescripcion());
-            rolPorPerfilListaDto.setId(rolPerfil.getId());
-
-
-            result.add(rolPorPerfilListaDto);
-
-        }
-        return result;
-    }
     @Transactional
     @Override
     public TiendaInfoDto getTiendaInfo(long idTienda) {

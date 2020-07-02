@@ -3,6 +3,7 @@ package com.micanasta.service;
 import com.micanasta.dto.*;
 import com.micanasta.exception.*;
 import com.micanasta.model.RolPorUsuario;
+import com.micanasta.model.UsuarioPorTienda;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface TiendaService {
     StockDto updateStock(long idTienda, long idProducto, StockUpdateDto stockUpdateDto);
     TiendaUsuarioDto postUsuarioInTienda(long idTienda, String dni)throws UserAddedShopIncorrectException, UserAddedShopExceedLimitException;
     RolPorUsuario asignarRolPorUsuario(String dni, Long id);
-    List<RolPorPerfilListaDto> switchRolPerfil(String userDni, String adminDni, boolean cambiarRol) throws UserNotFoundException, UserNotAdminException;
+    UsuarioPorTienda cambiarRolUsuario(String dni) throws UserNotFoundException;
     List<TiendaDto> getAllTiendas();
     TiendaInfoDto getTiendaInfo(long idTienda);
     List<TiendaBusquedaMiembrosDto> buscarMiembrosGrupoDistribuidoraPorTiendaId(long id);

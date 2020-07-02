@@ -92,19 +92,13 @@ public class TiendaController {
         }
     }
 
-    @GetMapping("/tiendas/RolesPorPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
-    public ResponseEntity<?> switchRolPerfil(String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
-
-
+    @PutMapping("/tiendas/{dni}/rolesPorUsuario")
+    public ResponseEntity<?> cambiarRolUsuario(String dni) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.switchRolPerfil(userDni,adminDni,cambiarRol));
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.cambiarRolUsuario(dni));
         }catch (UserNotFoundException userNotFoundExeption) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundExeption.exceptionDto);
-        }catch (UserNotAdminException userNotAdminException)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException);
         }
-
     }
 
 

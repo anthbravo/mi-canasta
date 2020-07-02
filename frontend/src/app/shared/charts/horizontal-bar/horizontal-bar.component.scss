@@ -1,0 +1,33 @@
+.red-chart {
+    background: #f76a8c;
+}
+.green-chart {
+    background: #ccf0e1;
+}
+.yellow-chart {
+    background: rgb(255, 240, 24);
+}
+.orange-chart {
+    background: #f8dc88;
+}
+.line-father {
+    width: 320px;
+    border-radius: 5px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.line-father .line {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+}
+.line-father p{
+    margin: 0;
+}

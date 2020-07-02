@@ -109,6 +109,12 @@ const routes: Routes = [
                 loadChildren : ()=>
                   import('./modules/stock/stock.module').then( (m)=> m.StockModule)
             },
+            {
+                path: 'home/limit',
+                canActivate: [GuardService],
+                loadChildren : ()=>
+                  import('./modules/limit/limit.module').then( (m)=> m.LimitModule)
+            },
         ],
     },
     {

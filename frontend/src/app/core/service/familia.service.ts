@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Familia, FamiliaCreate, FamiliaNoIdDto } from '../model/familia.model';
 import { Usuario } from 'src/app/core/model/usuario.model';
 import { AuthService } from './auth.service';
+import { CompraGet } from '../model/compra.model';
 
 @Injectable({
   providedIn: 'root',

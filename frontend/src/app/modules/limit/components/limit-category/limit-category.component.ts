@@ -30,7 +30,7 @@ export class LimitCategoryComponent implements OnInit {
   definirData(){
     this.dataHorizontalBar = [
       {text: this.restante, color: "red", value: 2},
-      {text: "D", color: "orange", value: 1},
+      {text: "0", color: "orange", value: 1},
     ]
   }
 

@@ -66,20 +66,16 @@ export class LoginComponent implements OnInit {
 
             if (usuarioAutenticacion.solicitud != null) {
                 await this.route.navigate(['/family/request-sent']);
-                window.location.reload();
             } else if (usuarioAutenticacion.tienda != null) {
                 await this.route.navigate([
                     `/dealer/members/${usuarioAutenticacion.tienda.id}`,
                 ]);
-                window.location.reload();
             } else if (usuarioAutenticacion.familia != null) {
                 await this.route.navigate([
                     `/family/members/${usuarioAutenticacion.familia.id}`,
                 ]);
-                window.location.reload();
             } else {
                 await this.route.navigate(['/family/home']);
-                window.location.reload();
             }
 
             this.homeService.setStatus({ isLoginView: false });

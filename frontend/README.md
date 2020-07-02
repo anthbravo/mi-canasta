@@ -1,6 +1,6 @@
 # Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
 ## Development server
 
@@ -25,12 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-# Estructura
-| CARPETA | DESCRIPCION |
-| ------ | ------ |
-| modules | Modulos especificos creados a partir del desarrollo de funcionalidades |
-| core | Modulo que contiene los modelos a representar y los servicios necesarios para interacción con la API |
-| layout | Modulo que contiene el diseño de la aplicación |
-| shared | Modulo que contiene todos los componentes compartidos de la aplicacion |
-| pages | Modulo que contiene los componentes que representan a paginas de respuesta o estaticas de la aplicacion |

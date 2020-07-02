@@ -35,11 +35,11 @@ public class UserServiceImpl implements UserDetailsService {
 		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-		rolPorUsuarioRepository.findAllById(dni).forEach(role -> {
+		/*rolPorUsuarioRepository.findAllById(dni).forEach(role -> {
 			System.out.println("loadUserByUsername:" + role.getRolPorUsuarioIdentity().getRolPerfil().getDescripcion());
 			authorities
 					.add(new SimpleGrantedAuthority(role.getRolPorUsuarioIdentity().getRolPerfil().getDescripcion()));
-		});
+		});*/
 
 		UserDetails userDetails = new User(usuario.getDni(), usuario.getContrasena(), authorities);
 		return userDetails;

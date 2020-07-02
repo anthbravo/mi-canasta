@@ -1,6 +1,7 @@
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
+import { AuthService } from 'src/app/core/service/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { FamiliaService } from 'src/app/core/service/familia.service';
 import { Rol, RolPorUsuario } from '../../../../core/model/rol.model';
@@ -29,7 +30,8 @@ export class HomeFamilyComponent implements OnInit {
         private homeService: HomeService,
         private route: ActivatedRoute,
         private familiaService: FamiliaService,
-        private rolService: RolService
+        private rolService: RolService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -56,7 +58,6 @@ export class HomeFamilyComponent implements OnInit {
             if(await this.isAdmin(this.integrantes[i].dni) == true) cont++;
         }
         if(this.userIsAdmin==true && cont==1) this.unicoAdmin = true;
-        console.log(this.unicoAdmin);
     }
 
     async listarMiembros() {
@@ -88,8 +89,9 @@ export class HomeFamilyComponent implements OnInit {
 
     async getRolUsuario(){
          try {
-          const res = await this.rolService.getRol(sessionStorage.getItem("dni"));
-          this.roles = res;
+            const res = await this.rolService.getRol(this.authService.getUsuarioAutenticacion().usuario.dni);
+            this.roles = res;
+          console.log(this.roles);
           for(let i=0; i < this.roles.length; i++){
             if(this.roles[i].rolPerfilId == 1) this.userIsAdmin=true;
           }        

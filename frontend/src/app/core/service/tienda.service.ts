@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/core/model/usuario.model';
 import { Tienda, TiendaUsuarioDto } from 'src/app/core/model/tienda.model';
 import { AuthService } from './auth.service';
+import { StockGet, StockPut } from '../model/stock.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,4 +55,15 @@ export class TiendaService {
       .toPromise();
   }
 
+  async getStocks(idTienda: number) {
+    return await this.httpClient.get<Array<StockGet>>
+    (`${environment.url_api}/tiendas/${idTienda}/stocks`, AuthService.getHeaderWithAuthorization())
+      .toPromise();
+  }
+
+  async putStock(idTienda: number, idProducto: number, stockPut: StockPut) {
+    return await this.httpClient.put
+    (`${environment.url_api}/tiendas/${idTienda}/productos/${idProducto}/stocks`, stockPut, AuthService.getHeaderWithAuthorization())
+      .toPromise();
+  }
 }

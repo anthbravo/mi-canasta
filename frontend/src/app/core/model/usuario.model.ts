@@ -29,6 +29,9 @@ class UsuarioAutenticacion {
 
 class UsuarioPut {
   correoElectronico?: string;
+  familia?: Familia;
+  rol?: Array<Rol>;
+  solicitud?:string
   contrasena?: string;
   nuevaContrasena?: string;
   repetirContrasena?: string;

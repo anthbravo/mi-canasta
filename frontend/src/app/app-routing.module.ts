@@ -24,7 +24,7 @@ const routes: Routes = [
             },
             {
                 path: 'home',
-                canActivate: [GuardService],
+                //canActivate: [GuardService],
                 loadChildren: () =>
                     import('./modules/home/home.module').then(
                         (m) => m.HomeModule

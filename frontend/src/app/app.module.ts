@@ -11,6 +11,7 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { LayoutModule } from './layout/layout.module';
+import { AgmCoreModule } from '@agm/core';
 
 registerLocaleData(en);
 
@@ -23,6 +24,9 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyA6-mMi_39xgm7npBNeEcngLsVoPA0NGLw"
+  })
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent],

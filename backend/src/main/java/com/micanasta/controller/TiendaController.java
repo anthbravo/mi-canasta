@@ -1,4 +1,9 @@
 package com.micanasta.controller;
+import com.micanasta.dto.*;
+import com.micanasta.exception.*;
+import com.micanasta.dto.SolicitudBusquedaDto;
+import com.micanasta.dto.StockUpdateDto;
+import com.micanasta.dto.StockUpdateDto;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +40,11 @@ public class TiendaController {
     @GetMapping("/tiendas/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         return ResponseEntity.ok().body(tiendaService.getById(id));
+    }
+
+    @GetMapping("/tiendas/{id}/limite")
+    public ResponseEntity<?> getLimiteTienda(@PathVariable long id) {
+        return ResponseEntity.ok().body(tiendaService.getLimiteTienda(id));
     }
 
     @GetMapping("/tiendas/{idTienda}/stocks")
@@ -83,21 +93,25 @@ public class TiendaController {
         }
     }
 
-    @GetMapping("/tiendas/RolesPorPerfi/{userDni}/{dniAdmi}/{cambiarRol}")
-    public ResponseEntity<?> switchRolPerfil( String userDni, String adminDni, @PathVariable boolean cambiarRol ) {
-
-
+    @PutMapping("/tiendas/{idTienda}/{dni}/updateTienda")
+    public ResponseEntity<?> updateTienda(@PathVariable Long idTienda, @PathVariable String dni,
+                                          @RequestBody TiendaUpdateDto tienda){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.switchRolPerfil(userDni,adminDni,cambiarRol));
-        }catch (UserNotFoundException userNotFoundExeption) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundExeption.exceptionDto);
-        }catch (UserNotAdminException userNotAdminException)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotAdminException);
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.updateTienda(idTienda, dni, tienda));
         }
-
+        catch (ActualPasswordNotMatchException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.exceptionDto);
+        }
     }
 
+    @PutMapping("/tiendas/{dni}/rolesPorUsuario")
+    public ResponseEntity<?> cambiarRolUsuario(String dni) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(tiendaService.cambiarRolUsuario(dni));
+        }catch (UserNotFoundException userNotFoundExeption) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userNotFoundExeption.exceptionDto);
+        }
+    }
 
 
     @GetMapping("/tiendas/{idTienda}/stockNombre")

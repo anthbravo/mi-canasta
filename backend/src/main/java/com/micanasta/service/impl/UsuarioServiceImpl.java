@@ -200,4 +200,37 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return solicitudBusquedaDto;
     }
+
+    @Override
+	public RolPorUsuario SwitchRolPerfil(String dni){
+
+		RolPorUsuario rolPorUsuario =  rolPorUsuarioRepository.findByRolPorUsuarioIdentityUsuarioDni(dni);
+		RolPerfil rolPerfil = new RolPerfil();
+		Usuario usuario = new Usuario();
+		usuario.setDni(dni);
+
+		if (rolPorUsuario.getRolPorUsuarioIdentity().getRolPerfil().getPerfil().getId()==1){
+			rolPerfil.setId(2);
+		}
+		if(rolPorUsuario.getRolPorUsuarioIdentity().getRolPerfil().getPerfil().getId()==2){
+			rolPerfil.setId(1);
+		}
+		if(rolPorUsuario.getRolPorUsuarioIdentity().getRolPerfil().getPerfil().getId()==3){
+			rolPerfil.setId(4);
+		}
+		if(rolPorUsuario.getRolPorUsuarioIdentity().getRolPerfil().getPerfil().getId()==4){
+			rolPerfil.setId(3);
+		}
+
+
+		RolPorUsuarioIdentity rolPorUsuarioIdentity = new RolPorUsuarioIdentity();
+		rolPorUsuarioIdentity.setUsuario(usuario);
+		rolPorUsuarioIdentity.setRolPerfil(rolPerfil);
+
+		RolPorUsuario entry = new RolPorUsuario();
+		entry.setRolPorUsuarioIdentity(rolPorUsuarioIdentity);
+		rolPorUsuarioRepository.save(entry);
+		return entry;
+
+	}
 }

@@ -61,11 +61,13 @@ export class HomeUserComponent implements OnInit {
       this.responsable = "Responsable de venta";
       this.descriptionRoles = "Roles en Tienda";
       this.userType = 1;
+      this.route.navigate(['/home/dealers/1']);
     }
     else {
       this.responsable = "Responsable de compra";
       this.descriptionRoles = "Roles en Grupo Familiar";
       this.userType = 0;
+      this.route.navigate(['/home/family/1']);
     }
   }
 

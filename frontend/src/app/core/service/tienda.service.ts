@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/core/model/usuario.model';
-import { Tienda, TiendaUsuarioDto } from 'src/app/core/model/tienda.model';
+import { Tienda, TiendaUsuarioDto, TiendaPut } from 'src/app/core/model/tienda.model';
 import { AuthService } from './auth.service';
 import { StockGet, StockPut } from '../model/stock.model';
 
@@ -53,6 +53,21 @@ export class TiendaService {
     return await this.httpClient
       .get<Array<Usuario>>(`${environment.url_api}/tiendas/${idTienda}/usuarios`, AuthService.getHeaderWithAuthorization())
       .toPromise();
+  }
+
+  async getLimiteTienda(idTienda: number) {
+    return await this.httpClient.get(`${environment.url_api}/tiendas/${idTienda}/limite`)
+    .toPromise();
+  }
+
+  async putTienda(idTienda: number, dni: number, putTienda: TiendaPut) {
+    return await this.httpClient.put(`${environment.url_api}/tiendas/${idTienda}/${dni}`, putTienda, AuthService.getHeaderWithAuthorization() )
+    .toPromise();
+  }
+
+  async cambiarRolUsuario(dni:string){
+    return await this.httpClient.put(`${environment.url_api}/tiendas/${dni}/rolesPorUsuario?dni=${dni}`, null, AuthService.getHeaderWithAuthorization() )
+    .toPromise();
   }
 
   async getStocks(idTienda: number) {

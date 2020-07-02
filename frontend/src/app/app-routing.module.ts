@@ -39,7 +39,7 @@ const routes: Routes = [
                     ),
             },
             {
-                path: 'home/dealers',
+                path: 'home/dealers/:id',
                 canActivate: [GuardService],
                 loadChildren: () =>
                     import('./modules/home-dealers/home-dealers.module').then(

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LimitCategoryComponent implements OnInit {
 
   @Input()
-  limite: any;
+  consumido: any;
 
   @Input()
   restante: any;
@@ -27,10 +27,12 @@ export class LimitCategoryComponent implements OnInit {
     this.definirData();
   }
 
+
+
   definirData(){
     this.dataHorizontalBar = [
-      {text: this.restante, color: "red", value: 2},
-      {text: "0", color: "orange", value: 1},
+      {text: this.consumido, color: "red", value: this.consumido},
+      {text: this.restante, color: "orange", value: this.restante},
     ]
   }
 

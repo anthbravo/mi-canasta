@@ -33,7 +33,10 @@ export class SelectComponent implements OnInit {
 cambiarRolUsuario(){
   const children: string[] = ["Administrador", "Miembro"];
     this.listOfOption = children.map((item) => {
-    this.familiaService.cambiarRolUsuario(localStorage.getItem("dni"));
+    // if 
+    this.familiaService.cambiarRolUsuario(sessionStorage.getItem("dni"));
+    // else 
+      // this.tiendaService.cambiarRolUsuario(localStorage.getItem("dni"));
     return {
       value: item,
       label: item,

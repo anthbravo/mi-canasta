@@ -51,7 +51,7 @@ export class HomeDealersComponent implements OnInit {
 
   async postUsuarioInTienda(){
     try{
-      if (this.numIntegrantes < 5 ) {
+      if (this.numIntegrantes < 5 ) { // this.tienda.limite
       const res = await this.tiendaService.postUsuarioInTienda(this.idTienda, this.dni);
       this.listarMiembros();
       console.log(res);

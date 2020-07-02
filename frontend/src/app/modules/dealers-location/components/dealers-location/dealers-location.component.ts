@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HomeService } from 'src/app/core/service/home.service';
 import { TiendaService } from 'src/app/core/service/tienda.service';
 import { ProductoService } from 'src/app/core/service/producto.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-dealers-location',
@@ -9,23 +10,16 @@ import { ProductoService } from 'src/app/core/service/producto.service';
     styleUrls: ['./dealers-location.component.scss'],
 })
 export class DealersLocationComponent implements OnInit {
-    lat = -12.063857;
-    lng = -77.035029;
+    lat = 1.32312;
+    lng = -1.2123;
     selectedMarker;
     demoValue = 3;
-
+    loading = true;
     kioskoIconMarker = true;
     tiendaIconMarker = true;
-    kioskoMarkers = [
-        { lat: -12.063437, lng: -77.039903, alpha: 1 },
-        { lat: -12.06457, lng: -77.040104, alpha: 1 },
-    ];
+    kioskoMarkers = [];
 
-    tiendaMarkers = [
-        { lat: -12.095683, lng: -76.997026, alpha: 1 },
-        { lat: -12.099292, lng: -76.999054, alpha: 1 },
-        { lat: -12.099093, lng: -76.999226, alpha: 1 },
-    ];
+    tiendaMarkers = [];
 
     productos = [];
 
@@ -54,7 +48,7 @@ export class DealersLocationComponent implements OnInit {
             arr: this.kioskoMarkers,
         },
         {
-            name: 'Tienda',
+            name: 'Supermercado',
             iconActivate: 'assets/shop_activate.svg',
             iconDesactivate: 'assets/shop_desactivate.svg',
             flag: this.tiendaIconMarker,
@@ -70,11 +64,16 @@ export class DealersLocationComponent implements OnInit {
     ngOnInit() {
         this.homeService.setStatus({ isLoginView: false });
 
-        this.markers = [...this.kioskoMarkers, ...this.tiendaMarkers];
         this.listarTiendas();
         this.listarSuperMercados();
 
-        this.listarTodasTiendas();
+        this.listarTodasTiendas().then(() => {
+            this.loading = false;
+            this.markers = [...this.kioskoMarkers, ...this.tiendaMarkers];
+            this.productoSeleccionado = 'Lentejas';
+            this.lat =  this.kioskoMarkers[0].lat;
+            this.lng =  this.kioskoMarkers[0].lng;
+        });
     }
 
     isNotSelected(value: string): boolean {
@@ -84,37 +83,28 @@ export class DealersLocationComponent implements OnInit {
     async listarTodasTiendas() {
         try {
             const tiendas = await this.tiendaService.listarTiendas();
+
             tiendas.forEach(async (tienda) => {
-                try {
-                    const stocks = await this.tiendaService.listarStock(
-                        tienda.id
-                    );
-                    stocks.forEach((stock) => {
-                        stock.forEach(async (e) => {
-                            try {
-                                const res = await this.productoService.listarDetalleProducto(
-                                    e.productoId
-                                );
-
-                                if (
-                                    this.productos.filter(
-                                        (e) => e.nombre === res.descripcion
-                                    ).length < 1
-                                ) {
-                                    this.productos.push({
-                                        nombre: res.descripcion,
-                                        stock: e.cantidad,
-                                    });
-                                }
-                            } catch (error) {
-                                console.log('qwe');
-                            }
-                        });
+                if (tienda.tipo === 'bodega') {
+                    this.kioskoMarkers.push({
+                        lat: parseFloat(tienda.latitud),
+                        lng: parseFloat(tienda.longitud),
+                        alpha: 1,
+                        name: tienda.descripcion,
+                        tipo: tienda.tipo,
+                        direccion:tienda.direccion,
+                        horario: tienda.horario
                     });
-
-                    console.log(this.productos);
-                } catch (error) {
-                    console.log(error);
+                } else if (tienda.tipo === 'supermercado') {
+                    this.tiendaMarkers.push({
+                        lat: parseFloat(tienda.latitud),
+                        lng: parseFloat(tienda.longitud),
+                        alpha: 1,
+                        name: tienda.descripcion,
+                        tipo: tienda.tipo,
+                        direccion:tienda.direccion,
+                        horario: tienda.horario
+                    });
                 }
             });
         } catch (error) {
@@ -156,13 +146,11 @@ export class DealersLocationComponent implements OnInit {
         console.log(this.markers);
         this.filterOptionsMap[i].flag = !this.filterOptionsMap[i].flag;
 
-
         let aux = this.filterOptionsMap
             .filter((e) => e.flag === true)
             .map((e) => e.arr);
 
         this.markers = [...aux][0] ? [...aux][0].concat([...aux][1] || []) : [];
-
     }
 
     mostrarKiosos() {
@@ -180,5 +168,16 @@ export class DealersLocationComponent implements OnInit {
     changeProduct(product) {
         this.cantidadProducto = product.stock;
         this.maxQuantity = product.stock;
+    }
+
+    getPin(type:string){
+        if(type === "bodega") return "assets/ic_pin.png"
+        else if(type === "supermercado") return "assets/ic_pin_2.png"
+
+    }
+
+    getColor(type:string){
+        if(type === 'bodega') return "#f76a8c"
+        else if(type === 'supermercado') return "#F1B62E";
     }
 }

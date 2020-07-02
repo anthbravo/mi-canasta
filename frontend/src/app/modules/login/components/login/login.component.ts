@@ -77,8 +77,9 @@ export class LoginComponent implements OnInit {
             this.homeService.setStatus({ isLoginView: false });
         } catch (error) {
             if (
-                error.error.exception === 'UserLoginNotFoundException' ||
-                error.error.exception === 'UserLoginIncorrectException'
+                error.error &&
+                (error.error.exception === 'UserLoginNotFoundException' ||
+                    error.error.exception === 'UserLoginIncorrectException')
             ) {
                 this.error.description =
                     'El usuario o contraseña ingresado es incorrecto';

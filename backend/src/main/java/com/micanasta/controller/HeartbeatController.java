@@ -12,13 +12,13 @@ import com.micanasta.model.Heartbeat;
 import com.micanasta.service.HeartbeatService;
 
 @RestController
-@RequestMapping("/heartbeat")
+@RequestMapping("/api/v1")
 public class HeartbeatController {
 
     @Autowired
     HeartbeatService heartbeatService;
 
-    @GetMapping()
+    @GetMapping("/heartbeat")
     public ResponseEntity<List<Heartbeat>> getAll() {
 
         List<Heartbeat> heartbeats = heartbeatService.getAll();

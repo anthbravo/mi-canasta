@@ -4,7 +4,7 @@ import { FamiliaService } from 'src/app/core/service/familia.service';
 import { HomeService } from 'src/app/core/service/home.service';
 import { FamiliaCreate } from 'src/app/core/model/familia.model';
 import { SolicitudService } from '../../../../core/service/solicitud.service';
-import { Solicitud } from 'src/app/core/model/solicitud.model';
+import { Solicitud, SolicitudCreated } from 'src/app/core/model/solicitud.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   async crearGrupo() {
     this.loadingCreaFamiliarButton = true;
     try {
-      let newFamily =  new FamiliaCreate()
+      let newFamily =  new FamiliaCreate();
       newFamily.aceptacionSolicitudes = true;
       newFamily.dni =  sessionStorage.getItem("dni");
       newFamily.nombreUnico =  this.grupoFamiliar;
@@ -64,9 +64,9 @@ export class HomeComponent implements OnInit {
     console.log('Unirse grupo');
     this.loadingUnirseFamiliaButton = true;
     try {
-      let newSolicitud =  new Solicitud()
+      let newSolicitud =  new SolicitudCreated();
       newSolicitud.dni =  sessionStorage.getItem("dni");
-      newSolicitud.familiaNombre =  this.grupoFamiliar;
+      newSolicitud.nombreFamilia =  this.grupoFamiliar;
       const res = await this.solicitudService.crearSolicitud(newSolicitud);
       console.log(res);
       this.route.navigate(['/home/solicitudes']);

@@ -11,5 +11,7 @@ public class TiendaDataDto {
     public String direccion;
     public String Latitud;
     public String longitud;
-    public String horario;
+    public String horario;    
+    private String tipo;
+    
 }
